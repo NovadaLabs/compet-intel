@@ -342,6 +342,26 @@
 
       <div class="card">
         <h3>
+          <span data-lang="en">WebMCP — Early Preview (New)</span>
+          <span data-lang="zh">WebMCP — 早期预览（新）</span>
+        </h3>
+        <p data-lang="en">New protocol layer bridging MCP and live web content, with active community discussion. Signals continued push to standardise how agents consume web data — Novada should track and aim for early compliance.</p>
+        <p data-lang="zh">连接 MCP 与实时网络内容的新协议层，社区讨论活跃。标志着持续推动标准化智能体消费网络数据方式——Novada 应持续跟踪并争取早期兼容。</p>
+        <span class="pill pill-blue">Watch</span>
+      </div>
+
+      <div class="card">
+        <h3>
+          <span data-lang="en">Show HN: Open-Source Browser for AI Agents (ABP)</span>
+          <span data-lang="zh">Show HN：面向 AI 智能体的开源浏览器（ABP）</span>
+        </h3>
+        <p data-lang="en">Freezes JS execution and rendering after each agent action to keep the acting agent perfectly synchronised with the browser state. Solves the stale-DOM problem for reproducible web automation workflows.</p>
+        <p data-lang="zh">每次智能体操作后冻结 JS 执行和渲染，使操作智能体与浏览器状态保持完美同步。解决了可复现网络自动化工作流中的 DOM 陈旧问题。</p>
+        <span class="pill pill-green">Ecosystem</span>
+      </div>
+
+      <div class="card">
+        <h3>
           <span data-lang="en">Show HN: Hyperbrowser MCP Server</span>
           <span data-lang="zh">Show HN：Hyperbrowser MCP 服务器</span>
         </h3>
@@ -513,6 +533,58 @@
           </tr>
           <tr>
             <td>
+              <strong><span data-lang="en">ToolACE-MCP: History-Aware Routing for MCP Tool Ecosystems</span><span data-lang="zh">ToolACE-MCP：MCP 工具生态的历史感知路由</span></strong>
+            </td>
+            <td><span class="pill pill-red">New</span></td>
+            <td>
+              <span data-lang="en">Dependency-graph + multi-turn trajectory synthesis for routing agents across large MCP tool sets. Validates that MCP tool selection is a hard problem — Novada's server must have excellent descriptions and metadata to win routing races.</span>
+              <span data-lang="zh">利用依赖图与多轮轨迹合成为大规模 MCP 工具集提供路由。验证 MCP 工具选择是个难题——Novada 服务器需具备出色的描述和元数据以赢得路由竞争。</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong><span data-lang="en">OpAgent: Web Navigation — 71.6% SOTA on WebArena</span><span data-lang="zh">OpAgent：网页导航——WebArena 71.6% SOTA</span></strong>
+            </td>
+            <td><a href="https://arxiv.org/html/2602.13559v1" target="_blank">2602.13559</a> <span class="pill pill-red">New</span></td>
+            <td>
+              <span data-lang="en">New leaderboard leader on the gold-standard web navigation benchmark. Agents can now reliably browse and extract data autonomously — reliable proxy infra is not optional for production deployments.</span>
+              <span data-lang="zh">网页导航权威基准新排行榜领跑者。智能体现可可靠地自主浏览和提取数据——可靠的代理基础设施对生产部署不可或缺。</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong><span data-lang="en">Hyperagents: Scalable Multi-Agent Architecture</span><span data-lang="zh">Hyperagents：可扩展多智能体架构</span></strong>
+            </td>
+            <td><a href="https://arxiv.org/abs/2603.19461" target="_blank">2603.19461</a> <span class="pill pill-red">New</span></td>
+            <td>
+              <span data-lang="en">New architecture for large-scale multi-agent coordination. More agents working in parallel = more concurrent web data requests = harder proxy concurrency requirements.</span>
+              <span data-lang="zh">大规模多智能体协调的新架构。更多智能体并行工作 = 更多并发网络数据请求 = 更高代理并发要求。</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span data-lang="en">Beyond Single-Shot: Multi-Step Tool Retrieval via Query Planning</span>
+              <span data-lang="zh">超越单次查询：通过查询规划实现多步工具检索</span>
+            </td>
+            <td><span class="pill pill-red">New</span></td>
+            <td>
+              <span data-lang="en">Iterative sub-task decomposition for tool retrieval. Agents re-query the same data sources multiple times per task — design for burst/session-style traffic, not single-call billing.</span>
+              <span data-lang="zh">工具检索的迭代子任务分解。智能体每次任务会多次查询同一数据源——为突发/会话式流量而非单次调用计费而设计。</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span data-lang="en">Towards Verifiably Safe Tool Use for LLM Agents</span>
+              <span data-lang="zh">面向 LLM 智能体的可验证安全工具使用</span>
+            </td>
+            <td><span class="pill pill-red">New</span></td>
+            <td>
+              <span data-lang="en">STPA-based hazard analysis for agent tool-use workflows. Enterprise procurement will soon require tool safety attestation — SOC-2 + sandbox isolation become the standard ask.</span>
+              <span data-lang="zh">基于 STPA 的智能体工具使用工作流危害分析。企业采购即将要求工具安全认证——SOC-2 + 沙箱隔离成为标准要求。</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
               <span data-lang="en">AutoResearchBench: Benchmarking AI Agents on Literature Discovery</span>
               <span data-lang="zh">AutoResearchBench：文献发现智能体基准测试</span>
             </td>
@@ -531,28 +603,6 @@
             <td>
               <span data-lang="en">4-stage pipeline: plan → question → web-explore → report. Web exploration is stage 3; proxy quality directly impacts output quality.</span>
               <span data-lang="zh">4 阶段流水线：规划→提问→网络探索→报告。网络探索是第 3 阶段；代理质量直接影响输出质量。</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span data-lang="en">Evolution of Agentic AI in Cybersecurity</span>
-              <span data-lang="zh">网络安全中智能体 AI 的演进</span>
-            </td>
-            <td><a href="https://arxiv.org/abs/2512.06659" target="_blank">2512.06659</a></td>
-            <td>
-              <span data-lang="en">5-gen taxonomy; attack surface of browsing agents growing — validates proxy sandboxing as a security product story.</span>
-              <span data-lang="zh">5 代分类体系；浏览智能体的攻击面持续扩大——验证了代理沙箱作为安全产品的价值叙事。</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span data-lang="en">AGNT2: Autonomous Agent Economies on Layer 2</span>
-              <span data-lang="zh">AGNT2：Layer 2 上的自主智能体经济</span>
-            </td>
-            <td><a href="https://arxiv.org/html/2604.21129v1" target="_blank">2604.21129</a></td>
-            <td>
-              <span data-lang="en">Agent-to-agent economic transactions on L2 infra — early signal for agentic commerce; future billing model implications for API vendors.</span>
-              <span data-lang="zh">L2 基础设施上的智能体间经济交易——智能体商务的早期信号；对 API 供应商未来计费模式有启示意义。</span>
             </td>
           </tr>
         </tbody>
@@ -629,8 +679,8 @@
 </div>
 
 <footer>
-  <p data-lang="en">Novada Intelligence · AI Trends Daily · Generated 2026-05-04 · Sources: Microsoft Tech Community, Versium Blog, Azure VS Blog, WorkOS, Easyship PRWeb, llm-stats.com, Anthropic Releasebot, OSSInsight, Fungies.io, Firecrawl Blog, Apify Blog, Capsolver Blog, arXiv, Hacker News</p>
-  <p data-lang="zh">Novada Intelligence · 每日 AI 趋势 · 生成日期：2026-05-04 · 来源：微软技术社区、Versium Blog、Azure VS Blog、WorkOS、Easyship PRWeb、llm-stats.com、Anthropic Releasebot、OSSInsight、Fungies.io、Firecrawl Blog、Apify Blog、Capsolver Blog、arXiv、Hacker News</p>
+  <p data-lang="en">Novada Intelligence · AI Trends Daily · Refreshed 2026-05-04 · Sources: Microsoft Tech Community, Versium Blog, Azure VS Blog, WorkOS, Easyship PRWeb, llm-stats.com, Anthropic Releasebot, OSSInsight, Fungies.io, Firecrawl Blog, Apify Blog, Capsolver Blog, arXiv (2601.12560, 2602.13559, 2603.19461, 2604.25256, 2508.12752), Hacker News</p>
+  <p data-lang="zh">Novada Intelligence · 每日 AI 趋势 · 更新日期：2026-05-04 · 来源：微软技术社区、Versium Blog、Azure VS Blog、WorkOS、Easyship PRWeb、llm-stats.com、Anthropic Releasebot、OSSInsight、Fungies.io、Firecrawl Blog、Apify Blog、Capsolver Blog、arXiv（2601.12560、2602.13559、2603.19461、2604.25256、2508.12752）、Hacker News</p>
 </footer>
 
 <script>
