@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novada Competitive Intelligence — 2026-05-07</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e6;
+    --card: #fffdf7;
+    --border: #e2d9c8;
+    --text: #2c2416;
+    --muted: #7a6e5e;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --orange: #d35400;
+    --orange-bg: #fef4ec;
+    --yellow: #b7860b;
+    --yellow-bg: #fefbec;
+    --green: #1e7e34;
+    --green-bg: #edf7f0;
+    --blue: #1a5276;
+    --blue-bg: #eaf2fb;
+    --accent: #7c4dbd;
+    --accent-light: #f0eaf9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .lang-cn { display: none; }
+  body.cn .lang-en { display: none; }
+  body.cn .lang-cn { display: block; }
+  body.cn .lang-cn-inline { display: inline; }
+  body.cn .lang-en-inline { display: none; }
+  .lang-cn-inline { display: none; }
+
+  /* ── Header ── */
+  header {
+    background: var(--text);
+    color: #f5f0e6;
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  header .brand { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; opacity: .6; }
+  header h1 { font-size: 22px; font-weight: 900; margin-top: 4px; }
+  header .meta { font-size: 12px; opacity: .55; margin-top: 2px; }
+  .lang-toggle {
+    display: flex; gap: 4px;
+  }
+  .lang-toggle button {
+    background: transparent;
+    border: 1px solid rgba(245,240,230,.35);
+    color: #f5f0e6;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .lang-toggle button.active,
+  .lang-toggle button:hover {
+    background: rgba(245,240,230,.18);
+    border-color: rgba(245,240,230,.7);
+  }
+
+  /* ── Layout ── */
+  main { max-width: 1120px; margin: 0 auto; padding: 36px 24px 60px; }
+  section { margin-bottom: 44px; }
+  h2 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Alert banners ── */
+  .alerts { display: flex; flex-direction: column; gap: 10px; }
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border-left: 4px solid;
+    font-size: 14px;
+  }
+  .alert.critical { background: var(--red-bg); border-color: var(--red); }
+  .alert.high     { background: var(--orange-bg); border-color: var(--orange); }
+  .alert.medium   { background: var(--yellow-bg); border-color: var(--yellow); }
+  .alert.low      { background: var(--green-bg); border-color: var(--green); }
+  .alert-icon { font-size: 18px; line-height: 1.4; flex-shrink: 0; }
+  .alert-body strong { font-weight: 800; }
+  .alert-body .co { font-weight: 700; color: var(--muted); font-size: 12px; margin-bottom: 1px; display: block; }
+
+  /* ── AI Insight cards ── */
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .insight-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #a06ee0);
+  }
+  .insight-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent-light);
+    line-height: 1;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+  .insight-card h3 { font-size: 14px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+  .insight-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ── Competitor cards ── */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .comp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .comp-logo {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    background: var(--accent-light);
+  }
+  .comp-name { font-weight: 900; font-size: 15px; }
+  .comp-category { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .comp-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .badge-alert  { background: var(--red-bg);    color: var(--red);    border: 1px solid #f5c6c2; }
+  .badge-active { background: var(--green-bg);  color: var(--green);  border: 1px solid #b8dfc4; }
+  .badge-watch  { background: var(--yellow-bg); color: var(--yellow); border: 1px solid #f5e0a0; }
+  .comp-updates { list-style: none; }
+  .comp-updates li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    border-bottom: 1px solid var(--bg);
+  }
+  .comp-updates li:last-child { border-bottom: none; }
+  .comp-updates li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 7px;
+  }
+  .comp-updates li strong { color: var(--text); font-weight: 700; }
+  .comp-updates li .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 8px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .tag-mcp  { background: #eaf2fb; color: #1a5276; }
+  .tag-sec  { background: var(--red-bg); color: var(--red); }
+  .tag-new  { background: var(--green-bg); color: var(--green); }
+  .tag-dep  { background: var(--yellow-bg); color: var(--yellow); }
+  .tag-acq  { background: var(--accent-light); color: var(--accent); }
+  .tag-win  { background: #edf7f0; color: #1e7e34; }
+  .tag-brk  { background: var(--red-bg); color: var(--red); border: 1px solid #f5c6c2; }
+
+  /* ── MCP table ── */
+  .mcp-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mcp-table th {
+    background: var(--text);
+    color: #f5f0e6;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 11px 16px;
+    text-align: left;
+  }
+  .mcp-table td {
+    padding: 11px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .mcp-table tr:last-child td { border-bottom: none; }
+  .mcp-table tr:hover td { background: var(--bg); }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-green  { background: #27ae60; }
+  .dot-yellow { background: #f39c12; }
+  .dot-red    { background: #c0392b; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 28px 24px 40px;
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+  ⚠️ INTERNAL USE ONLY — DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+</div>
+
+<header>
+  <div>
+    <div class="brand">Novada Labs</div>
+    <h1>
+      <span class="lang-en-inline">Competitive Intelligence</span>
+      <span class="lang-cn-inline">竞争情报</span>
+    </h1>
+    <div class="meta">
+      <span class="lang-en-inline">Daily Report — 2026-05-07</span>
+      <span class="lang-cn-inline">每日报告 — 2026-05-07</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('cn')">中文</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ALERTS -->
+  <section>
+    <h2>
+      <span class="lang-en">Alerts</span>
+      <span class="lang-cn">警报</span>
+    </h2>
+    <div class="alerts">
+
+      <div class="alert critical">
+        <div class="alert-icon">🔴</div>
+        <div class="alert-body">
+          <span class="co">Firecrawl</span>
+          <div class="lang-en"><strong>CRITICAL — <code>/extract</code> endpoint deprecated in JS + Python SDKs.</strong> The <code>extract()</code> method is now marked deprecated across both SDKs; all extraction routes through <code>/agent</code> (Spark models). Developers learning Firecrawl today will build on the intent-driven <code>/agent</code> paradigm — not URL-in/schema-out. Any product still presenting a legacy extract-style API must reframe positioning immediately or be seen as a generation behind.</div>
+          <div class="lang-cn"><strong>严重 — Firecrawl <code>/extract</code> 端点在 JS + Python SDK 中已废弃。</strong> 两个 SDK 中的 <code>extract()</code> 方法均已标记为废弃；所有提取操作现在通过 <code>/agent</code>（Spark 模型）路由。今天学习 Firecrawl 的开发者将基于意图驱动的 <code>/agent</code> 范式构建——而非"URL 输入/Schema 输出"模式。任何仍在推广传统提取式 API 的产品必须立即重新定位，否则将被视为落后一代。</div>
+        </div>
+      </div>
+
+      <div class="alert high">
+        <div class="alert-icon">🟠</div>
+        <div class="alert-body">
+          <span class="co">BrightData</span>
+          <div class="lang-en"><strong>HIGH — BrightData publishing 3+ Claude-specific integration guides this week.</strong> "Claude Agent SDK + Web MCP", "Claude Code + Web MCP", "Claude Desktop + Web MCP", and "Claude Skills + Web MCP" published in rapid succession. Each is a standalone SEO page targeting "[Claude tool] + web data" queries — exactly the searches Novada's target developer runs. BrightData's MCP is live; novada-proxy is pending. Every day of delay cedes this SEO and developer mindshare ground.</div>
+          <div class="lang-cn"><strong>高危 — BrightData 本周发布 3+ 个 Claude 专项集成指南。</strong> "Claude Agent SDK + Web MCP"、"Claude Code + Web MCP"、"Claude Desktop + Web MCP" 和 "Claude Skills + Web MCP" 密集发布。每篇指南都是针对"[Claude 工具] + 网络数据"查询的独立 SEO 页面——正是 Novada 目标开发者会搜索的内容。BrightData 的 MCP 已上线；novada-proxy 仍在等待审批。每延误一天，都在拱手相让这片 SEO 和开发者心智阵地。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Firecrawl</span>
+          <div class="lang-en"><strong>MEDIUM — Skill package live: Claude Code, Codex, OpenCode invoke Firecrawl via <code>skill://</code> with zero MCP config.</strong> The new skill:// package is self-contained and discoverable by agent runtimes — a developer can add Firecrawl in under 30 seconds with no configuration file edits. Novada has no equivalent distribution channel. This is a new category of frictionless adoption that directly competes for developer attention before they reach the MCP config step.</div>
+          <div class="lang-cn"><strong>中危 — Skill 包上线：Claude Code、Codex、OpenCode 通过 <code>skill://</code> 零配置调用 Firecrawl。</strong> 新的 skill:// 包自包含且可被 Agent 运行时自动发现——开发者无需编辑任何配置文件，30 秒内即可添加 Firecrawl。Novada 目前没有等效分发渠道。这是一种全新的无摩擦采用方式，直接在开发者接触 MCP 配置步骤之前抢占其注意力。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Exa</span>
+          <div class="lang-en"><strong>MEDIUM — Exa 2.0 fully stable with sub-350 ms Fast search.</strong> Three-tier architecture confirmed GA: Fast (&lt;350 ms P50, 30 % faster than next-fastest API), Auto (higher default quality), Deep (agentic, 3.5 s P50). Index refreshed every minute. May 2026 breaking deprecations from yesterday are still active — audit any Exa API calls immediately.</div>
+          <div class="lang-cn"><strong>中危 — Exa 2.0 完全稳定，Fast 搜索低于 350ms。</strong> 三层架构确认 GA：Fast（&lt;350ms P50，比次快 API 快 30%），Auto（默认质量提升），Deep（智能体，3.5s P50）。索引每分钟刷新。昨日 5 月 2026 破坏性废弃仍然有效——请立即审查所有 Exa API 调用。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Tavily</span>
+          <div class="lang-en"><strong>MEDIUM — Tavily at IBM THINK (May 4–7, Boston); April shipped events, not features.</strong> Post-acquisition GTM is clearly enterprise-first: Fortune 500 conferences, Nebius AMA, LangSmith Fleet demos — zero product feature announcements in April. This is a structural opening: Tavily's historic developer-first segment is temporarily under-invested while the team repositions upmarket under Nebius.</div>
+          <div class="lang-cn"><strong>中危 — Tavily 参加 IBM THINK（5 月 4–7 日，波士顿）；4 月交付了活动而非产品特性。</strong> 收购后的 GTM 明显以企业为先：财富 500 强会议、Nebius AMA、LangSmith Fleet 演示——4 月零产品功能公告。这是一个结构性机会：Tavily 历史上的开发者优先细分市场正处于阶段性投入不足，团队正在 Nebius 旗下向上市场重新定位。</div>
+        </div>
+      </div>
+
+      <div class="alert low">
+        <div class="alert-icon">🟢</div>
+        <div class="alert-body">
+          <span class="co">Crawl4AI</span>
+          <div class="lang-en"><strong>LOW — Still at v0.8.6; crash recovery + prefetch mode documented, not yet released.</strong> Stable post-patch phase continues. Next features (crash recovery for deep crawls, prefetch URL discovery mode) documented in changelog but no v0.8.7 tag yet. 62,300+ GitHub stars.</div>
+          <div class="lang-cn"><strong>低危 — 仍在 v0.8.6；崩溃恢复 + 预取模式已文档化，尚未发布。</strong> 稳定的补丁后阶段继续。下一批特性（深度爬取崩溃恢复、URL 预取发现模式）已在更新日志中记录，但尚无 v0.8.7 标签。GitHub 超 62,300 颗星。</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AI INSIGHTS -->
+  <section>
+    <h2>
+      <span class="lang-en">AI Insights</span>
+      <span class="lang-cn">AI 洞察</span>
+    </h2>
+    <div class="insight-grid">
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('firecrawl-extract-deprecation-resets-the-api-conversation.md', '# Firecrawl /extract Deprecation Resets the Extraction API Conversation\n\nMoving from /extract (URL-in, schema-out) to /agent (intent-in, results-out) is a paradigm shift, not just a rename. Developers building new integrations today will learn the /agent mental model first — describe what you need, let the AI find and extract it. The JS and Python SDK extract() methods are now deprecated, so any tutorial, quickstart, or sample code that references /extract is pointing to a dead end.\n\nFor Novada, the urgency is this: novada-search\'s Extract endpoint is pending infra activation. If it ships as a traditional URL-in/schema-out endpoint without agent-style intent support, Novada will be presenting 2025 UX to a 2026 developer audience that has been trained on /agent. At minimum, the Extract endpoint should be framed relative to Firecrawl\'s /agent — either as a deliberate complement (structured, deterministic, auditable) or as a stepping stone toward an agent-first design.\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">01</div>
+        <div class="lang-en">
+          <h3>Firecrawl's /extract Deprecation Resets the Extraction API Conversation</h3>
+          <p>Moving from <code>/extract</code> (URL-in, schema-out) to <code>/agent</code> (intent-in, results-out) is a paradigm shift. Developers building integrations today learn the <code>/agent</code> mental model first — the AI decides where to look. SDK <code>extract()</code> methods are deprecated across JS and Python, so any tutorial referencing <code>/extract</code> is a dead end. For Novada, this means the Extract endpoint (pending infra activation) must be positioned deliberately: either as a structured, deterministic complement to <code>/agent</code>, or redesigned as agent-first. Shipping URL-in/schema-out in May 2026 without a clear narrative is a positioning risk, not a gap.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Firecrawl /extract 废弃重置了提取 API 对话</h3>
+          <p>从 <code>/extract</code>（URL 输入/Schema 输出）到 <code>/agent</code>（意图输入/结果输出）是范式转变，而非简单的更名。今天构建集成的开发者首先学习 <code>/agent</code> 思维模型——AI 决定去哪里查找。JS 和 Python SDK 的 <code>extract()</code> 方法均已废弃，任何引用 <code>/extract</code> 的教程都是死路。对 Novada 而言，这意味着待激活的 Extract 端点必须有意识地定位：要么作为 <code>/agent</code> 的结构化、确定性补充，要么重新设计为 Agent 优先。在 2026 年 5 月发布无明确叙事的 URL 输入/Schema 输出是定位风险，而非功能缺口。</p>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('brightdata-claude-blitz-is-a-distribution-strategy.md', '# BrightData\'s Claude Content Blitz Is a Distribution Strategy, Not Just Marketing\n\nPublishing "Claude Agent SDK + Web MCP", "Claude Code + Web MCP", "Claude Desktop + Web MCP", and "Claude Skills + Web MCP" guides in quick succession is a systematic play to own the SEO surface area for the query pattern "[Claude tool] + web data." This is the exact search that Novada\'s target developer runs when evaluating web data options inside their Claude workflow.\n\nBrightData\'s MCP is already published and functional. Every guide they publish while novada-proxy is pending approval is a compounding distribution advantage: the guide ranks, the developer lands, signs up, and forms a product habit. By the time novada-proxy ships, many of these developers will already be integrated with BrightData and have no motivation to switch unless Novada offers a clear reason to.\n\nThe response is not to out-publish BrightData on volume — they have a larger content team. The response is to publish one high-signal piece first: a focused "Novada Proxy + Claude Code" guide that emphasises the agent-first, MCP-native differentiator and targets the specific developer segment BrightData\'s guides don\'t speak to directly (developers building on novada-search\'s integrated stack).\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">02</div>
+        <div class="lang-en">
+          <h3>BrightData's Claude Content Blitz Is a Distribution Strategy, Not Just Marketing</h3>
+          <p>Publishing "Claude Agent SDK + Web MCP", "Claude Code + Web MCP", "Claude Desktop + Web MCP", and "Claude Skills + Web MCP" guides in rapid succession is a systematic play to own the SEO surface area for "<em>[Claude tool] + web data</em>" — precisely the queries Novada's target developer runs. BrightData's MCP is live; novada-proxy is pending. Every published guide is a compounding head start: the developer lands, integrates, forms a product habit, and has no reason to switch. The counter-move is not to out-publish them on volume — it's to publish one high-signal piece the day novada-proxy ships: a "Novada Proxy + Claude Code" guide targeting the agent-native angle BrightData can't credibly claim.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>BrightData 的 Claude 内容闪电战是分发策略，不只是营销</h3>
+          <p>密集发布"Claude Agent SDK + Web MCP"、"Claude Code + Web MCP"等指南，是一个系统性占领"<em>[Claude 工具] + 网络数据</em>"搜索词 SEO 阵地的策略——正是 Novada 目标开发者会搜索的内容。BrightData 的 MCP 已上线；novada-proxy 仍在等待。每篇发布的指南都是复利先发优势：开发者落地、集成、形成产品习惯，之后没有理由切换。反制不是以量取胜，而是在 novada-proxy 上线当天发布一篇高信号文章：一份聚焦 Agent 原生优势的"Novada Proxy + Claude Code"指南——这是 BrightData 无法可信声称的差异点。</p>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('tavily-enterprise-pivot-opens-developer-search-market.md', '# Tavily\'s Enterprise Pivot Under Nebius Opens the Developer-First Search Market\n\nTavily\'s April 2026 update was events, conferences, and AMAs — not product features. IBM THINK attendance (May 4–7) confirms that Nebius is steering Tavily toward Fortune 500 enterprise accounts. This is rational for a company acquired for $275–400M that needs to justify the price via enterprise ARR — but it means Tavily\'s historic developer-first segment (self-serve, affordable, quick integration) is temporarily under-invested.\n\nThe timing is significant: this is the same window during which novada-search is activating its Search endpoint. If novada-search ships with a transparent pricing page, a fast-start guide, and a clear MCP-native narrative before Tavily re-engages its developer community, Novada has a genuine opportunity to capture the organic developer traffic Tavily built its brand on. Tavily\'s 3M+ monthly SDK downloads did not come from IBM — they came from developers who wanted a fast, affordable, no-friction search API. That appetite hasn\'t gone away.\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">03</div>
+        <div class="lang-en">
+          <h3>Tavily's Enterprise Pivot Opens the Developer-First Search Market</h3>
+          <p>Tavily's April 2026 shipped events, conferences, and Nebius AMAs — not product features. IBM THINK attendance confirms the post-acquisition GTM is enterprise-first. This is rational for a $275–400 M acquisition justifying itself via Fortune 500 ARR — but it means Tavily's historic developer-first segment (self-serve, affordable, fast integration) is under-invested right now. This window aligns exactly with when novada-search should be activating its Search endpoint. Tavily's 3 M+ monthly downloads came from developers who wanted a fast, no-friction search API — not from IBM. That demand still exists and has nowhere to go while Tavily is upmarket.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Tavily 企业化转型为开发者优先搜索市场打开了窗口</h3>
+          <p>Tavily 2026 年 4 月交付的是活动、会议和 Nebius AMA——而非产品特性。IBM THINK 出席证实了收购后 GTM 以企业为先。这对于一个需要通过财富 500 强 ARR 证明自身价值的 2.75–4 亿美元收购来说是合理的——但这意味着 Tavily 历史上的开发者优先细分市场（自助服务、价格实惠、快速集成）目前投入不足。这个时间窗口与 novada-search 应该激活 Search 端点的时机完全重合。Tavily 每月 300 万+次下载来自想要快速、无摩擦搜索 API 的开发者——而不是来自 IBM。这种需求依然存在，在 Tavily 专注企业市场期间无处释放。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPETITOR CARDS -->
+  <section>
+    <h2>
+      <span class="lang-en">Competitor Updates</span>
+      <span class="lang-cn">竞品动态</span>
+    </h2>
+    <div class="comp-grid">
+
+      <!-- Firecrawl -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔥</div>
+          <div>
+            <div class="comp-name">Firecrawl</div>
+            <div class="comp-category lang-en">Web Scraping API</div>
+            <div class="comp-category lang-cn">网页抓取 API</div>
+          </div>
+          <span class="comp-badge badge-alert">Action needed</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>/extract deprecated</strong>: JS + Python SDK <code>extract()</code> marked deprecated; all extraction routes through <code>/agent</code> (Spark models). Intent-driven paradigm now default. <span class="tag tag-brk">BREAKING</span></li>
+          <li class="lang-cn"><strong>/extract 已废弃</strong>：JS + Python SDK <code>extract()</code> 标记废弃；所有提取通过 <code>/agent</code>（Spark 模型）路由。意图驱动范式成为默认。<span class="tag tag-brk">破坏性</span></li>
+          <li class="lang-en"><strong>Firecrawl CLI</strong>: full command support — <code>scrape</code>, <code>search</code>, <code>crawl</code>, <code>map</code> — terminal-native access, no SDK required <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Firecrawl CLI</strong>：完整命令支持——<code>scrape</code>、<code>search</code>、<code>crawl</code>、<code>map</code>——终端原生访问，无需 SDK <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>skill:// package</strong>: zero-config Claude Code / Codex / OpenCode invocation; self-contained, auto-discoverable by agent runtimes <span class="tag tag-mcp">MCP</span> <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>skill:// 包</strong>：Claude Code/Codex/OpenCode 零配置调用；自包含，可被 Agent 运行时自动发现 <span class="tag tag-mcp">MCP</span> <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>GET /v2/team/activity</strong>: lists recent scrape/crawl/extract jobs with cursor pagination (last 24 h, 100/page, filterable) <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>GET /v2/team/activity</strong>：列出近期 scrape/crawl/extract 任务，游标分页（24h，100/页，可过滤）<span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Spark 1 Fast in Playground</strong>: instant retrieval model now publicly testable; Spark 1 Mini (−60 % vs Pro) + Spark 1 Pro (multi-domain) remain stable</li>
+          <li class="lang-cn"><strong>Spark 1 Fast 进入 Playground</strong>：即时检索模型现可公开测试；Spark 1 Mini（较 Pro 降 60%）+ Spark 1 Pro（多域）保持稳定</li>
+        </ul>
+      </div>
+
+      <!-- Tavily -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔍</div>
+          <div>
+            <div class="comp-name">Tavily</div>
+            <div class="comp-category lang-en">Search API (Nebius)</div>
+            <div class="comp-category lang-cn">搜索 API（Nebius 旗下）</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>IBM THINK (May 4–7, Boston)</strong>: Tavily team present; post-Nebius GTM clearly enterprise-first, not developer-self-serve</li>
+          <li class="lang-cn"><strong>IBM THINK（5 月 4–7 日，波士顿）</strong>：Tavily 团队出席；后 Nebius GTM 明显以企业为先，非开发者自助</li>
+          <li class="lang-en"><strong>April 2026 shipped</strong>: LangSmith Fleet demo, Deep Research UI, AMA with Nebius — events, not features. No product announcements.</li>
+          <li class="lang-cn"><strong>2026 年 4 月交付</strong>：LangSmith Fleet 演示、深度研究 UI、Nebius AMA——活动而非功能。无产品公告。</li>
+          <li class="lang-en"><strong>Cursor MCP marketplace</strong>: Tavily listed live — no new updates this week</li>
+          <li class="lang-cn"><strong>Cursor MCP 市场</strong>：Tavily 已上线——本周无新更新</li>
+          <li class="lang-en">Acquired by Nebius for $275 M (up to $400 M); Nvidia AI-Q Blueprint integration; 3 M+ monthly SDK downloads <span class="tag tag-acq">ACQ</span></li>
+          <li class="lang-cn">Nebius 以 2.75 亿美元（最高 4 亿）收购；Nvidia AI-Q Blueprint 集成；月 SDK 下载量 300 万+ <span class="tag tag-acq">收购</span></li>
+        </ul>
+      </div>
+
+      <!-- BrightData -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">💡</div>
+          <div>
+            <div class="comp-name">BrightData</div>
+            <div class="comp-category lang-en">Proxy + Scraping</div>
+            <div class="comp-category lang-cn">代理 + 抓取</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Claude ecosystem blitz</strong>: "Claude Agent SDK + Web MCP", "Claude Code + Web MCP", "Claude Desktop + Web MCP", "Claude Skills + Web MCP" guides published this week <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Claude 生态闪电战</strong>："Claude Agent SDK + Web MCP"、"Claude Code + Web MCP"、"Claude Desktop + Web MCP"、"Claude Skills + Web MCP" 指南本周发布 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>60+ MCP tools</strong>: geo-specific content, CAPTCHA auto-solve, anti-bot bypass, social scrapers — all in a single Web MCP call</li>
+          <li class="lang-cn"><strong>60+ MCP 工具</strong>：地理定向内容、CAPTCHA 自动解决、反爬绕过、社交媒体爬虫——单次 Web MCP 调用全覆盖</li>
+          <li class="lang-en"><strong>HTML → Markdown conversion</strong>: now in both API and native proxy interfaces — LLM-ready output <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>HTML → Markdown 转换</strong>：现在 API 和原生代理接口中均可用——LLM 就绪输出 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Free MCP tier</strong>: one-click setup for Claude Desktop, Cursor, VS Code — no credit card; clear developer acquisition play</li>
+          <li class="lang-cn"><strong>免费 MCP 层</strong>：Claude Desktop、Cursor、VS Code 一键设置——无需信用卡；明确的开发者获客策略</li>
+          <li class="lang-en"><strong>RFC 9209 migration</strong>: legacy error headers deprecated; proxy error responses now RFC 9209 standard <span class="tag tag-dep">DEPRECATED</span></li>
+          <li class="lang-cn"><strong>RFC 9209 迁移</strong>：旧版错误头已废弃；代理错误响应现符合 RFC 9209 标准 <span class="tag tag-dep">废弃</span></li>
+        </ul>
+      </div>
+
+      <!-- Oxylabs -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🧪</div>
+          <div>
+            <div class="comp-name">Oxylabs</div>
+            <div class="comp-category lang-en">Proxy</div>
+            <div class="comp-category lang-cn">代理</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Self-service ISP proxies launched</strong>: $1.60/IP — no sales call required. Significant friction reduction for SMB and developer buyers <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>自助 ISP 代理上线</strong>：$1.60/IP——无需销售通话。大幅降低中小企业和开发者购买门槛 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Self-healing parser presets</strong>: Web Scraper API auto-adapts when target site structure changes — reduces long-run maintenance <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>自愈解析器预设</strong>：目标站点结构变化时 Web Scraper API 自动适配——降低长期维护成本 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>PAYG mobile proxies removed</strong> (March 2026): subscription-only; Micro $99/mo ($7.75/GB, 13 GB), Starter $300/mo ($7.50/GB, 40 GB) <span class="tag tag-dep">CHANGED</span></li>
+          <li class="lang-cn"><strong>移动代理按需付费下线</strong>（2026 年 3 月）：仅保留订阅制；Micro $99/月（$7.75/GB，13 GB），Starter $300/月（$7.50/GB，40 GB）<span class="tag tag-dep">变更</span></li>
+          <li class="lang-en"><strong>AI Web Unblocker</strong> (Q1 2026): Cloudflare/Akamai/Kasada auto-handled; −43 % block rate; ML-driven ASN-matching IP rotation</li>
+          <li class="lang-cn"><strong>AI 解封器</strong>（2026 Q1）：自动处理 Cloudflare/Akamai/Kasada；封锁率降低 43%；ML 驱动 ASN 匹配 IP 轮换</li>
+        </ul>
+      </div>
+
+      <!-- Decodo -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔷</div>
+          <div>
+            <div class="comp-name">Decodo</div>
+            <div class="comp-category lang-en">Proxy (formerly Smartproxy)</div>
+            <div class="comp-category lang-cn">代理（原 Smartproxy）</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>No new announcements this week</strong> — brand fully settled as Decodo (rebranded July 2025). Quiet week.</li>
+          <li class="lang-cn"><strong>本周无新公告</strong>——品牌已完全稳定为 Decodo（2025 年 7 月更名）。平静一周。</li>
+          <li class="lang-en"><strong>AI Parser GA</strong>: auto-cleans and formats scraped data; "no post-processing required" positioning</li>
+          <li class="lang-cn"><strong>AI 解析器 GA</strong>：自动清洗格式化抓取数据；"零后处理"定位</li>
+          <li class="lang-en"><strong>Universal Scraper</strong>: real-time extraction from JS-heavy sites; no-code/low-code target segment</li>
+          <li class="lang-cn"><strong>Universal Scraper</strong>：实时抓取 JS 密集页面；面向无代码/低代码用户群</li>
+          <li class="lang-en"><strong>PAYG mobile proxies removed</strong> (March 2026) — subscription-only <span class="tag tag-dep">CHANGED</span></li>
+          <li class="lang-cn"><strong>移动代理按需付费下线</strong>（2026 年 3 月）— 仅保留订阅制 <span class="tag tag-dep">变更</span></li>
+          <li class="lang-en">125 M+ IPs, 195+ countries, 135,000+ clients. Promo: <strong>DECODO30</strong> (30 % off)</li>
+          <li class="lang-cn">195+ 国家 1.25 亿+ IP；135,000+ 客户；优惠码：<strong>DECODO30</strong>（7 折）</li>
+        </ul>
+      </div>
+
+      <!-- Crawl4AI -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🕷️</div>
+          <div>
+            <div class="comp-name">Crawl4AI</div>
+            <div class="comp-category lang-en">Open-Source Crawler</div>
+            <div class="comp-category lang-cn">开源爬虫</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>v0.8.6 still current</strong>; crash recovery for deep crawls + prefetch URL discovery mode documented — no v0.8.7 tag yet; 62,300+ GitHub stars</li>
+          <li class="lang-cn"><strong>v0.8.6 仍为当前版本</strong>；深度爬取崩溃恢复 + 预取 URL 发现模式已文档化——尚无 v0.8.7 标签；GitHub 超 62,300 颗星</li>
+          <li class="lang-en"><strong>Supply chain context</strong> (Mar 24): litellm PyPI compromised by TeamPCP; Crawl4AI forked to <code>unclecode-litellm</code> same day <span class="tag tag-sec">SEC</span></li>
+          <li class="lang-cn"><strong>供应链背景</strong>（3 月 24 日）：litellm PyPI 被 TeamPCP 入侵；Crawl4AI 当天分叉至 <code>unclecode-litellm</code> <span class="tag tag-sec">安全</span></li>
+          <li class="lang-en"><strong>Built-in MCP server</strong> (since v0.8): Claude Code compatible; Docker deployments hardened; 7+ community forks <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>内置 MCP 服务器</strong>（自 v0.8）：兼容 Claude Code；Docker 部署已加固；7+ 社区分支 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <!-- Exa -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">⚡</div>
+          <div>
+            <div class="comp-name">Exa</div>
+            <div class="comp-category lang-en">Neural Search</div>
+            <div class="comp-category lang-cn">神经搜索</div>
+          </div>
+          <span class="comp-badge badge-alert">Action needed</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Exa 2.0 fully stable</strong>: Fast (&lt;350 ms P50, 30 % faster than next API), Auto (higher default quality), Deep (agentic, 3.5 s P50). Index refreshed every minute. <span class="tag tag-new">GA</span></li>
+          <li class="lang-cn"><strong>Exa 2.0 完全稳定</strong>：Fast（&lt;350ms P50，比次快 API 快 30%）、Auto（默认质量提升）、Deep（智能体，3.5s P50）。索引每分钟刷新。<span class="tag tag-new">GA</span></li>
+          <li class="lang-en"><strong>May 2026 deprecations STILL ACTIVE</strong>: <code>use_autoprompt</code> removed, <code>highlights</code> removed from SDKs (JS ≥2.0.11 only), Auto relevance scores deprecated <span class="tag tag-brk">BREAKING</span></li>
+          <li class="lang-cn"><strong>5 月废弃仍在生效</strong>：<code>use_autoprompt</code> 已移除，<code>highlights</code> 从 SDK 删除（仅 JS ≥2.0.11），Auto 相关性评分废弃 <span class="tag tag-brk">破坏性</span></li>
+          <li class="lang-en"><strong>MCP server (free tier)</strong>: no API key required up to rate limit; powers Cursor IDE <code>@web</code> semantic search <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>MCP 服务器（免费层）</strong>：达到速率限制前无需 API Key；驱动 Cursor IDE <code>@web</code> 语义搜索 <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en"><strong>$85 M Series B</strong> (Benchmark-led); query-dependent highlights for 50–75 % token savings; tens of billions of pages indexed</li>
+          <li class="lang-cn"><strong>8500 万美元 B 轮</strong>（Benchmark 领投）；查询相关摘要节省 50–75% token；数百亿页面已建索引</li>
+        </ul>
+      </div>
+
+      <!-- Apify -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🤖</div>
+          <div>
+            <div class="comp-name">Apify</div>
+            <div class="comp-category lang-en">Scraping Platform</div>
+            <div class="comp-category lang-cn">抓取平台</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>SSE fully removed</strong> (April 1 deadline passed): all clients must use Streamable HTTP via mcp.apify.com — no SSE fallback remains <span class="tag tag-dep">DEPRECATED</span></li>
+          <li class="lang-cn"><strong>SSE 完全移除</strong>（4 月 1 日截止已过）：所有客户端必须通过 mcp.apify.com 使用 Streamable HTTP——无 SSE 回退 <span class="tag tag-dep">废弃</span></li>
+          <li class="lang-en"><strong>Actor schema support</strong> (Jan 2026): enforce schemas for Actor outputs, datasets, web server responses, key-value stores — structured data guarantees across Actor marketplace <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Actor 模式支持</strong>（2026 年 1 月）：对 Actor 输出、数据集、Web 响应、键值存储强制模式——Actor 市场结构化数据保证 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Limited vs. Full permissions</strong>: mobile-style least-privilege model; secure-by-default for all new Actors</li>
+          <li class="lang-cn"><strong>有限/完整权限</strong>：移动端式最小权限模型；所有新 Actor 默认安全</li>
+          <li class="lang-en"><strong>State of Web Scraping 2026</strong>: 65.8 % increased proxy usage YoY; 62.5 % higher infra spend; 46.7 % use internal code only</li>
+          <li class="lang-cn"><strong>2026 年网络爬虫现状</strong>：代理使用量同比增 65.8%；基础设施支出同比增 62.5%；46.7% 仅用内部代码</li>
+          <li class="lang-en">80+ MCP servers via ApifyForge; RAG Web Browser Actor for LLM/RAG pipelines; Cursor AI references Apify docs natively <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">ApifyForge 提供 80+ MCP 服务器；RAG Web Browser Actor 用于 LLM/RAG 管道；Cursor AI 原生引用 Apify 文档 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCP ECOSYSTEM -->
+  <section>
+    <h2>
+      <span class="lang-en">MCP Ecosystem</span>
+      <span class="lang-cn">MCP 生态</span>
+    </h2>
+    <table class="mcp-table">
+      <thead>
+        <tr>
+          <th><span class="lang-en">Server</span><span class="lang-cn">服务器</span></th>
+          <th><span class="lang-en">Status</span><span class="lang-cn">状态</span></th>
+          <th><span class="lang-en">Notable</span><span class="lang-cn">亮点</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Firecrawl MCP + Skill</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (v3, updated May 5 2026)</span><span class="lang-cn">活跃（v3，2026 年 5 月 5 日更新）</span></td>
+          <td><span class="lang-en">skill:// zero-config invocation; firecrawl_agent + firecrawl_agent_status; CLI (scrape/search/crawl/map); /extract deprecated → /agent</span><span class="lang-cn">skill:// 零配置调用；firecrawl_agent + firecrawl_agent_status；CLI；/extract 废弃 → /agent</span></td>
+        </tr>
+        <tr>
+          <td><strong>BrightData MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (v2.8.3) — #1 in 250-agent benchmark</span><span class="lang-cn">活跃（v2.8.3）— 250 代理基准第一</span></td>
+          <td><span class="lang-en">60+ tools; Claude ecosystem guides blitz this week; HTML→Markdown; free tier; CAPTCHA auto-solve</span><span class="lang-cn">60+ 工具；本周 Claude 生态指南闪电战；HTML→Markdown；免费层；CAPTCHA 自动解决</span></td>
+        </tr>
+        <tr>
+          <td><strong>Crawl4AI MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Built-in since v0.8 (v0.8.6 current)</span><span class="lang-cn">自 v0.8 内置（当前 v0.8.6）</span></td>
+          <td><span class="lang-en">Self-hosted, free; Docker hardened; Claude Code compatible; 7+ forks; v0.8.7 (crash recovery, prefetch) pending</span><span class="lang-cn">自托管免费；Docker 加固；兼容 Claude Code；7+ 分支；v0.8.7 待发布</span></td>
+        </tr>
+        <tr>
+          <td><strong>Apify MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (Streamable HTTP only — SSE fully removed Apr 1)</span><span class="lang-cn">活跃（仅 Streamable HTTP——4 月 1 日 SSE 完全移除）</span></td>
+          <td><span class="lang-en">mcp.apify.com configurator; 80+ actors; Actor schema support; SEP-2640 Skills PR under review</span><span class="lang-cn">mcp.apify.com 配置器；80+ Actors；Actor 模式支持；SEP-2640 Skills PR 审查中</span></td>
+        </tr>
+        <tr>
+          <td><strong>Exa MCP</strong></td>
+          <td><span class="dot dot-red"></span><span class="lang-en">Active — ⚠ May 2026 deprecations LIVE</span><span class="lang-cn">活跃 — ⚠ 5 月废弃已生效</span></td>
+          <td><span class="lang-en">Fast/Auto/Deep tiers GA; free tier (no API key); highlights removed; use_autoprompt gone; Auto relevance deprecated</span><span class="lang-cn">Fast/Auto/Deep 层级 GA；免费层（无需 API Key）；highlights 已移除；use_autoprompt 已删除；Auto 相关性废弃</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tavily MCP</strong></td>
+          <td><span class="dot dot-yellow"></span><span class="lang-en">Active (Cursor marketplace listed) — no updates this week</span><span class="lang-cn">活跃（Cursor 市场已上线）— 本周无更新</span></td>
+          <td><span class="lang-en">Post-acquisition; enterprise GTM focus (IBM THINK); developer community under-invested currently</span><span class="lang-cn">收购后；企业 GTM 重点（IBM THINK）；开发者社区目前投入不足</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px; font-size:12px; color:var(--muted);">
+      <span class="lang-en">Ecosystem: <strong>10,000+ public MCP servers</strong> · 97 M+ monthly SDK downloads · Linux Foundation Agentic AI Foundation governance (Apr 2026) · Amazon AWS, OpenAI, Google DeepMind native MCP. <strong>SEP-2640 Skills extension</strong> (<code>skill://</code> URIs as discoverable MCP resources) under active spec review — Firecrawl already shipping compatible invocation.</span>
+      <span class="lang-cn">生态：超过 <strong>1 万个</strong>公开 MCP 服务器 · 月 SDK 下载量 9700 万+ · Linux Foundation Agentic AI Foundation 治理（2026 年 4 月）· 亚马逊 AWS、OpenAI、Google DeepMind 均已原生支持 MCP。<strong>SEP-2640 Skills 扩展</strong>（<code>skill://</code> URI 作为可发现 MCP 资源）正在接受规范审查——Firecrawl 已率先发布兼容实现。</span>
+    </p>
+  </section>
+
+  <!-- NOVADA TEAM BRIEF -->
+  <section>
+    <h2><span class="lang-en">Novada Team Brief</span><span class="lang-cn">Novada 团队简报</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;margin-top:-8px;">Novada-specific angles on today's intel. Open in browser and click 💾 Save .md to export any insight to your workspace.</p>
+    <div class="insight-grid">
+
+      <!-- Card 01: BLIND SPOT -->
+      <div class="insight-card" style="border-left-color:#c0392b;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">01</div>
+            <span style="background:#f0eaf9;color:#7c4dbd;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">BLIND SPOT</span>
+          </div>
+          <button onclick="saveInsightMd('firecrawl-skill-zero-config-novada-has-no-equivalent.md','# Firecrawl\'s skill:// Package Is a Zero-Config Distribution Win Novada Can\'t Match Yet\n\nFirecrawl\'s new Skill package lets Claude Code, Codex, and OpenCode invoke scraping autonomously via `skill://` — no MCP config, no API setup, no config file edits. A developer can add Firecrawl in under 30 seconds. Novada\'s MCP requires manual configuration. This isn\'t a feature gap; it\'s a developer acquisition gap. Firecrawl is removing all adoption friction from the path of the exact user segment Novada needs.\n\nThe skill:// mechanism is also directionally aligned with SEP-2640 (the in-review MCP Skills extension), meaning Firecrawl is effectively shaping the emerging standard while Novada watches from the outside. By the time novada-search or novada-proxy is published as an MCP server, Firecrawl will have weeks of head start in developer habit formation.\n\n**This week →** Investigate Claude Code\'s skill:// invocation mechanism. File a KR-3 story to ship a Novada Skill package alongside the Claude Plugin publish. Even a minimal novada_search skill:// that wraps the Search endpoint would close this gap and signal Novada\'s agent-first commitment.\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Firecrawl's skill:// Package Is a Zero-Config Distribution Win Novada Can't Match Yet</h3>
+        <p>Firecrawl's new Skill package lets Claude Code, Codex, and OpenCode invoke scraping via <code>skill://</code> — no config files, no API setup, under 30 seconds to add. Novada's MCP requires manual configuration. This is a developer acquisition gap, not a feature gap: Firecrawl is eliminating all adoption friction on the exact user segment Novada needs. The <code>skill://</code> mechanism also aligns with SEP-2640 (in-review MCP Skills extension), meaning Firecrawl is shaping the emerging standard from the inside.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #c0392b;"><strong>This week →</strong> Investigate Claude Code's skill:// mechanism. File a KR-3 story to ship a Novada Skill package alongside the Claude Plugin publish. Even a minimal novada_search skill:// wrapping the Search endpoint closes this gap and signals agent-first commitment.</div>
+      </div>
+
+      <!-- Card 02: ACTION -->
+      <div class="insight-card" style="border-left-color:#c0392b;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">02</div>
+            <span style="background:#fdf0ee;color:#c0392b;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">ACTION</span>
+          </div>
+          <button onclick="saveInsightMd('firecrawl-deprecated-extract-novada-extract-needs-reframing.md','# Firecrawl Deprecated /extract — Novada\'s Extract Endpoint Needs Reframing Before It Ships\n\nFirecrawl\'s /extract endpoint is deprecated in both JS and Python SDKs; all extraction now routes through /agent (Spark models). The successor is intent-driven: describe what you need, the AI finds and extracts it — no URL required. novada-search has its own Extract endpoint that is pending infra activation.\n\nThe risk: if novada-search\'s Extract ships as a traditional URL-in/schema-out endpoint without an agent-style intent layer, Novada will be presenting 2025 UX to a 2026 developer audience that has been trained on /agent. This is a positioning problem even if the underlying quality is competitive.\n\nThe opportunity: there is a legitimate case that structured, deterministic, auditable extraction (URL-in/schema-out) is a deliberate complement to agent-style extraction, not a step backward. Novada should make that case explicitly in the Extract endpoint docs and landing page — otherwise the default buyer interpretation is "they haven\'t caught up."\n\n**This week →** Before activating SERP + Scraper infra, review the novada-search Extract endpoint design against /agent paradigm. Write one paragraph of positioning copy that explains what Extract is for and what /agent (Firecrawl\'s approach) is for. This prevents category confusion at launch.\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Firecrawl Deprecated /extract — Novada's Extract Endpoint Needs Reframing Before It Ships</h3>
+        <p>Firecrawl's <code>/extract</code> is deprecated in JS + Python SDKs; the canonical extraction path is now <code>/agent</code> (intent-in, results-out — no URL required). novada-search has its own Extract endpoint pending infra activation. If it ships as URL-in/schema-out without a clear narrative, the default developer interpretation is "they haven't caught up." There is a real case that structured/deterministic extraction is a deliberate complement — but Novada needs to make that case proactively, in the docs, before launch.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #c0392b;"><strong>This week →</strong> Before activating SERP + Scraper infra, write one positioning paragraph for Extract docs explaining what it is for vs. agent-orchestrated extraction. Prevents category confusion at launch and frames Novada's approach as deliberate, not lagging.</div>
+      </div>
+
+      <!-- Card 03: WATCH -->
+      <div class="insight-card" style="border-left-color:#d35400;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">03</div>
+            <span style="background:#fefbec;color:#b7860b;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">WATCH</span>
+          </div>
+          <button onclick="saveInsightMd('brightdata-owns-claude-plus-web-data-seo-novada-proxy-not-published.md','# BrightData Is Claiming the Claude + Web Data SEO Surface While novada-proxy Is Unpublished\n\nBrightData published at least four Claude-specific integration guides this week: "Claude Agent SDK + Web MCP", "Claude Code + Web MCP", "Claude Desktop + Web MCP", and "Claude Skills + Web MCP." Each is a standalone SEO page targeting the exact query a Novada target customer runs when they want web data inside their Claude workflow.\n\nThis is a distribution moat, not just marketing content. When a developer searches "[Claude tool] + web scraping" or "[Claude tool] + proxy", BrightData guides will appear and form the developer\'s mental model of what the category looks like. By the time novada-proxy ships, these developers will already be integrated with BrightData and have no motivation to switch unless Novada offers a clear and visible reason.\n\nNovada has genuine differentiators: agent-first, MCP-native from day one, integrated stack (search + proxy). But differentiators that aren\'t published don\'t influence decisions.\n\n**This week →** Watch which BrightData Claude guides rank in the next 7 days. Queue a "Novada Proxy + Claude Code" guide for day-one publish when novada-proxy ships. Prioritise the agent-native angle (purpose-built for Claude agents, not retrofitted enterprise proxy infrastructure) — a claim BrightData cannot credibly make.\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>BrightData Is Claiming the "Claude + Web Data" SEO Surface While novada-proxy Is Unpublished</h3>
+        <p>Four Claude-specific BrightData integration guides published this week means every developer searching "[Claude tool] + web scraping" lands on BrightData content first. Each guide forms the buyer's mental model of what the category looks like before Novada has a published presence. BrightData's MCP is live; novada-proxy is pending approval. Differentiators that aren't published — agent-native, integrated stack, purpose-built for Claude — don't influence decisions. BrightData has "retrofitted" enterprise proxy infrastructure positioned as MCP; Novada can truthfully claim MCP-native from day one.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #d35400;"><strong>This week →</strong> Monitor which BrightData Claude guides rank in the next 7 days. Queue a "Novada Proxy + Claude Code" guide for day-one publish when novada-proxy ships — prioritise the agent-native angle BrightData cannot credibly claim.</div>
+      </div>
+
+      <!-- Card 04: OPPORTUNITY -->
+      <div class="insight-card" style="border-left-color:#1e7e34;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">04</div>
+            <span style="background:#edf7f0;color:#1e7e34;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">OPPORTUNITY</span>
+          </div>
+          <button onclick="saveInsightMd('tavily-enterprise-pivot-opens-developer-search-segment.md','# Tavily\'s IBM THINK Push Leaves the Developer-First Search Segment Open\n\nTavily\'s April 2026 shipped events and Nebius AMAs, not features. IBM THINK attendance (May 4–7) confirms Nebius is steering Tavily toward Fortune 500 enterprise. This is rational post-acquisition behaviour — a $275–400M deal needs Fortune 500 ARR to justify the price — but it creates a structural gap: Tavily\'s historic developer-first segment (self-serve, affordable, fast integration) is temporarily under-invested.\n\nThe timing aligns directly with Novada\'s window to activate novada-search\'s Search endpoint. Tavily\'s 3M+ monthly SDK downloads did not come from IBM — they came from developers who wanted a fast, no-friction, affordable search API. That appetite exists and currently has no strong incumbent serving it. Firecrawl\'s /agent is a different category (extraction, not search). Exa is neural/semantic and higher cost. There is a clear gap for a developer-first, transparent-pricing, MCP-native search API.\n\n**This week →** If novada-search Search endpoint activates this week, target Tavily\'s developer community directly: post a comparison on Show HN, LangChain Discord, and r/LocalLLaMA. Frame it as the fast, self-serve alternative to Tavily while Tavily is doing IBM conferences. The window is open — use it.\n\n---\nSaved from Novada Intel — 2026-05-07\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Tavily's IBM THINK Push Leaves the Developer-First Search Segment Open</h3>
+        <p>Tavily's April shipped events and Nebius AMAs — not features. IBM THINK presence confirms the post-acquisition GTM is Fortune 500-first. This is rational for a $275–400 M acquisition, but it creates a structural opening: Tavily's 3 M+ monthly SDK downloads came from developers who wanted fast, self-serve, affordable search — not from IBM. That demand is currently un-served. Firecrawl's /agent is extraction, not search. Exa is neural/higher cost. There's a clear gap for a developer-first, transparent-pricing, MCP-native search API right now.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #1e7e34;"><strong>This week →</strong> If novada-search Search activates, post on Show HN, LangChain Discord, and r/LocalLLaMA immediately. Frame as the fast, self-serve alternative while Tavily does IBM conferences. The window is open — use it before Tavily re-engages its developer community.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Novada Labs</strong> &nbsp;·&nbsp;
+    <span class="lang-en">Competitive Intelligence — Daily Report</span>
+    <span class="lang-cn">竞争情报 — 每日报告</span>
+    &nbsp;·&nbsp; 2026-05-07
+  </p>
+  <p style="margin-top:6px;">
+    <span class="lang-en">Sources: Firecrawl GitHub/Changelog/Docs/Blog · Firecrawl MCP Server GitHub · Tavily Blog (April 2026) · Nebius newsroom · BrightData Blog/Docs/Release Notes · Oxylabs blog/pricing/product-updates · Decodo blog · Crawl4AI GitHub/Docs · Exa blog/docs/pricing · Apify blog/changelog/GitHub · Datadog Security Labs (litellm supply chain) · modelcontextprotocol SEP-2640 · IBM THINK 2026</span>
+    <span class="lang-cn">来源：Firecrawl GitHub/更新日志/文档/博客 · Firecrawl MCP Server GitHub · Tavily 博客（2026 年 4 月）· Nebius 新闻室 · BrightData 博客/文档/发布说明 · Oxylabs 博客/定价/产品更新 · Decodo 博客 · Crawl4AI GitHub/文档 · Exa 博客/文档/定价 · Apify 博客/更新日志/GitHub · Datadog Security Labs（litellm 供应链）· modelcontextprotocol SEP-2640 · IBM THINK 2026</span>
+  </p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('cn', lang === 'cn');
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => {
+      btn.classList.toggle('active', (i === 0 && lang === 'en') || (i === 1 && lang === 'cn'));
+    });
+  }
+</script>
+
+<script>
+function saveInsightMd(filename, content) {
+  const text = content.replace(/\\n/g, '\n').replace(/\\'/g, "'");
+  const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 500);
+}
+</script>
+</body>
+</html>
