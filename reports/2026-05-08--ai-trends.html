@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novada AI Trends — 2026-05-08</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f0e6;
+      --card: #fffdf7;
+      --border: #e2d9c8;
+      --accent: #2d6a4f;
+      --accent2: #52b788;
+      --accent3: #e76f51;
+      --muted: #6b7280;
+      --text: #1a1a1a;
+      --tag-bg: #d8f3dc;
+      --tag-text: #1b4332;
+      --warn-bg: #fff3cd;
+      --warn-text: #7d4e1a;
+      --signal-bg: #fde8e4;
+      --signal-text: #7f1d1d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+    .internal-banner {
+      background: #1a1a1a;
+      color: #ff453a;
+      padding: 10px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    header {
+      background: var(--accent);
+      color: #fff;
+      padding: 28px 40px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    header .brand { font-size: 1.1rem; font-weight: 700; opacity: 0.85; letter-spacing: 0.04em; text-transform: uppercase; }
+    header h1 { font-size: 1.75rem; font-weight: 800; }
+    header .meta { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
+    .lang-toggle {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 8px;
+      padding: 6px 4px;
+      display: flex;
+      gap: 2px;
+      align-self: flex-start;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.75);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .lang-btn.active {
+      background: #fff;
+      color: var(--accent);
+    }
+    .container { max-width: 1080px; margin: 0 auto; padding: 36px 24px 0; }
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 40px 0 16px;
+    }
+    .top3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .insight-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--accent2);
+    }
+    .insight-card.warn::before { background: var(--accent3); }
+    .insight-card.signal::before { background: #9b5de5; }
+    .insight-num {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .insight-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .insight-card p { font-size: 0.88rem; line-height: 1.65; color: #3a3a3a; }
+    .novada-angle {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #edf7f1;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      border-left: 3px solid var(--accent2);
+    }
+    .novada-angle .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; opacity: 0.7; }
+    .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 0.875rem; }
+    th { background: #f0ebe0; font-weight: 800; text-align: left; padding: 12px 16px; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    td { padding: 11px 16px; border-top: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #faf7f0; }
+    .star-badge {
+      display: inline-block;
+      background: #fff8e1;
+      color: #a16207;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .delta-badge {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+    .tag.orange { background: #ffe4cc; color: #7c2d12; }
+    .tag.purple { background: #ede9fe; color: #4c1d95; }
+    .tag.red { background: #fee2e2; color: #7f1d1d; }
+    .tag.blue { background: #dbeafe; color: #1e3a8a; }
+    .hn-list { display: flex; flex-direction: column; gap: 12px; }
+    .hn-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .hn-icon {
+      width: 42px; height: 42px;
+      background: #ff6600;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: #fff; font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .hn-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .hn-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+    .signals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .signal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .signal-card .sig-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin-bottom: 6px; }
+    .signal-card .sig-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .signal-card .sig-body { font-size: 0.83rem; color: #444; line-height: 1.55; }
+    .paper-list { display: flex; flex-direction: column; gap: 10px; }
+    .paper-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+    }
+    .paper-item .paper-id { font-size: 0.75rem; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+    .paper-item .paper-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 5px; }
+    .paper-item .paper-summary { font-size: 0.82rem; color: #444; line-height: 1.55; }
+    .mcp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .mcp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .mcp-card .mcp-name { font-weight: 800; font-size: 0.92rem; margin-bottom: 5px; }
+    .mcp-card .mcp-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    footer {
+      margin-top: 56px;
+      padding: 24px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    footer strong { color: var(--text); }
+    .lang-cn { display: none; }
+    body.cn .lang-en { display: none; }
+    body.cn .lang-cn { display: block; }
+    body.cn .lang-cn.inline { display: inline; }
+    body.cn .lang-en.inline { display: none; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+  INTERNAL USE ONLY - DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+</div>
+
+<header>
+  <div>
+    <div class="brand">Novada · AI Trends Agent</div>
+    <h1 class="lang-en">AI Trends Report</h1>
+    <h1 class="lang-cn">AI 趋势报告</h1>
+    <div class="meta lang-en">Friday, 8 May 2026 · Agent / Proxy / MCP / Web Data</div>
+    <div class="meta lang-cn">2026年5月8日（星期五）· 智能体 / 代理 / MCP / 网络数据</div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('cn')">中文</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- TOP 3 -->
+  <div class="section-title lang-en">Top 3 Signals for Novada</div>
+  <div class="section-title lang-cn">Novada 三大关键信号</div>
+
+  <div class="top3">
+
+    <!-- Signal 1 -->
+    <div class="insight-card">
+      <div class="insight-num lang-en">Signal 01</div>
+      <div class="insight-num lang-cn">信号 01</div>
+      <h3 class="lang-en">Claude Opus 4.7 GA + Managed Agents "Dreaming" — Self-Improving Long-Running Agents Arrive</h3>
+      <h3 class="lang-cn">Claude Opus 4.7 正式发布 + Managed Agents "梦境"功能——自我改进的长期运行代理正式登场</h3>
+      <p class="lang-en">Anthropic released Claude Opus 4.7 (GA) with major software engineering gains. Managed Agents ships three new capabilities: <strong>Multi-agent orchestration</strong> (public beta), <strong>Outcomes</strong> — iterate until success criteria met (public beta), and <strong>"Dreaming"</strong> — agents inspect prior session history and self-improve (research preview). Backed by the Anthropic–SpaceX Colossus deal: 300 MW, 220,000+ NVIDIA GPUs online within the month.</p>
+      <p class="lang-cn">Anthropic 发布 Claude Opus 4.7（正式版），在高难度软件工程任务上取得重大进展。Managed Agents 新增三大能力：<strong>多智能体编排</strong>（公测），<strong>结果导向</strong>——自动迭代直至满足成功标准（公测），<strong>"梦境"</strong>——智能体审查历史会话自我改进（研究预览）。背后是 Anthropic 与 SpaceX Colossus 的算力协议：300 兆瓦、超 22 万块英伟达 GPU 于本月上线。</p>
+      <div class="novada-angle">
+        <div class="label">Novada Angle</div>
+        <span class="lang-en">Agents looping over their own history ("Dreaming") generate burst, rapid-repeat web data requests unlike human browsing. Novada's proxy rotation and rate-limit management is the direct bottleneck. Position as "built for agentic access patterns, not just human browsing."</span>
+        <span class="lang-cn">智能体循环审查历史（"梦境"）会产生与人类浏览截然不同的突发、快速重复网络数据请求。Novada 的代理轮换和速率限制管理是直接瓶颈。定位为"专为智能体访问模式设计，而非仅供人类浏览"。</span>
+      </div>
+    </div>
+
+    <!-- Signal 2 -->
+    <div class="insight-card warn">
+      <div class="insight-num lang-en">Signal 02</div>
+      <div class="insight-num lang-cn">信号 02</div>
+      <h3 class="lang-en">GPT-5.5 Instant + Claude Opus 4.7 Same Week — Multi-Model Pipelines Now the Enterprise Default</h3>
+      <h3 class="lang-cn">GPT-5.5 Instant 与 Claude Opus 4.7 同周发布——多模型管道成为企业默认选择</h3>
+      <p class="lang-en">OpenAI's <strong>GPT-5.5 Instant</strong> (fast-inference, GPT-5 family) and <strong>Claude Opus 4.7</strong> both shipped the week of April 30–May 7, alongside Gemini's multimodal RAG. Enterprise teams now routinely route tasks across Claude + GPT + Gemini in a single pipeline. Claude Code doubled Pro/Max/Team rate limits, removed peak-hour reductions, and added plugin URL loading — explicitly accommodating high-throughput agent workloads.</p>
+      <p class="lang-cn">OpenAI 的 <strong>GPT-5.5 Instant</strong>（快速推理，GPT-5 系列）与 <strong>Claude Opus 4.7</strong> 在4月30日至5月7日同周发布，同时 Gemini 多模态 RAG 也加速落地。企业团队现已习惯在单一管道中跨 Claude、GPT、Gemini 路由任务。Claude Code 将 Pro/Max/Team 速率限制翻倍，取消高峰时段限制，新增插件 URL 加载——明确为高吞吐量智能体工作负载提供支持。</p>
+      <div class="novada-angle">
+        <div class="label">Novada Angle</div>
+        <span class="lang-en">Multi-model pipelines send web data requests from increasingly diverse SDKs. Framework-agnostic, model-agnostic proxy APIs become more valuable. Novada should publish compatibility guides for all three major provider SDKs and ensure the MCP server works with Claude Code's new plugin URL loading.</span>
+        <span class="lang-cn">多模型管道从越来越多样的 SDK 发送网络数据请求，框架无关、模型无关的代理 API 价值提升。Novada 应为三大主流提供商 SDK 发布兼容指南，并确保 MCP 服务器与 Claude Code 新插件 URL 加载功能兼容。</span>
+      </div>
+    </div>
+
+    <!-- Signal 3 -->
+    <div class="insight-card signal">
+      <div class="insight-num lang-en">Signal 03</div>
+      <div class="insight-num lang-cn">信号 03</div>
+      <h3 class="lang-en">jcode Framework + CAR-bench — Agent Ecosystem Shifts from Experimentation to Production Testing</h3>
+      <h3 class="lang-cn">jcode 框架 + CAR-bench——智能体生态从实验转向生产测试</h3>
+      <p class="lang-en"><strong>jcode</strong>, a specialised GitHub-trending framework for testing code agents (Week 18, May 2026), emerges alongside the arXiv <strong>CAR-bench</strong> paper introducing multi-turn tool-use consistency benchmarks. Together these signal a maturity inflection: the ecosystem is now stress-testing agent reliability at production scale. Production-ready agents require reliable, auditable, SLA-backed data access — not just fast access.</p>
+      <p class="lang-cn"><strong>jcode</strong>（2026年5月第18周 GitHub 热门），一个专为代码智能体测试设计的框架，与 arXiv 的 <strong>CAR-bench</strong> 多轮工具使用一致性基准论文同期出现。两者共同标志着一个成熟拐点：生态系统正在对生产规模的智能体可靠性进行压力测试。生产就绪的智能体需要可靠、可审计、有 SLA 保障的数据访问，而不仅仅是快速访问。</p>
+      <div class="novada-angle">
+        <div class="label">Novada Angle</div>
+        <span class="lang-en">As agent teams enter QA and production phases, enterprise buyers demand SLA metrics and per-request success rates. Surface these prominently in the Novada developer portal. Consider a "production readiness" API tier with enhanced SLAs for regulated industries.</span>
+        <span class="lang-cn">随着智能体团队进入质量保证和生产阶段，企业买家要求 SLA 指标和逐请求成功率。在 Novada 开发者门户中突出展示这些数据。考虑为受监管行业推出具有增强 SLA 的"生产就绪"API 层级。</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GITHUB TRENDING -->
+  <div class="section-title lang-en">GitHub Trending — AI Agents (2026-05-08)</div>
+  <div class="section-title lang-cn">GitHub 趋势——AI 智能体（2026-05-08）</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th class="lang-en">Repository</th>
+          <th class="lang-cn">仓库</th>
+          <th class="lang-en">Stars</th>
+          <th class="lang-cn">星标</th>
+          <th class="lang-en">Description</th>
+          <th class="lang-cn">描述</th>
+          <th class="lang-en">Tags</th>
+          <th class="lang-cn">标签</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><a href="https://github.com/caramaschiHG/awesome-ai-agents-2026">caramaschiHG/awesome-ai-agents-2026</a></td>
+          <td><span class="star-badge">⭐ 210k+</span></td>
+          <td class="lang-en">Most comprehensive AI agents/frameworks list. 300+ resources, 20+ categories, updated monthly.</td>
+          <td class="lang-cn">最全面的 AI 智能体/框架列表，超过 300 个资源，20+ 分类，每月更新。</td>
+          <td><span class="tag">curated</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><a href="https://github.com/langflow-ai/langflow">langflow-ai/langflow</a></td>
+          <td><span class="star-badge">⭐ 146k</span></td>
+          <td class="lang-en">Visual drag-and-drop agent builder. Domain experts building AI pipelines without ML background.</td>
+          <td class="lang-cn">可视化拖放智能体构建器，领域专家无需 ML 背景即可构建 AI 管道。</td>
+          <td><span class="tag">visual-builder</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><a href="https://github.com/dify-ai/dify">dify-ai/dify</a></td>
+          <td><span class="star-badge">⭐ 136k</span></td>
+          <td class="lang-en">Open-source LLM app platform. ChatGPT-style agents via visual UI. Growing enterprise user base.</td>
+          <td class="lang-cn">开源 LLM 应用平台，通过可视化界面创建智能体，企业用户基础持续增长。</td>
+          <td><span class="tag">visual-builder</span> <span class="tag orange">enterprise</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><a href="https://github.com/getmem0/mem0">getmem0/mem0</a></td>
+          <td><span class="star-badge">⭐ 52k</span></td>
+          <td class="lang-en">Persistent memory layer for AI agents. Graph + vector hybrid storage for continuous agent sessions.</td>
+          <td class="lang-cn">AI 智能体的持久记忆层，图向量混合存储，支持连续智能体会话。</td>
+          <td><span class="tag blue">memory</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><a href="https://github.com/FlowiseAI/Flowise">FlowiseAI/Flowise</a></td>
+          <td><span class="star-badge">⭐ 51k</span></td>
+          <td class="lang-en">Low-code LLM orchestration. Drag-and-drop agent flow builder with growing MCP integrations.</td>
+          <td class="lang-cn">低代码 LLM 编排，拖放式智能体流程构建器，MCP 集成持续增加。</td>
+          <td><span class="tag">visual-builder</span> <span class="tag purple">MCP</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>1jehuang/jcode</td>
+          <td><span class="delta-badge">↑ trending W18</span></td>
+          <td class="lang-en">Specialized testing framework for code agents. Signals production-readiness phase for the agent ecosystem.</td>
+          <td class="lang-cn">专为代码智能体设计的测试框架，标志着智能体生态进入生产就绪阶段。</td>
+          <td><span class="tag orange">testing</span> <span class="tag">devtools</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Ruflo (orchestration)</td>
+          <td><span class="delta-badge">↑ new</span></td>
+          <td class="lang-en">Orchestration platform for Claude AI agents. Multi-agent cluster deployment and coordination.</td>
+          <td class="lang-cn">Claude AI 智能体的编排平台，支持多智能体集群部署与协调。</td>
+          <td><span class="tag purple">Claude</span> <span class="tag">orchestration</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- HN HIGHLIGHTS -->
+  <div class="section-title lang-en">Hacker News Highlights — AI / Scraping / MCP</div>
+  <div class="section-title lang-cn">Hacker News 精选——AI / 抓取 / MCP</div>
+
+  <div class="hn-list">
+    <div class="hn-item">
+      <div class="hn-icon">HN</div>
+      <div>
+        <div class="hn-title lang-en">Show HN: MCP Server to let agents control the browser</div>
+        <div class="hn-title lang-cn">Show HN：让智能体控制浏览器的 MCP 服务器</div>
+        <div class="hn-desc lang-en">Browser-control MCP server. HN thread immediately surfaced residential IP requirements and anti-fingerprinting as the first integration challenges post-launch. Strong community interest in the proxy/identity layer beneath the browser-agent stack. <span class="tag orange">browser</span> <span class="tag purple">MCP</span></div>
+        <div class="hn-desc lang-cn">浏览器控制 MCP 服务器。HN 评论区立即将住宅 IP 需求和反指纹作为发布后首要集成挑战提出，社区对浏览器智能体栈底层代理/身份层表现出强烈兴趣。</div>
+      </div>
+    </div>
+    <div class="hn-item">
+      <div class="hn-icon">HN</div>
+      <div>
+        <div class="hn-title lang-en">Show HN: Free web search for AI agents via MCP (You.com)</div>
+        <div class="hn-title lang-cn">Show HN：通过 MCP 为 AI 智能体提供免费网络搜索（You.com）</div>
+        <div class="hn-desc lang-en">Free real-time web search via MCP — no API keys. Compatible with Cursor, Claude Desktop, all MCP-compatible agents. Ongoing community debate: free tier reliability vs. quality of results at production data volumes. <span class="tag">MCP</span> <span class="tag orange">search</span></div>
+        <div class="hn-desc lang-cn">通过 MCP 提供免费实时网络搜索，无需 API 密钥，兼容 Cursor、Claude Desktop 等所有 MCP 兼容智能体。社区持续讨论：免费层可靠性与生产数据量下的结果质量。</div>
+      </div>
+    </div>
+    <div class="hn-item">
+      <div class="hn-icon">HN</div>
+      <div>
+        <div class="hn-title lang-en">Turning My Website into an MCP Tool for AI Agents</div>
+        <div class="hn-title lang-cn">将我的网站变成 AI 智能体的 MCP 工具</div>
+        <div class="hn-desc lang-en">Developer post on exposing a personal website as a structured MCP data source. Grassroots signal that "website as MCP endpoint" is becoming a real pattern, foreshadowing web-as-MCP at scale. <span class="tag purple">MCP</span> <span class="tag">web</span></div>
+        <div class="hn-desc lang-cn">开发者分享将个人网站作为结构化 MCP 数据源的实践。这是"网站即 MCP 端点"正在成为真实模式的草根信号，预示着 Web 即 MCP 的规模化趋势。</div>
+      </div>
+    </div>
+    <div class="hn-item">
+      <div class="hn-icon">HN</div>
+      <div>
+        <div class="hn-title lang-en">Show HN: AI agent that runs real browser workflows</div>
+        <div class="hn-title lang-cn">Show HN：运行真实浏览器工作流的 AI 智能体</div>
+        <div class="hn-desc lang-en">Persistent browser agent sessions. Thread debated whether session persistence or IP rotation was the harder engineering problem — most comments concluded both are required simultaneously. <span class="tag orange">browser</span> <span class="tag">workflow</span></div>
+        <div class="hn-desc lang-cn">持久浏览器智能体会话。讨论争论会话持久性还是 IP 轮换是更难的工程问题——大多数评论认为两者需要同时实现。</div>
+      </div>
+    </div>
+    <div class="hn-item">
+      <div class="hn-icon">HN</div>
+      <div>
+        <div class="hn-title lang-en">Show HN: Open-source browser for AI agents (ABP)</div>
+        <div class="hn-title lang-cn">Show HN：AI 智能体开源浏览器（ABP）</div>
+        <div class="hn-desc lang-en">Freezes JavaScript after each agent action to capture deterministic state snapshots. Signals browser-agent infra maturing beyond basic Playwright/Selenium wrappers into purpose-built agent runtimes. <span class="tag orange">browser</span> <span class="tag">open-source</span></div>
+        <div class="hn-desc lang-cn">每次智能体操作后冻结 JavaScript，捕获确定性状态快照，标志着浏览器智能体基础设施超越 Playwright/Selenium 封装，向专用智能体运行时演进。</div>
+      </div>
+    </div>
+    <div class="hn-item">
+      <div class="hn-icon">HN</div>
+      <div>
+        <div class="hn-title lang-en">Chrome Announced WebMCP Integration</div>
+        <div class="hn-title lang-cn">Chrome 宣布 WebMCP 集成</div>
+        <div class="hn-desc lang-en">Proposed browser-native standard exposing structured tools for AI agents on existing websites. HN community split: phishing surface risk vs. the only viable long-term alternative to DOM scraping. <span class="tag">standard</span> <span class="tag orange">browser</span></div>
+        <div class="hn-desc lang-cn">提议的浏览器原生标准，在现有网站上为 AI 智能体暴露结构化工具。HN 社区分歧：网络钓鱼风险 vs. DOM 抓取唯一可行的长期替代方案。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDUSTRY NEWS -->
+  <div class="section-title lang-en">Industry News</div>
+  <div class="section-title lang-cn">行业新闻</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="lang-en">Item</th>
+          <th class="lang-cn">事项</th>
+          <th class="lang-en">Detail</th>
+          <th class="lang-cn">详情</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Claude Opus 4.7 GA</strong></td>
+          <td class="lang-en">Generally available. Strongest gains on hard software engineering benchmarks. Replaces Opus 4.6 as the recommended frontier model for heavy code tasks.</td>
+          <td class="lang-cn">正式发布。在高难度软件工程基准上取得最强进展，取代 Opus 4.6 成为推荐的前沿代码任务模型。</td>
+        </tr>
+        <tr>
+          <td><strong>Managed Agents: Orchestration + Outcomes + Dreaming</strong></td>
+          <td class="lang-en">Multi-agent orchestration (public beta). Outcomes — iterate until success criteria met (public beta). Dreaming — agents inspect prior sessions and self-improve (research preview).</td>
+          <td class="lang-cn">多智能体编排（公测）。结果导向——迭代至满足成功标准（公测）。梦境——智能体审查历史会话自我改进（研究预览）。</td>
+        </tr>
+        <tr>
+          <td><strong>Anthropic × SpaceX Colossus</strong></td>
+          <td class="lang-en">300 MW, 220,000+ NVIDIA GPUs at Colossus 1. Capacity online within the month. Largest single compute acquisition for LLM inference workloads to date.</td>
+          <td class="lang-cn">Colossus 1 数据中心 300 兆瓦、超 22 万块英伟达 GPU，本月内上线，是迄今为止 LLM 推理工作负载最大的单次算力采购。</td>
+        </tr>
+        <tr>
+          <td><strong>Claude Code rate limit doubling</strong></td>
+          <td class="lang-en">Pro/Max/Team limits doubled. Peak-hour reductions removed for Pro/Max. Plugin URL loading + gateway model discovery added. Opus API limits raised.</td>
+          <td class="lang-cn">Pro/Max/Team 限制翻倍，为 Pro/Max 取消高峰时段限制，新增插件 URL 加载和网关模型发现，Opus API 限制提升。</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-5.5 Instant (OpenAI)</strong></td>
+          <td class="lang-en">Fast-inference model in the GPT-5 family. Targets high-throughput agent data-parsing use cases. Competes directly with Claude's Haiku-tier for volume workloads.</td>
+          <td class="lang-cn">GPT-5 系列快速推理模型，针对高吞吐量智能体数据解析用例，与 Claude Haiku 层级直接竞争海量工作负载。</td>
+        </tr>
+        <tr>
+          <td><strong>Gemini Multimodal RAG acceleration</strong></td>
+          <td class="lang-en">Google accelerates multimodal RAG pipelines targeting enterprise document + web data agents. Practical AI emphasis: production use case acceleration over research demos.</td>
+          <td class="lang-cn">谷歌加速多模态 RAG 管道，针对企业文档与网络数据智能体，强调生产用例加速而非研究演示。</td>
+        </tr>
+        <tr>
+          <td><strong>Microsoft Agent Framework 1.0 GA</strong></td>
+          <td class="lang-en">Open-source, .NET + Python. MCP dynamic tool discovery. Sequential, group-chat, and Magentic-One patterns. Browser-based local debugger. GA April 3, 2026.</td>
+          <td class="lang-cn">开源，.NET + Python，MCP 动态工具发现，顺序、群聊和 Magentic-One 模式，浏览器本地调试器，2026年4月3日正式发布。</td>
+        </tr>
+        <tr>
+          <td><strong>AWS MCP Server GA</strong></td>
+          <td class="lang-en">GA May 6, 2026. All AWS APIs via single MCP tool. Sandboxed Python execution. Auditable enterprise access with per-request logging.</td>
+          <td class="lang-cn">2026年5月6日正式发布。单一 MCP 工具访问所有 AWS API，沙盒 Python 执行，带逐请求日志的企业可审计访问。</td>
+        </tr>
+        <tr>
+          <td><strong>CrewAI (45,900+ stars, v1.10+)</strong></td>
+          <td class="lang-en">Native MCP + A2A support. 12M+ daily agent executions. LangChain fully removed. Role-based multi-agent teams. Fastest-growing agent framework in 2025–2026.</td>
+          <td class="lang-cn">原生 MCP + A2A 支持，超 1200 万日均智能体执行，LangChain 完全移除，基于角色的多智能体团队，2025-2026 年增长最快的智能体框架。</td>
+        </tr>
+        <tr>
+          <td><strong>LangGraph v0.3.0</strong></td>
+          <td class="lang-en">Stateful graph orchestration: DAGs, conditional branching, parallel execution, durable state management. LangSmith observability tightened.</td>
+          <td class="lang-cn">有状态图编排：DAG、条件分支、并行执行、持久状态管理，LangSmith 可观测性集成增强。</td>
+        </tr>
+        <tr>
+          <td><strong>Firecrawl /agent endpoint</strong></td>
+          <td class="lang-en">Autonomous research via /agent. /interact for persistent interactive browser sessions. Official MCP server GA for Cursor, Claude, Windsurf.</td>
+          <td class="lang-cn">通过 /agent 进行自主研究，/interact 用于持久交互式浏览器会话，面向 Cursor、Claude、Windsurf 的官方 MCP 服务器正式发布。</td>
+        </tr>
+        <tr>
+          <td><strong>jcode (GitHub trending W18)</strong></td>
+          <td class="lang-en">Specialized testing framework for code agents. Signals agent ecosystem entering production-readiness phase across the industry.</td>
+          <td class="lang-cn">专为代码智能体的测试框架，标志着智能体生态系统在全行业进入生产就绪阶段。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MCP ECOSYSTEM -->
+  <div class="section-title lang-en">MCP Ecosystem Snapshot</div>
+  <div class="section-title lang-cn">MCP 生态系统概览</div>
+
+  <div class="table-wrap" style="margin-bottom:20px">
+    <table>
+      <thead>
+        <tr>
+          <th class="lang-en">Metric</th>
+          <th class="lang-cn">指标</th>
+          <th class="lang-en">Value</th>
+          <th class="lang-cn">值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lang-en">Public MCP servers</td>
+          <td class="lang-cn">公开 MCP 服务器</td>
+          <td><strong>10,000+</strong></td>
+        </tr>
+        <tr>
+          <td class="lang-en">Governance body</td>
+          <td class="lang-cn">治理机构</td>
+          <td class="lang-en">Linux Foundation — Agentic AI Foundation</td>
+          <td class="lang-cn">Linux 基金会——智能体 AI 基金会</td>
+        </tr>
+        <tr>
+          <td class="lang-en">Protocol spec additions</td>
+          <td class="lang-cn">协议新增</td>
+          <td class="lang-en">Streamable HTTP · MCP Tasks · Triggers · OAuth 2.1</td>
+          <td class="lang-cn">可流式 HTTP · MCP 任务 · 触发器 · OAuth 2.1</td>
+        </tr>
+        <tr>
+          <td class="lang-en">Cloud GA this week</td>
+          <td class="lang-cn">本周云端正式发布</td>
+          <td class="lang-en">AWS MCP Server (May 6) · Azure MCP in Visual Studio 2026 · Google Cloud A2A</td>
+          <td class="lang-cn">AWS MCP Server（5月6日）· Azure MCP 集成 Visual Studio 2026 · Google Cloud A2A</td>
+        </tr>
+        <tr>
+          <td class="lang-en">Browser standard</td>
+          <td class="lang-cn">浏览器标准</td>
+          <td class="lang-en">Chrome WebMCP integration (proposal stage)</td>
+          <td class="lang-cn">Chrome WebMCP 集成（提案阶段）</td>
+        </tr>
+        <tr>
+          <td class="lang-en">Protocol trajectory</td>
+          <td class="lang-cn">协议走向</td>
+          <td class="lang-en">Cloud-native production → browser-native standard → agent-to-agent (A2A) cross-platform</td>
+          <td class="lang-cn">云原生生产 → 浏览器原生标准 → 跨平台智能体间（A2A）协议</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mcp-grid">
+    <div class="mcp-card">
+      <div class="mcp-name">☁️ AWS MCP Server</div>
+      <div class="mcp-desc lang-en">GA May 6. All AWS APIs via single tool. Sandboxed Python. Auditable enterprise access.</div>
+      <div class="mcp-desc lang-cn">5月6日正式发布。单工具访问所有 AWS API，沙盒 Python，企业可审计访问。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">🔍 You.com MCP</div>
+      <div class="mcp-desc lang-en">Free real-time web search for any MCP-compatible agent. No API keys required.</div>
+      <div class="mcp-desc lang-cn">为所有 MCP 兼容智能体提供免费实时网络搜索，无需 API 密钥。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">🖥️ Hyperbrowser MCP</div>
+      <div class="mcp-desc lang-en">Real Chromium browser sessions for AI agents. Scrape, interact, automate via MCP.</div>
+      <div class="mcp-desc lang-cn">为 AI 智能体提供真实 Chromium 浏览器会话，通过 MCP 支持抓取、交互和自动化。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">🔥 Firecrawl MCP</div>
+      <div class="mcp-desc lang-en">Autonomous research (/agent), persistent browser (/interact), structured extraction. Official server GA.</div>
+      <div class="mcp-desc lang-cn">自主研究（/agent）、持久浏览器（/interact）、结构化提取，官方服务器正式发布。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">🏦 Blend Autopilot MCP</div>
+      <div class="mcp-desc lang-en">Financial AI workflows inside loan origination. Launched May 2026. Vertical MCP expansion.</div>
+      <div class="mcp-desc lang-cn">贷款发放流程中的金融 AI 工作流，2026年5月发布，垂直 MCP 扩展。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">📊 GoodData MCP</div>
+      <div class="mcp-desc lang-en">AI agents build, update, operate analytics end-to-end. 10–50× faster BI than manual workflows.</div>
+      <div class="mcp-desc lang-cn">AI 智能体端到端构建、更新、运营分析，比手动 BI 工作流快 10-50 倍。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">📇 Versium REACH MCP</div>
+      <div class="mcp-desc lang-en">Contact enrichment + email validation for AI agent workflows. Q1 2026 launch.</div>
+      <div class="mcp-desc lang-cn">为 AI 智能体工作流提供联系人丰富和邮件验证，2026年Q1发布。</div>
+    </div>
+    <div class="mcp-card">
+      <div class="mcp-name">🔐 Splunk MCP</div>
+      <div class="mcp-desc lang-en">AI agents access Splunk data without custom integration code. Security operations use case.</div>
+      <div class="mcp-desc lang-cn">AI 智能体无需自定义集成代码即可访问 Splunk 数据，安全运营用例。</div>
+    </div>
+  </div>
+
+  <!-- ARXIV RESEARCH -->
+  <div class="section-title lang-en">arXiv Agent Research (Recent)</div>
+  <div class="section-title lang-cn">arXiv 智能体研究（近期）</div>
+
+  <div class="paper-list">
+    <div class="paper-item">
+      <div class="paper-id">arXiv 2605.04019</div>
+      <div class="paper-title lang-en">Redefining AI Red Teaming in the Agentic Era: From Weeks to Hours</div>
+      <div class="paper-title lang-cn">重新定义智能体时代的 AI 红队：从数周压缩到数小时</div>
+      <div class="paper-summary lang-en">Compresses agent security assessments from weeks to hours. Key: agentic systems introduce multi-step attack surfaces that static red-teaming systematically misses. Novada's proxy layer sits in the critical path of agent tool use — relevant to security compliance requirements. <span class="tag red">security</span></div>
+      <div class="paper-summary lang-cn">将智能体安全评估从数周压缩到数小时。关键：智能体系统引入了静态红队系统性遗漏的多步骤攻击面。Novada 的代理层处于智能体工具使用的关键路径上，与安全合规要求直接相关。</div>
+    </div>
+    <div class="paper-item">
+      <div class="paper-id">arXiv 2604.02460</div>
+      <div class="paper-title lang-en">Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Token Budgets</div>
+      <div class="paper-title lang-cn">在相同令牌预算下，单智能体 LLM 在多跳推理上优于多智能体系统</div>
+      <div class="paper-summary lang-en">Under equal compute, single agents match or beat multi-agent systems on complex reasoning. Coordination overhead is expensive. Implication: optimise Novada's API for high-throughput single-agent loops, not just multi-agent concurrency. <span class="tag blue">research</span></div>
+      <div class="paper-summary lang-cn">在计算资源相同时，单智能体在复杂推理上匹配或超越多智能体系统，协调开销代价高昂。启示：优化 Novada API 以支持高吞吐量单智能体循环，而不仅仅是多智能体并发。</div>
+    </div>
+    <div class="paper-item">
+      <div class="paper-id">arXiv 2605.02911</div>
+      <div class="paper-title lang-en">Agentic AI-Based Joint Computing and Networking via Mixture of Experts and LLMs</div>
+      <div class="paper-title lang-cn">基于智能体 AI 的混合专家模型与 LLM 联合计算与网络</div>
+      <div class="paper-summary lang-en">Proposes MoE-based resource allocation for networked agent tasks. Network-layer intelligence (routing, load balancing) is becoming an active research area for agentic systems — directly relevant to Novada's proxy routing infrastructure. <span class="tag purple">networking</span></div>
+      <div class="paper-summary lang-cn">为网络化智能体任务提出基于混合专家的资源分配方案，网络层智能（路由、负载均衡）正成为智能体系统的活跃研究领域，与 Novada 的代理路由基础设施直接相关。</div>
+    </div>
+    <div class="paper-item">
+      <div class="paper-id">CAR-bench (arXiv, 2026)</div>
+      <div class="paper-title lang-en">CAR-bench: LLM Agent Consistency, Uncertainty, and Capability Awareness in Multi-Turn Tool Use</div>
+      <div class="paper-title lang-cn">CAR-bench：多轮工具使用中的 LLM 智能体一致性、不确定性与能力感知基准</div>
+      <div class="paper-summary lang-en">Benchmark for evaluating agent reliability in multi-turn tool-using scenarios with incomplete or ambiguous requests. Production evaluation standards for enterprise agent procurement — data access layer reliability is a key evaluation axis. <span class="tag orange">benchmark</span> <span class="tag">enterprise</span></div>
+      <div class="paper-summary lang-cn">评估多轮工具使用场景中智能体可靠性的基准，涵盖不完整或模糊请求。企业智能体采购的生产评估标准——数据访问层可靠性是关键评估轴。</div>
+    </div>
+  </div>
+
+  <!-- NOVADA SIGNALS -->
+  <div class="section-title lang-en">Novada Competitive Signals</div>
+  <div class="section-title lang-cn">Novada 竞争信号</div>
+
+  <div class="signals-grid">
+    <div class="signal-card">
+      <div class="sig-label lang-en">🔴 High Priority</div>
+      <div class="sig-label lang-cn">🔴 高优先级</div>
+      <div class="sig-title lang-en">Managed Agents "Dreaming" = Burst Proxy Demand</div>
+      <div class="sig-title lang-cn">Managed Agents "梦境" = 突发代理需求</div>
+      <div class="sig-body lang-en">Iterative, self-improving agent loops generate burst, rapid-repeat web data requests. Novada proxy must handle these patterns without triggering target site rate limits. Differentiate on burst-handling and rate-awareness, not just throughput.</div>
+      <div class="sig-body lang-cn">迭代自我改进的智能体循环产生突发、快速重复的网络数据请求。Novada 代理必须处理这些模式而不触发目标网站速率限制，在突发处理和速率感知上差异化，而非仅靠吞吐量。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🔴 High Priority</div>
+      <div class="sig-label lang-cn">🔴 高优先级</div>
+      <div class="sig-title lang-en">Colossus 220k GPUs = Agent Scale-Out Imminent</div>
+      <div class="sig-title lang-cn">Colossus 22 万 GPU = 智能体规模扩展迫在眉睫</div>
+      <div class="sig-body lang-en">Anthropic's compute expansion enables massive scale-out of agent workloads within the month. Novada infrastructure must be positioned to scale with Anthropic's capacity — anticipate 10–100× spikes in Claude-based agent web data traffic.</div>
+      <div class="sig-body lang-cn">Anthropic 的算力扩展使智能体工作负载在本月内实现大规模扩展，Novada 基础设施必须具备与 Anthropic 容量同步扩展的能力——预计基于 Claude 的智能体网络数据流量将激增 10-100 倍。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🔴 High Priority</div>
+      <div class="sig-label lang-cn">🔴 高优先级</div>
+      <div class="sig-title lang-en">HN: Browser MCP → Residential IP as First Demand</div>
+      <div class="sig-title lang-cn">HN：浏览器 MCP → 住宅 IP 是首要需求</div>
+      <div class="sig-body lang-en">Multiple HN threads on browser-control MCP servers immediately surface residential IP and anti-fingerprinting as the top integration need. Novada should have a published integration guide for the top 3 browser-agent MCP servers within 2 weeks.</div>
+      <div class="sig-body lang-cn">多个关于浏览器控制 MCP 服务器的 HN 讨论立即将住宅 IP 和反指纹列为首要集成需求，Novada 应在 2 周内为三大浏览器智能体 MCP 服务器发布集成指南。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🟡 Medium Priority</div>
+      <div class="sig-label lang-cn">🟡 中优先级</div>
+      <div class="sig-title lang-en">Multi-Model Default → Framework-Agnostic API</div>
+      <div class="sig-title lang-cn">多模型成为默认 → 框架无关 API</div>
+      <div class="sig-body lang-en">GPT-5.5 + Claude Opus 4.7 + Gemini all shipping the same week confirms multi-model pipelines as the enterprise default. Novada's API and MCP server must work seamlessly with all three provider SDKs out-of-the-box.</div>
+      <div class="sig-body lang-cn">GPT-5.5、Claude Opus 4.7 和 Gemini 同周发布，确认多模型管道成为企业默认选择。Novada 的 API 和 MCP 服务器必须开箱即用地与三大提供商 SDK 无缝兼容。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🟡 Medium Priority</div>
+      <div class="sig-label lang-cn">🟡 中优先级</div>
+      <div class="sig-title lang-en">jcode + CAR-bench → SLA-Backed Data Access Demand</div>
+      <div class="sig-title lang-cn">jcode + CAR-bench → SLA 保障数据访问需求</div>
+      <div class="sig-body lang-en">Agent production testing frameworks demand reliable, auditable data access. Surface Novada's uptime SLAs, per-request success rates, and latency p99 in the developer portal. Consider a "production readiness" API tier.</div>
+      <div class="sig-body lang-cn">智能体生产测试框架要求可靠、可审计的数据访问，在开发者门户中突出展示 Novada 的正常运行时间 SLA、逐请求成功率和延迟 p99，考虑推出"生产就绪"API 层级。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🟡 Medium Priority</div>
+      <div class="sig-label lang-cn">🟡 中优先级</div>
+      <div class="sig-title lang-en">CrewAI 12M Daily Executions + Native MCP</div>
+      <div class="sig-title lang-cn">CrewAI 1200 万日均执行 + 原生 MCP</div>
+      <div class="sig-body lang-en">The largest agent runtime by volume is now natively MCP-aware. Novada should publish a CrewAI integration guide and list the Novada MCP server in the CrewAI tools registry to capture inbound developer traffic.</div>
+      <div class="sig-body lang-cn">按执行量计最大的智能体运行时现已原生支持 MCP，Novada 应发布 CrewAI 集成指南并在 CrewAI 工具注册表中列出 Novada MCP 服务器，以吸引入站开发者流量。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🟢 Watch</div>
+      <div class="sig-label lang-cn">🟢 关注</div>
+      <div class="sig-title lang-en">Claude Code Plugin URL Loading → Novada MCP Discovery</div>
+      <div class="sig-title lang-cn">Claude Code 插件 URL 加载 → Novada MCP 发现</div>
+      <div class="sig-body lang-en">Claude Code now supports plugin URL loading and gateway model discovery. Novada MCP server should publish a discoverable plugin URL so it appears automatically when developers configure Claude Code agent workflows.</div>
+      <div class="sig-body lang-cn">Claude Code 现支持插件 URL 加载和网关模型发现，Novada MCP 服务器应发布可发现的插件 URL，使其在开发者配置 Claude Code 智能体工作流时自动出现。</div>
+    </div>
+    <div class="signal-card">
+      <div class="sig-label lang-en">🟢 Watch</div>
+      <div class="sig-label lang-cn">🟢 关注</div>
+      <div class="sig-title lang-en">Single-Agent Efficiency Paper → Throughput Benchmarking</div>
+      <div class="sig-title lang-cn">单智能体效率论文 → 吞吐量基准测试</div>
+      <div class="sig-body lang-en">High-throughput single-agent data loops are as critical as multi-agent concurrency. Benchmark and publish Novada's sustained single-agent requests-per-second capacity alongside multi-agent concurrency figures.</div>
+      <div class="sig-body lang-cn">高吞吐量单智能体数据循环与多智能体并发同等关键。基准测试并发布 Novada 的持续单智能体每秒请求容量，与多智能体并发数据并列展示。</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div>
+    <strong>Novada AI Trends Agent</strong> ·
+    <span class="lang-en">Report date: 2026-05-08 · Internal use only</span>
+    <span class="lang-cn">报告日期：2026-05-08 · 仅供内部使用</span>
+  </div>
+  <div>
+    <span class="lang-en">Sources: Anthropic News (Claude Opus 4.7 / Managed Agents), Releasebot Claude May 2026, Simon Willison live blog Code w/ Claude 2026, llm-stats.com, AWS What's New (May 6 2026), Microsoft Tech Community Agent Fw 1.0, Azure MCP VS 2026 blog, WorkOS MCP 2026 Guide, AIToolly (jcode), Fungies.io / AskGlitch GitHub trending May 2026 W18, Kadoa AI Scrapers 2026, Firecrawl blog, Hacker News (items 43572595, 47082612, 47334191, 47322046, 47336171, 46969572), arXiv 2605.04019 / 2604.02460 / 2605.02911, CrewAI v1.10 release notes, LangGraph v0.3.0 changelog, Versium Q1 2026, GoodData PR, Splunk AI 2026, blog.greeden.me weekly summary Apr 30–May 7 2026</span>
+    <span class="lang-cn">来源：Anthropic 新闻（Claude Opus 4.7 / Managed Agents）、Releasebot Claude 2026年5月、Simon Willison Code w/ Claude 2026 直播博客、llm-stats.com、AWS 最新动态（2026年5月6日）、微软技术社区 Agent Fw 1.0、Azure MCP VS 2026 博客、WorkOS MCP 2026 指南、AIToolly (jcode)、Fungies.io / AskGlitch GitHub 2026年5月第18周趋势、Kadoa AI 爬虫 2026、Firecrawl 博客、Hacker News（条目 43572595 / 47082612 / 47334191 / 47322046 / 47336171 / 46969572）、arXiv 2605.04019 / 2604.02460 / 2605.02911、CrewAI v1.10 发布说明、LangGraph v0.3.0 更新日志、Versium Q1 2026、GoodData 新闻稿、Splunk AI 2026、blog.greeden.me 4月30日-5月7日周报</span>
+  </div>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('cn', lang === 'cn');
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+  }
+</script>
+</body>
+</html>
