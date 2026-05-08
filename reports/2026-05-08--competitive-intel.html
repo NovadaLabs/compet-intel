@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novada Competitive Intelligence — 2026-05-08</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e6;
+    --card: #fffdf7;
+    --border: #e2d9c8;
+    --text: #2c2416;
+    --muted: #7a6e5e;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --orange: #d35400;
+    --orange-bg: #fef4ec;
+    --yellow: #b7860b;
+    --yellow-bg: #fefbec;
+    --green: #1e7e34;
+    --green-bg: #edf7f0;
+    --blue: #1a5276;
+    --blue-bg: #eaf2fb;
+    --accent: #7c4dbd;
+    --accent-light: #f0eaf9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .lang-cn { display: none; }
+  body.cn .lang-en { display: none; }
+  body.cn .lang-cn { display: block; }
+  body.cn .lang-cn-inline { display: inline; }
+  body.cn .lang-en-inline { display: none; }
+  .lang-cn-inline { display: none; }
+
+  /* ── Header ── */
+  header {
+    background: var(--text);
+    color: #f5f0e6;
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  header .brand { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; opacity: .6; }
+  header h1 { font-size: 22px; font-weight: 900; margin-top: 4px; }
+  header .meta { font-size: 12px; opacity: .55; margin-top: 2px; }
+  .lang-toggle {
+    display: flex; gap: 4px;
+  }
+  .lang-toggle button {
+    background: transparent;
+    border: 1px solid rgba(245,240,230,.35);
+    color: #f5f0e6;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .lang-toggle button.active,
+  .lang-toggle button:hover {
+    background: rgba(245,240,230,.18);
+    border-color: rgba(245,240,230,.7);
+  }
+
+  /* ── Layout ── */
+  main { max-width: 1120px; margin: 0 auto; padding: 36px 24px 60px; }
+  section { margin-bottom: 44px; }
+  h2 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Alert banners ── */
+  .alerts { display: flex; flex-direction: column; gap: 10px; }
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border-left: 4px solid;
+    font-size: 14px;
+  }
+  .alert.critical { background: var(--red-bg); border-color: var(--red); }
+  .alert.high     { background: var(--orange-bg); border-color: var(--orange); }
+  .alert.medium   { background: var(--yellow-bg); border-color: var(--yellow); }
+  .alert.low      { background: var(--green-bg); border-color: var(--green); }
+  .alert-icon { font-size: 18px; line-height: 1.4; flex-shrink: 0; }
+  .alert-body strong { font-weight: 800; }
+  .alert-body .co { font-weight: 700; color: var(--muted); font-size: 12px; margin-bottom: 1px; display: block; }
+
+  /* ── AI Insight cards ── */
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .insight-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #a06ee0);
+  }
+  .insight-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent-light);
+    line-height: 1;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+  .insight-card h3 { font-size: 14px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+  .insight-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ── Competitor cards ── */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .comp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .comp-logo {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    background: var(--accent-light);
+  }
+  .comp-name { font-weight: 900; font-size: 15px; }
+  .comp-category { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .comp-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .badge-alert  { background: var(--red-bg);    color: var(--red);    border: 1px solid #f5c6c2; }
+  .badge-active { background: var(--green-bg);  color: var(--green);  border: 1px solid #b8dfc4; }
+  .badge-watch  { background: var(--yellow-bg); color: var(--yellow); border: 1px solid #f5e0a0; }
+  .comp-updates { list-style: none; }
+  .comp-updates li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    border-bottom: 1px solid var(--bg);
+  }
+  .comp-updates li:last-child { border-bottom: none; }
+  .comp-updates li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 7px;
+  }
+  .comp-updates li strong { color: var(--text); font-weight: 700; }
+  .comp-updates li .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 8px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .tag-mcp  { background: #eaf2fb; color: #1a5276; }
+  .tag-sec  { background: var(--red-bg); color: var(--red); }
+  .tag-new  { background: var(--green-bg); color: var(--green); }
+  .tag-dep  { background: var(--yellow-bg); color: var(--yellow); }
+  .tag-acq  { background: var(--accent-light); color: var(--accent); }
+  .tag-win  { background: #edf7f0; color: #1e7e34; }
+  .tag-brk  { background: var(--red-bg); color: var(--red); border: 1px solid #f5c6c2; }
+
+  /* ── MCP table ── */
+  .mcp-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mcp-table th {
+    background: var(--text);
+    color: #f5f0e6;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 11px 16px;
+    text-align: left;
+  }
+  .mcp-table td {
+    padding: 11px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .mcp-table tr:last-child td { border-bottom: none; }
+  .mcp-table tr:hover td { background: var(--bg); }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-green  { background: #27ae60; }
+  .dot-yellow { background: #f39c12; }
+  .dot-red    { background: #c0392b; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 28px 24px 40px;
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+  ⚠️ INTERNAL USE ONLY — DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+</div>
+
+<header>
+  <div>
+    <div class="brand">Novada Labs</div>
+    <h1>
+      <span class="lang-en-inline">Competitive Intelligence</span>
+      <span class="lang-cn-inline">竞争情报</span>
+    </h1>
+    <div class="meta">
+      <span class="lang-en-inline">Daily Report — 2026-05-08</span>
+      <span class="lang-cn-inline">每日报告 — 2026-05-08</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('cn')">中文</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ALERTS -->
+  <section>
+    <h2>
+      <span class="lang-en">Alerts</span>
+      <span class="lang-cn">警报</span>
+    </h2>
+    <div class="alerts">
+
+      <div class="alert critical">
+        <div class="alert-icon">🔴</div>
+        <div class="alert-body">
+          <span class="co">Exa</span>
+          <div class="lang-en"><strong>CRITICAL — May 2026 API deprecation deadline PASSED (May 1).</strong> <code>use_autoprompt</code>, <code>highlights</code> (non-JS ≥2.0.11), and Auto relevance scores are live-removed from the API. Any integration still calling these fields is actively failing in production — not deprecation warnings, real broken responses. If novada-search's Research pipeline or any internal tooling calls Exa, audit today before the SERP + Scraper infra activation.</div>
+          <div class="lang-cn"><strong>严重 — Exa 2026 年 5 月 API 废弃截止日期已过（5 月 1 日）。</strong> <code>use_autoprompt</code>、<code>highlights</code>（非 JS ≥2.0.11）和 Auto 相关性分数已从 API 中实时移除。任何仍调用这些字段的集成正在生产中实际失败——不是废弃警告，而是真正的响应错误。如果 novada-search 的 Research 管道或任何内部工具调用 Exa，请在 SERP + Scraper 基础设施激活前的今天进行审查。</div>
+        </div>
+      </div>
+
+      <div class="alert high">
+        <div class="alert-icon">🟠</div>
+        <div class="alert-body">
+          <span class="co">BrightData</span>
+          <div class="lang-en"><strong>HIGH — Social scrapers now GA: Facebook profiles, Reddit profiles/posts, YouTube Podcasts, YouTube content.</strong> All first-class MCP tools in BrightData's Web MCP. A developer can now get web content, proxy rotation, CAPTCHA bypass, and social media data from a single server call. novada-search has no social scrapers — confirmed gap on one of the 6 KR-1 buying dimensions. BrightData is widening breadth lead while novada-proxy is pending approval.</div>
+          <div class="lang-cn"><strong>高危 — 社交媒体爬虫现已正式发布：Facebook 个人资料、Reddit 帖子、YouTube 播客、YouTube 内容。</strong> 全部作为 BrightData Web MCP 中的一流工具。开发者现在可以从单次服务器调用中获取网页内容、代理轮换、CAPTCHA 绕过和社交媒体数据。novada-search 没有社交爬虫——确认为 6 项 KR-1 购买维度之一的差距。BrightData 在扩大广度优势，而 novada-proxy 仍在等待审批。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Firecrawl</span>
+          <div class="lang-en"><strong>MEDIUM — Audio extraction added to <code>/scrape</code> (+4 credits/request).</strong> First major competitor to cross into audio extraction — web-hosted audio now returned alongside markdown, HTML, JSON, and screenshots. This signals that extraction APIs are heading multimodal. No Novada endpoint has audio extraction. Near-term relevance is low, but this is a 90-day watch item as audio-native LLM workflows grow.</div>
+          <div class="lang-cn"><strong>中危 — <code>/scrape</code> 新增音频提取（+4 积分/请求）。</strong> 第一家跨入音频提取领域的主要竞争对手——网络托管音频现在与 markdown、HTML、JSON 和截图一起返回。这表明提取 API 正朝着多模态方向发展。Novada 没有音频提取端点。近期相关性较低，但随着原生音频 LLM 工作流增长，这是一个 90 天的观察项目。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Tavily</span>
+          <div class="lang-en"><strong>MEDIUM — IBM THINK ended May 7; enterprise GTM now in full execution.</strong> Post-conference, Nebius is steering Tavily toward Fortune 500 accounts with urgency. Nvidia GTC 2026 presence and Token Factory integration confirmed. Developer-first segment gap grows by one more week. The window for novada-search's Search endpoint to claim the self-serve developer narrative is still open — but narrowing.</div>
+          <div class="lang-cn"><strong>中危 — IBM THINK 已于 5 月 7 日结束；企业 GTM 现已全面执行。</strong> 会议后，Nebius 正紧迫地将 Tavily 引向财富 500 强客户。Nvidia GTC 2026 出席及 Token Factory 集成已确认。开发者优先细分市场的差距又扩大了一周。novada-search 的 Search 端点占领自助开发者叙事的窗口仍然开着——但正在收窄。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Decodo</span>
+          <div class="lang-en"><strong>MEDIUM — Decodo wasn't as quiet as yesterday's scan suggested: v2 Scraper API shipped.</strong> New <code>/v2</code> sync, async, and batch scraping routes replace <code>/v1/*</code>. IP Replacement from dashboard live. LangChain loader available. Yesterday's classification of Decodo as "quiet this week" missed active API modernization — Decodo is rebuilding its scraping API stack, and their LangChain loader is direct competition for Novada's KR-3 LangChain PR goal.</div>
+          <div class="lang-cn"><strong>中危 — Decodo 并非昨日扫描所示的那么平静：v2 Scraper API 已发布。</strong> 新的 <code>/v2</code> 同步、异步和批量抓取路由替换了 <code>/v1/*</code>。仪表板 IP 替换功能已上线。LangChain 加载器可用。昨天将 Decodo 归类为"本周安静"遗漏了活跃的 API 现代化——Decodo 正在重建其抓取 API 技术栈，其 LangChain 加载器与 Novada 的 KR-3 LangChain PR 目标直接竞争。</div>
+        </div>
+      </div>
+
+      <div class="alert low">
+        <div class="alert-icon">🟢</div>
+        <div class="alert-body">
+          <span class="co">Crawl4AI</span>
+          <div class="lang-en"><strong>LOW — 3-tier anti-bot confirmed in v0.8.5: structural detection of Akamai, Cloudflare, PerimeterX, DataDome, Imperva.</strong> Shadow DOM flattening and webhook job queues also documented. Still at v0.8.6; no v0.8.7 yet. GitHub stars: 62,300+. The free open-source CAPTCHA/anti-bot alternative continues to mature — relevant to Novada's own gap (no CAPTCHA auto-solve).</div>
+          <div class="lang-cn"><strong>低危 — v0.8.5 中 3 层反爬虫已确认：对 Akamai、Cloudflare、PerimeterX、DataDome、Imperva 的结构化检测。</strong> Shadow DOM 展平和 Webhook 任务队列也已文档化。仍在 v0.8.6；尚无 v0.8.7。GitHub 星标：62,300+。免费开源 CAPTCHA/反爬虫替代方案持续成熟——与 Novada 自身的差距（无 CAPTCHA 自动解决）相关。</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AI INSIGHTS -->
+  <section>
+    <h2>
+      <span class="lang-en">AI Insights</span>
+      <span class="lang-cn">AI 洞察</span>
+    </h2>
+    <div class="insight-grid">
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('exa-broken-deprecations-switching-signal.md', '# Exa\'s Broken Deprecations Are a Live Switching Signal — Novada Should Be Ready\n\nThe Exa May 1 deadline has passed. Developers running `use_autoprompt`, `highlights` (non-JS ≥2.0.11), or consuming Auto relevance scores are seeing live errors in production right now — not deprecation warnings, actual broken API responses.\n\nExa 2.0 is technically stronger: sub-350 ms P50 Fast search, improved Auto quality, agentic Deep tier. But breaking changes on a production API create switching motivation that no latency improvement undoes in the short term. The developer who just had their pipeline break doesn\'t care that Exa 2.0 is 30% faster. They care that their agent is failing.\n\nThe opportunity for Novada is not to point fingers. It\'s to be the search API with a stable, developer-respecting API contract — and to be visible where frustrated Exa users will go looking for alternatives: Show HN, LangChain Discord, r/LocalLLaMA, the Exa subreddit.\n\nNovada\'s Search endpoint (pending infra activation) has a chance to show up in those communities as "the alternative that doesn\'t surprise you." That positioning costs nothing except showing up.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">01</div>
+        <div class="lang-en">
+          <h3>Exa's Broken Deprecations Are a Live Switching Signal</h3>
+          <p>The May 1 deadline has passed. Developers running <code>use_autoprompt</code>, <code>highlights</code>, or Auto relevance scores are seeing live API failures now — not warnings. Exa 2.0 is technically stronger (sub-350 ms, improved Auto, Deep tier), but breaking changes create switching motivation that no latency improvement undoes. The opportunity for Novada is not to point fingers — it's to be the search API with a stable, developer-respecting contract and to be visible in the places (Show HN, LangChain Discord, r/LocalLLaMA) where frustrated Exa users will look. Positioning novada-search as "the API that doesn't surprise you" costs nothing except showing up.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Exa 破坏性废弃是实时切换信号</h3>
+          <p>5 月 1 日截止已过。运行 <code>use_autoprompt</code>、<code>highlights</code> 或 Auto 相关性分数的开发者现在正在经历实际 API 失败——不是警告。Exa 2.0 技术上更强（sub-350ms、改进的 Auto、Deep 层），但破坏性变更会产生切换动机，任何延迟改进都无法在短期内消除。Novada 的机会不是指责——而是成为拥有稳定、尊重开发者 API 协议的搜索 API，并在受挫 Exa 用户会寻找替代品的地方（Show HN、LangChain Discord、r/LocalLLaMA）保持可见。将 novada-search 定位为"不会给你惊喜的 API"只需要出现即可。</p>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('brightdata-social-scrapers-change-single-call-benchmark.md', '# BrightData\'s Social Scraper GA Changes the Single-Call Benchmark Calculus\n\nFacebook profiles, Reddit posts, and YouTube content are now first-class tools in BrightData\'s Web MCP. A developer can get web content, proxy-rotated requests, CAPTCHA bypass, and social media data from a single MCP server. This is a genuine breadth advantage that no amount of integration quality from Novada closes in the short term — because Novada has no social scrapers.\n\nFor Novada\'s KR-1 benchmark (beat Firecrawl/Tavily/BrightData on ≥5/6 buying dimensions), the honest answer is: Novada cannot win the social scraper dimension today. The strategic response is not to scramble to build social scrapers — it\'s to:\n1. Explicitly acknowledge which dimensions Novada wins and which it doesn\'t in the KR-1 scorecard.\n2. Win decisively on the dimensions where the integrated stack (search + proxy), MCP-native architecture, and agent-first design create genuine differentiation.\n3. Publish those comparison points before the KR-1 deadline — a benchmark Novada chooses to run is one Novada can frame.\n\nThe social gap will not close this month. Making that honest and intentional — "we\'re optimizing for X, not Y" — is stronger than pretending the gap doesn\'t exist.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">02</div>
+        <div class="lang-en">
+          <h3>BrightData's Social Scraper GA Changes the Single-Call Benchmark Calculus</h3>
+          <p>Facebook profiles, Reddit posts, YouTube content — now first-class MCP tools in BrightData's Web MCP. A developer gets web content, proxy rotation, CAPTCHA bypass, and social data from one server. For Novada's KR-1 benchmark (≥5/6 buying dimensions), the honest answer is Novada cannot win the social scraper dimension today. The strategic response: acknowledge which dimensions Novada wins and which it doesn't, then win decisively where the integrated stack and MCP-native architecture create real differentiation. A benchmark Novada chooses to run is one Novada can frame — publish the comparison before BrightData does it for us.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>BrightData 社交爬虫 GA 改变了单次调用基准计算</h3>
+          <p>Facebook 个人资料、Reddit 帖子、YouTube 内容——现在都是 BrightData Web MCP 中的一流工具。开发者可以从一个服务器获取网页内容、代理轮换、CAPTCHA 绕过和社交数据。对于 Novada 的 KR-1 基准（≥5/6 购买维度），诚实的答案是 Novada 今天无法赢得社交爬虫这一维度。战略响应：承认哪些维度 Novada 赢了、哪些没有，然后在集成技术栈和 MCP 原生架构创造真正差异化的地方决定性地获胜。Novada 选择运行的基准是 Novada 可以定义框架的——在 BrightData 为我们做之前发布比较。</p>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('firecrawl-audio-extraction-multimodal-90-day-watch.md', '# Firecrawl\'s Audio Extraction Is a 90-Day Watch Item, Not a 7-Day Action\n\nFirecrawl added audio extraction to /scrape (+4 credits/request) — the first major extraction API to return web-hosted audio as a native media type alongside text, JSON, and screenshots. Today\'s share of audio extraction in agent pipelines is small. Podcast processing, speech transcripts, and video audio are niche use cases for current AI workflows.\n\nBut this is a directional signal: extraction APIs that already support audio content will gain distribution advantage when audio-native LLM workflows become mainstream. Multimodal models are improving rapidly. An agent that can scrape, transcribe, and reason over audio content in a single pipeline will be a real use case within 6-12 months.\n\nNovada has no audio extraction endpoint and no roadmap item for it. The question is not "should we build it now?" (probably not — too niche). The question is "have we made a conscious decision not to build it yet?" A gap you\'ve decided to leave is strategy. A gap you\'ve overlooked is a blind spot.\n\n**This week →** Add "audio extraction" to the explicit backlog with a "not now / revisit Q3 2026" tag. That\'s all — but without that tag, it will be discovered in a KR-1 benchmark review and look like an oversight.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">03</div>
+        <div class="lang-en">
+          <h3>Firecrawl's Audio Extraction Is a 90-Day Watch Item, Not a 7-Day Action</h3>
+          <p>Firecrawl added audio extraction (+4 credits/request) — first major extraction API to return web-hosted audio natively. Today's share of audio in agent pipelines is small: podcast processing and speech transcripts are niche. But this is a directional signal. Extraction APIs with audio support will gain pipeline distribution advantage when audio-native LLM workflows mature (6–12 months). Novada has no audio extraction endpoint. The question isn't "should we build it now?" — probably not. It's "have we consciously decided not to yet?" A gap you've decided to leave is strategy; a gap you've overlooked is a blind spot. Add it to backlog with a "not now / revisit Q3" tag.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Firecrawl 音频提取是 90 天观察项目，不是 7 天行动</h3>
+          <p>Firecrawl 新增音频提取（+4 积分/请求）——第一个将网络托管音频作为原生媒体类型返回的主要提取 API。今天音频在 Agent 管道中的份额很小：播客处理和语音转录是小众用例。但这是一个方向性信号。当音频原生 LLM 工作流成熟（6-12 个月）时，支持音频的提取 API 将获得管道分发优势。Novada 没有音频提取端点。问题不是"我们现在应该构建吗？"——可能不是。而是"我们是否有意识地决定还不做？"你选择留下的差距是策略；你忽视的差距是盲点。将其添加到积压项中并标记"暂不/Q3 重新评估"。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPETITOR CARDS -->
+  <section>
+    <h2>
+      <span class="lang-en">Competitor Updates</span>
+      <span class="lang-cn">竞品动态</span>
+    </h2>
+    <div class="comp-grid">
+
+      <!-- Firecrawl -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔥</div>
+          <div>
+            <div class="comp-name">Firecrawl</div>
+            <div class="comp-category lang-en">Web Scraping API</div>
+            <div class="comp-category lang-cn">网页抓取 API</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Audio extraction on /scrape</strong>: web-hosted audio now a native return type (+4 credits/request); first competitor with audio extraction <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>/scrape 新增音频提取</strong>：网络托管音频现为原生返回类型（+4 积分/请求）；首个具备音频提取的竞争对手 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Full credit model published</strong> (May 4): 1cr/scrape; +4 JSON; +4 stealth proxy; +4 audio; +1/PDF page</li>
+          <li class="lang-cn"><strong>完整积分模型发布</strong>（5 月 4 日）：1 积分/抓取；+4 JSON；+4 隐身代理；+4 音频；+1/PDF 页</li>
+          <li class="lang-en"><strong>n8n promo ended</strong> (May 5): 100,000 free credits partnership offer no longer available</li>
+          <li class="lang-cn"><strong>n8n 促销结束</strong>（5 月 5 日）：10 万免费积分合作优惠不再提供</li>
+          <li class="lang-en"><strong>GET /v2/team/activity</strong>: last-24 h job list (scrape/crawl/extract), cursor pagination, 100/page, filterable <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>GET /v2/team/activity</strong>：过去 24 小时任务列表（scrape/crawl/extract），游标分页，100 条/页，可过滤 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Parallel Agents GA</strong>: thousands of simultaneous /agent calls; waterfall failover (Spark Fast → Spark Mini) <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>并行 Agent GA</strong>：数千个同时 /agent 调用；瀑布式故障转移（Spark Fast → Spark Mini）<span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en"><strong>MCP v3 stable</strong>: cloud HTTP Transport + SSE; <code>firecrawl_agent</code> + <code>firecrawl_agent_status</code> production-confirmed <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>MCP v3 稳定</strong>：云端 HTTP Transport + SSE；<code>firecrawl_agent</code> + <code>firecrawl_agent_status</code> 生产确认 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <!-- Tavily -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔍</div>
+          <div>
+            <div class="comp-name">Tavily</div>
+            <div class="comp-category lang-en">Search API (Nebius)</div>
+            <div class="comp-category lang-cn">搜索 API（Nebius 旗下）</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>IBM THINK ended May 7</strong>: post-conference enterprise GTM now in full execution; developer-first segment gap widens</li>
+          <li class="lang-cn"><strong>IBM THINK 5 月 7 日结束</strong>：会后企业 GTM 现已全面执行；开发者优先细分差距扩大</li>
+          <li class="lang-en"><strong>Nvidia GTC 2026 confirmed</strong>: integrated into Nvidia AI-Q Blueprint (agentic systems); Token Factory = Tavily search + Nebius GPU inference</li>
+          <li class="lang-cn"><strong>Nvidia GTC 2026 已确认</strong>：集成到 Nvidia AI-Q Blueprint（智能体系统）；Token Factory = Tavily 搜索 + Nebius GPU 推理</li>
+          <li class="lang-en"><strong>No product features</strong> since acquisition (Feb 10) — full reorganization phase continues</li>
+          <li class="lang-cn"><strong>自收购以来（2 月 10 日）无产品功能发布</strong>——完整重组阶段持续</li>
+          <li class="lang-en">Acquired by Nebius ($275 M, up to $400 M); 3 M+ monthly SDK downloads; IBM, Cohere, Groq customers <span class="tag tag-acq">ACQ</span></li>
+          <li class="lang-cn">Nebius 收购（2.75 亿，最高 4 亿美元）；月 SDK 下载量 300 万+；IBM、Cohere、Groq 为客户 <span class="tag tag-acq">收购</span></li>
+        </ul>
+      </div>
+
+      <!-- BrightData -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">💡</div>
+          <div>
+            <div class="comp-name">BrightData</div>
+            <div class="comp-category lang-en">Proxy + Scraping</div>
+            <div class="comp-category lang-cn">代理 + 抓取</div>
+          </div>
+          <span class="comp-badge badge-alert">Action needed</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Social scrapers GA</strong>: Facebook profiles, Reddit profiles/posts, YouTube Podcasts, YouTube content — first-class MCP tools <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>社交爬虫 GA</strong>：Facebook 个人资料、Reddit 帖子、YouTube 播客、YouTube 内容——一流 MCP 工具 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>RFC 9209 live in production</strong>: legacy proprietary proxy error headers deprecated; standard HTTP error format is now default <span class="tag tag-dep">DEPRECATED</span></li>
+          <li class="lang-cn"><strong>RFC 9209 生产上线</strong>：旧版专有代理错误头已废弃；标准 HTTP 错误格式现为默认 <span class="tag tag-dep">废弃</span></li>
+          <li class="lang-en"><strong>Usage-limit alerts improved</strong>: clearer emails when approaching zone limits; unlimited traffic distribution across zones</li>
+          <li class="lang-cn"><strong>使用限制提醒改进</strong>：接近区域限制时更清晰的邮件通知；跨区域无限流量分配</li>
+          <li class="lang-en"><strong>Free MCP tier</strong>: 5,000 requests/month; no credit card; Claude Desktop/Cursor/VS Code one-click setup <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>免费 MCP 层</strong>：5,000 请求/月；无需信用卡；Claude Desktop/Cursor/VS Code 一键设置 <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en">60+ MCP tools across 9 groups: ecommerce, social, browser, finance, business, research, app_stores, travel, advanced_scraping <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">9 个分组 60+ MCP 工具：电商、社交、浏览器、金融、商业、研究、应用商店、旅游、高级抓取 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <!-- Oxylabs -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🧪</div>
+          <div>
+            <div class="comp-name">Oxylabs</div>
+            <div class="comp-category lang-en">Proxy</div>
+            <div class="comp-category lang-cn">代理</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>New proxy pool locations</strong>: added to Dedicated Datacenter, Datacenter, Dedicated ISP, and ISP pools <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>新增代理池位置</strong>：已添加至专用数据中心、数据中心、专用 ISP 和 ISP 池 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Headless Browser city/state sessions</strong>: granular geo-targeting now available (previously country-level only) <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>无头浏览器城市/州级会话</strong>：精细地理定位现可用（以前仅限国家级别）<span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>New ISP providers</strong>: Cox + Deutsche Telekom added to ISP and Dedicated ISP pools <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>新增 ISP 供应商</strong>：Cox + Deutsche Telekom 加入 ISP 和专用 ISP 池 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>New proxy filters</strong>: filter by operating system; filter by IP version (IPv4 vs IPv6) <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>新增代理过滤器</strong>：按操作系统过滤；按 IP 版本（IPv4 vs IPv6）过滤 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>AI Web Unblocker</strong> (Q1 2026): Cloudflare/Akamai/Kasada auto-handled; −43 % block rate; ML-driven ASN-matching IP rotation</li>
+          <li class="lang-cn"><strong>AI 解封器</strong>（2026 Q1）：自动处理 Cloudflare/Akamai/Kasada；封锁率降低 43%；ML 驱动 ASN 匹配 IP 轮换</li>
+        </ul>
+      </div>
+
+      <!-- Decodo -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔷</div>
+          <div>
+            <div class="comp-name">Decodo</div>
+            <div class="comp-category lang-en">Proxy (formerly Smartproxy)</div>
+            <div class="comp-category lang-cn">代理（原 Smartproxy）</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>v2 Scraper API</strong>: new <code>/v2</code> sync, async, and batch routes replace <code>/v1/*</code> — active API modernization confirmed <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>v2 Scraper API</strong>：新的 <code>/v2</code> 同步、异步、批量路由替换 <code>/v1/*</code>——主动 API 现代化已确认 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>IP Replacement Feature</strong>: swap individual static (ISP/DC) IPs from dashboard; ASN/subnet visibility; no plan change required <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>IP 替换功能</strong>：从仪表板即时替换单个静态（ISP/DC）IP；ASN/子网可见性；无需更换套餐 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>LangChain loader available</strong>: direct integration for LangChain agent pipelines — KR-3 competition signal <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>LangChain 加载器可用</strong>：LangChain Agent 管道的直接集成——KR-3 竞争信号 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>AI Parser</strong>: plain English → clean JSON; no developer required for structured extraction</li>
+          <li class="lang-cn"><strong>AI 解析器</strong>：自然语言 → 清洁 JSON；无需开发者即可结构化提取</li>
+          <li class="lang-en">125 M+ IPs, 195+ countries, 135,000+ clients. Promo: <strong>DECODO30</strong> (30 % off)</li>
+          <li class="lang-cn">195+ 国家 1.25 亿+ IP；135,000+ 客户；优惠码：<strong>DECODO30</strong>（7 折）</li>
+        </ul>
+      </div>
+
+      <!-- Crawl4AI -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🕷️</div>
+          <div>
+            <div class="comp-name">Crawl4AI</div>
+            <div class="comp-category lang-en">Open-Source Crawler</div>
+            <div class="comp-category lang-cn">开源爬虫</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>3-tier anti-bot confirmed</strong> (v0.8.5): structural HTML detection of Akamai, Cloudflare, PerimeterX, DataDome, Imperva; Tier 2 proxy escalation (DC → residential) <span class="tag tag-new">CONFIRMED</span></li>
+          <li class="lang-cn"><strong>3 层反爬虫已确认</strong>（v0.8.5）：对 Akamai、Cloudflare、PerimeterX、DataDome、Imperva 的 HTML 结构检测；Tier 2 代理升级（DC → 住宅）<span class="tag tag-new">已确认</span></li>
+          <li class="lang-en"><strong>Shadow DOM flattening</strong>: SPAs using Shadow DOM now properly parsed — unlocks a major class of previously inaccessible pages</li>
+          <li class="lang-cn"><strong>Shadow DOM 展平</strong>：使用 Shadow DOM 的 SPA 现在可以正确解析——解锁一大类以前无法访问的页面</li>
+          <li class="lang-en"><strong>Webhook job queues</strong>: async deep-crawl status callbacks in Docker deployments; crash recovery for deep crawls also documented</li>
+          <li class="lang-cn"><strong>Webhook 任务队列</strong>：Docker 部署中的异步深度爬取状态回调；深度爬取崩溃恢复也已文档化</li>
+          <li class="lang-en">Still at v0.8.6 — no v0.8.7 yet; GitHub stars: <strong>62,300+</strong>; MCP server built-in <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">仍在 v0.8.6——尚无 v0.8.7；GitHub 星标：<strong>62,300+</strong>；内置 MCP 服务器 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <!-- Exa -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">⚡</div>
+          <div>
+            <div class="comp-name">Exa</div>
+            <div class="comp-category lang-en">Neural Search</div>
+            <div class="comp-category lang-cn">神经搜索</div>
+          </div>
+          <span class="comp-badge badge-alert">Breaking live</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>⚠ Deprecations NOW LIVE (deadline passed May 1)</strong>: <code>use_autoprompt</code> removed globally; <code>highlights</code> removed (except JS ≥2.0.11); Auto relevance scores deprecated <span class="tag tag-brk">BREAKING</span></li>
+          <li class="lang-cn"><strong>⚠ 废弃现已生效（截止 5 月 1 日已过）</strong>：<code>use_autoprompt</code> 全局移除；<code>highlights</code> 已移除（JS ≥2.0.11 除外）；Auto 相关性分数废弃 <span class="tag tag-brk">破坏性</span></li>
+          <li class="lang-en"><strong>Exa 2.0 stable GA</strong>: Fast (&lt;350 ms P50, 30 % faster than next-fastest), Auto (higher default quality), Deep (agentic, 3.5 s P50) <span class="tag tag-new">GA</span></li>
+          <li class="lang-cn"><strong>Exa 2.0 稳定 GA</strong>：Fast（&lt;350ms P50，比次快 API 快 30%）、Auto（默认质量提升）、Deep（智能体，3.5s P50）<span class="tag tag-new">GA</span></li>
+          <li class="lang-en"><strong>Index</strong>: tens of billions of pages refreshed every minute; real-time coverage claims competitive parity with Google</li>
+          <li class="lang-cn"><strong>索引</strong>：数百亿页面每分钟刷新；实时覆盖声称与 Google 竞争对等</li>
+          <li class="lang-en"><strong>MCP free tier</strong>: no API key required up to rate limit; powers Cursor IDE <code>@web</code> semantic search <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>MCP 免费层</strong>：达速率限制前无需 API Key；驱动 Cursor IDE <code>@web</code> 语义搜索 <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en"><strong>$85 M Series B</strong> (Benchmark-led): neural embedding infrastructure expansion</li>
+          <li class="lang-cn"><strong>8500 万美元 B 轮</strong>（Benchmark 领投）：神经嵌入基础设施扩展</li>
+        </ul>
+      </div>
+
+      <!-- Apify -->
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🤖</div>
+          <div>
+            <div class="comp-name">Apify</div>
+            <div class="comp-category lang-en">Scraping Platform</div>
+            <div class="comp-category lang-cn">抓取平台</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Job lifecycle tools confirmed</strong>: <code>get_runs</code> (filterable by status), <code>get_run_details</code>, <code>get_run_output</code>, <code>get_run_log</code> — full Actor run observability from MCP <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>任务生命周期工具已确认</strong>：<code>get_runs</code>（可按状态过滤）、<code>get_run_details</code>、<code>get_run_output</code>、<code>get_run_log</code>——从 MCP 对 Actor 运行的完整可观测性 <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en"><strong>Blog active May 4–8</strong>: finance/fintech use cases, tool comparisons, anti-blocking strategies, pricing guides — developer content flywheel running</li>
+          <li class="lang-cn"><strong>博客 5 月 4–8 日活跃</strong>：金融/金融科技用例、工具比较、反封锁策略、定价指南——开发者内容飞轮运转</li>
+          <li class="lang-en"><strong>MCP ecosystem maturity</strong> (April 2026): OAuth 2.1, Streamable HTTP, async tasks stable; 10,000+ servers, Linux Foundation governance</li>
+          <li class="lang-cn"><strong>MCP 生态系统成熟</strong>（2026 年 4 月）：OAuth 2.1、Streamable HTTP、异步任务稳定；10,000+ 服务器，Linux Foundation 治理</li>
+          <li class="lang-en"><strong>Cursor AI</strong> natively references Apify docs — documentation-as-SEO-moat forming</li>
+          <li class="lang-cn"><strong>Cursor AI</strong> 原生引用 Apify 文档——文档即 SEO 护城河正在形成</li>
+          <li class="lang-en">80+ MCP servers via ApifyForge; RAG Web Browser Actor for LLM/RAG pipelines <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">ApifyForge 提供 80+ MCP 服务器；RAG Web Browser Actor 用于 LLM/RAG 管道 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCP ECOSYSTEM -->
+  <section>
+    <h2>
+      <span class="lang-en">MCP Ecosystem</span>
+      <span class="lang-cn">MCP 生态</span>
+    </h2>
+    <table class="mcp-table">
+      <thead>
+        <tr>
+          <th><span class="lang-en">Server</span><span class="lang-cn">服务器</span></th>
+          <th><span class="lang-en">Status</span><span class="lang-cn">状态</span></th>
+          <th><span class="lang-en">Notable</span><span class="lang-cn">亮点</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Firecrawl MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (v3 stable)</span><span class="lang-cn">活跃（v3 稳定）</span></td>
+          <td><span class="lang-en">firecrawl_agent + firecrawl_agent_status production-confirmed; Parallel Agents GA; audio extraction live; /v2/team/activity new</span><span class="lang-cn">firecrawl_agent + firecrawl_agent_status 生产确认；并行 Agent GA；音频提取上线；/v2/team/activity 新增</span></td>
+        </tr>
+        <tr>
+          <td><strong>BrightData MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (v2.8.3) — social scrapers GA</span><span class="lang-cn">活跃（v2.8.3）— 社交爬虫 GA</span></td>
+          <td><span class="lang-en">Facebook/Reddit/YouTube now GA; 60+ tools across 9 groups; RFC 9209 live; free tier (5K req/mo)</span><span class="lang-cn">Facebook/Reddit/YouTube 现已 GA；9 组 60+ 工具；RFC 9209 上线；免费层（5K 请求/月）</span></td>
+        </tr>
+        <tr>
+          <td><strong>Crawl4AI MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Built-in (v0.8.6)</span><span class="lang-cn">内置（v0.8.6）</span></td>
+          <td><span class="lang-en">3-tier anti-bot confirmed (Akamai/Cloudflare/PerimeterX/DataDome/Imperva); Shadow DOM; webhooks; self-hosted free</span><span class="lang-cn">3 层反爬虫确认；Shadow DOM；Webhook；自托管免费</span></td>
+        </tr>
+        <tr>
+          <td><strong>Apify MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (Streamable HTTP only)</span><span class="lang-cn">活跃（仅 Streamable HTTP）</span></td>
+          <td><span class="lang-en">Job lifecycle tools confirmed (get_runs, get_run_details, get_run_output, get_run_log); 80+ actors; Cursor native docs</span><span class="lang-cn">任务生命周期工具已确认；80+ Actors；Cursor 原生文档</span></td>
+        </tr>
+        <tr>
+          <td><strong>Decodo MCP</strong></td>
+          <td><span class="dot dot-yellow"></span><span class="lang-en">Active — v2 Scraper API live</span><span class="lang-cn">活跃 — v2 Scraper API 上线</span></td>
+          <td><span class="lang-en">v2 sync/async/batch routes; LangChain loader available; IP Replacement dashboard feature</span><span class="lang-cn">v2 同步/异步/批量路由；LangChain 加载器可用；IP 替换仪表板功能</span></td>
+        </tr>
+        <tr>
+          <td><strong>Exa MCP</strong></td>
+          <td><span class="dot dot-red"></span><span class="lang-en">Active — ⚠ BREAKING CHANGES LIVE (deadline passed May 1)</span><span class="lang-cn">活跃 — ⚠ 破坏性变更已生效（截止 5 月 1 日已过）</span></td>
+          <td><span class="lang-en">Fast/Auto/Deep GA; highlights gone; use_autoprompt gone; Auto relevance deprecated — integrations may be silently broken</span><span class="lang-cn">Fast/Auto/Deep GA；highlights 已移除；use_autoprompt 已移除；Auto 相关性废弃——集成可能静默失败</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tavily MCP</strong></td>
+          <td><span class="dot dot-yellow"></span><span class="lang-en">Active (Cursor marketplace) — no updates</span><span class="lang-cn">活跃（Cursor 市场）— 无更新</span></td>
+          <td><span class="lang-en">IBM THINK ended; enterprise GTM in execution; developer community under-invested; Nvidia AI-Q Blueprint integration active</span><span class="lang-cn">IBM THINK 结束；企业 GTM 执行中；开发者社区投入不足；Nvidia AI-Q Blueprint 集成活跃</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px; font-size:12px; color:var(--muted);">
+      <span class="lang-en">Ecosystem: <strong>10,000+ public MCP servers</strong> · OAuth 2.1 + Streamable HTTP + async tasks confirmed stable · Linux Foundation Agentic AI Foundation governance (Apr 2026) · Amazon AWS, OpenAI, Google DeepMind native MCP support.</span>
+      <span class="lang-cn">生态：超过 <strong>1 万个</strong>公开 MCP 服务器 · OAuth 2.1 + Streamable HTTP + 异步任务确认稳定 · Linux Foundation Agentic AI Foundation 治理（2026 年 4 月）· 亚马逊 AWS、OpenAI、Google DeepMind 均已原生支持 MCP。</span>
+    </p>
+  </section>
+
+  <!-- NOVADA TEAM BRIEF -->
+  <section>
+    <h2><span class="lang-en">Novada Team Brief</span><span class="lang-cn">Novada 团队简报</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;margin-top:-8px;">Novada-specific angles on today's intel. Open in browser and click 💾 Save .md to export any insight to your workspace.</p>
+    <div class="insight-grid">
+
+      <!-- Card 01: BLIND SPOT -->
+      <div class="insight-card" style="border-left-color:#c0392b;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">01</div>
+            <span style="background:#f0eaf9;color:#7c4dbd;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">BLIND SPOT</span>
+          </div>
+          <button onclick="saveInsightMd('brightdata-social-scrapers-ga-kr1-buying-dimension-gap.md','# BrightData Social Scrapers GA — KR-1 Buying Dimension Gap Confirmed\n\nBrightData confirmed GA today for Facebook profiles, Reddit profiles/posts, and YouTube content as first-class MCP tools. This is directly relevant to Novada\'s known gap: no social scrapers.\n\nFor KR-1 (beat Firecrawl/Tavily/BrightData on ≥5/6 buying dimensions), social scraping is now an explicit BrightData win. This isn\'t a hypothetical future feature — it\'s live, in production, accessible via MCP with no configuration. A developer evaluating Novada vs BrightData for any use case involving social data will select BrightData in under 5 minutes.\n\nThe blind spot here is treating this as a roadmap gap rather than a benchmark gap. If the KR-1 scorecard doesn\'t explicitly acknowledge social scraping as a dimension where BrightData wins, the benchmark results will be ambiguous or look worse than they are.\n\nThe honest framing: Novada wins on integration depth (search+proxy in one stack), MCP-native architecture, and agent-first design. BrightData wins on breadth (60+ tools including social). Choose the 5 dimensions Novada wins, publish those comparisons, and be explicit that social scraping is out of scope for v0.8.5 — by design, not by accident.\n\n**This week →** Update the KR-1 benchmark scorecard: mark social scraping as a BrightData win. Identify the 5 dimensions Novada can definitively win. Draft those comparison points before the KR-1 deadline.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>BrightData Social Scrapers GA Exposes KR-1 Buying Dimension Gap</h3>
+        <p>BrightData confirmed Facebook profiles, Reddit posts, and YouTube content as live GA MCP tools today. Novada has no social scrapers — a known gap, now confirmed as an active competitor offering. For KR-1 (≥5/6 buying dimensions), this is an explicit BrightData win. The blind spot is treating this as a roadmap gap rather than a benchmark accounting item. The honest framing: Novada wins on integrated stack depth and MCP-native architecture; BrightData wins on breadth. If the KR-1 scorecard doesn't acknowledge this explicitly, the benchmark results will look worse than they need to.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #c0392b;"><strong>This week →</strong> Update the KR-1 scorecard: mark social scraping as a BrightData win. Identify the 5 dimensions Novada can definitively win — and draft those comparison points before the KR-1 deadline, so Novada frames the benchmark, not BrightData.</div>
+      </div>
+
+      <!-- Card 02: ACTION -->
+      <div class="insight-card" style="border-left-color:#c0392b;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">02</div>
+            <span style="background:#fdf0ee;color:#c0392b;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">ACTION</span>
+          </div>
+          <button onclick="saveInsightMd('exa-deprecations-live-audit-upstream-usage-today.md','# Exa API Deprecations Are Live — Audit Any Upstream Exa Usage Today\n\nThe Exa May 1 deadline has passed. `use_autoprompt`, `highlights` (non-JS ≥2.0.11), and Auto relevance scores are actively removed from the Exa API. Today is May 8. Any integration using these fields has been returning broken responses for 7 days.\n\nIf novada-search\'s Research API uses Exa as an upstream provider — either directly or via an SDK — the following must be checked today:\n- Any call using `use_autoprompt: true` → field is gone, call may silently return degraded results\n- Any call consuming `highlights` in the response → field is absent (unless using Exa JS SDK ≥2.0.11)\n- Any call comparing or filtering on Auto search relevance scores → scores are no longer returned\n\nThis is specifically important before the SERP + Scraper endpoint infra activation this week. If a broken Exa integration propagates into a newly activated endpoint, debugging becomes significantly harder because the failure mode looks like a Novada infrastructure issue, not an upstream API change.\n\n**This week →** Run a targeted audit of novada-search codebase for Exa API calls. Grep for `use_autoprompt`, `highlights`, and relevance score consumption. Fix any affected calls before SERP + Scraper infra goes live.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Exa Deprecations Are Live — Audit Upstream Usage Before SERP Infra Activates</h3>
+        <p>Exa's May 1 deadline has passed. <code>use_autoprompt</code>, <code>highlights</code> (non-JS ≥2.0.11), and Auto relevance scores have been actively broken for 7 days. If novada-search's Research pipeline uses Exa upstream, those calls may be silently returning degraded or missing fields right now. This is critical to audit before the SERP + Scraper endpoint infra activation: a broken upstream Exa integration propagating into a newly activated endpoint looks like a Novada infrastructure failure, not an external API change — making it dramatically harder to debug.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #c0392b;"><strong>This week →</strong> Grep the novada-search codebase for <code>use_autoprompt</code>, <code>highlights</code>, and Exa Auto relevance score consumption. Fix any affected calls before SERP + Scraper infra goes live. 30-minute audit, high-leverage risk reduction.</div>
+      </div>
+
+      <!-- Card 03: WATCH -->
+      <div class="insight-card" style="border-left-color:#d35400;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">03</div>
+            <span style="background:#fefbec;color:#b7860b;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">WATCH</span>
+          </div>
+          <button onclick="saveInsightMd('decodo-langchain-loader-kr3-competition-signal.md','# Decodo\'s LangChain Loader Is Direct KR-3 Competition — Check If It\'s Official\n\nToday\'s deeper research on Decodo reveals they quietly shipped: (1) a v2 Scraper API replacing /v1/* routes, (2) an IP Replacement dashboard feature, and (3) a LangChain loader for direct pipeline integration.\n\nYesterday\'s competitive scan called Decodo "quiet this week." That was wrong — they\'re actively modernizing their scraping API stack.\n\nThe LangChain loader is the most relevant item for Novada. KR-3 is explicitly about GitHub distribution including LangChain PRs. If Decodo\'s LangChain loader is already merged into the official LangChain repository (not a community fork), novada-search\'s LangChain PR will be competing for attention against an established integration — which is a harder position than being first.\n\nThe v2 Scraper API architecture also warrants watching. Decodo\'s new /v2 sync/async/batch structure is similar to the design direction for novada-search\'s scraping endpoints. If they converge on identical API surface, Novada\'s differentiation story requires more than API compatibility — it needs to emphasize the MCP-native, agent-first framing.\n\n**This week →** Check whether Decodo\'s LangChain loader is in the official LangChain GitHub repo or a standalone community fork. If official, escalate the KR-3 LangChain PR timeline accordingly.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Decodo's LangChain Loader Is a Direct KR-3 Signal — Check If It's in Official Repo</h3>
+        <p>Yesterday's scan classified Decodo as "quiet." Today's data shows they shipped a v2 Scraper API (sync/async/batch replacing <code>/v1/*</code>), an IP Replacement dashboard feature, and a LangChain loader. The LangChain loader is the KR-3 concern: if Decodo's loader is already merged into the official LangChain repo (not a community fork), novada-search's LangChain PR will compete against an established integration. Being second to Decodo on LangChain is a harder position than being second to Firecrawl — Decodo is a proxy provider, not typically a LangChain-first tool, which means developers won't expect it there.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #d35400;"><strong>This week →</strong> Check whether Decodo's LangChain loader is in the official LangChain GitHub repo or a standalone fork. If official, escalate the KR-3 LangChain PR timeline. If fork-only, it confirms the official slot is still available for novada-search.</div>
+      </div>
+
+      <!-- Card 04: OPPORTUNITY -->
+      <div class="insight-card" style="border-left-color:#1e7e34;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">04</div>
+            <span style="background:#edf7f0;color:#1e7e34;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">OPPORTUNITY</span>
+          </div>
+          <button onclick="saveInsightMd('firecrawl-parallel-agents-benchmark-novada-kr2-needs-concurrency.md','# Firecrawl\'s Parallel Agents Claim Makes Concurrency a Required KR-2 Column\n\nFirecrawl shipped Parallel Agents GA this week: thousands of simultaneous /agent calls with waterfall failover. Their narrative is explicit: "what took hours of sequential agent queries now completes in minutes." This is the kind of benchmark claim that enterprise buyers actually remember.\n\nNovada\'s KR-2 calls for a crawl tool and a 50-site benchmark. No concurrency numbers have been planned or published for novada-search. This is a gap relative to Firecrawl\'s narrative — and it\'s also an opportunity, because novada-search\'s integrated stack (search + proxy in one call) theoretically has a concurrency architecture advantage over Firecrawl\'s /agent orchestration model.\n\nThe opportunity: if novada-search\'s 50-site benchmark includes a concurrency column (e.g., "50 sites crawled simultaneously — time to completion"), and that number is competitive or better than Firecrawl\'s Parallel Agents, Novada has a publishable counter-narrative. The benchmark becomes the content.\n\nNote: this only works if SERP + Scraper infra is activated first. Without live endpoints, there\'s no benchmark to run.\n\n**This week →** Add "concurrency / parallel execution time" as a required column to the KR-2 50-site benchmark design. Even a 10-site parallel baseline vs Firecrawl gives Novada a first public number to cite — and closes the narrative gap before it becomes entrenched.\n\n---\nSaved from Novada Intel — 2026-05-08\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Firecrawl Parallel Agents Makes Concurrency a Required KR-2 Benchmark Column</h3>
+        <p>Firecrawl Parallel Agents GA ships a memorable enterprise claim: "what took hours now completes in minutes." Novada's KR-2 calls for a 50-site benchmark, but no concurrency numbers are planned. This is both a gap and an opportunity: novada-search's integrated stack (search + proxy in one call) theoretically has a concurrency architecture advantage over Firecrawl's multi-hop /agent model. If the 50-site benchmark includes a parallel execution time column and the number is competitive, Novada has a counter-narrative. But this requires live SERP + Scraper infra first — so it's sequentially dependent on this week's activation.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #1e7e34;"><strong>This week →</strong> Add "concurrency / parallel time-to-completion" as a required column to the KR-2 50-site benchmark design. Even a 10-site parallel baseline vs Firecrawl's Parallel Agents gives Novada a first public number — and closes the narrative gap before Firecrawl's claim becomes the category default.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Novada Labs</strong> &nbsp;·&nbsp;
+    <span class="lang-en">Competitive Intelligence — Daily Report</span>
+    <span class="lang-cn">竞争情报 — 每日报告</span>
+    &nbsp;·&nbsp; 2026-05-08
+  </p>
+  <p style="margin-top:6px;">
+    <span class="lang-en">Sources: Firecrawl blog/changelog/docs/GitHub · Firecrawl MCP Server GitHub · Tavily Blog (May 2026) · Nebius newsroom · BrightData Release Notes/Blog/Docs · Oxylabs product-updates/blog/pricing · Decodo blog/changelog · Crawl4AI GitHub/Docs (v0.8.x) · Exa docs/changelog/blog · Apify blog/changelog/GitHub · PulseMCP · modelcontextprotocol spec</span>
+    <span class="lang-cn">来源：Firecrawl 博客/更新日志/文档/GitHub · Firecrawl MCP Server GitHub · Tavily 博客（2026 年 5 月）· Nebius 新闻室 · BrightData 发布说明/博客/文档 · Oxylabs 产品更新/博客/定价 · Decodo 博客/更新日志 · Crawl4AI GitHub/文档（v0.8.x）· Exa 文档/更新日志/博客 · Apify 博客/更新日志/GitHub · PulseMCP · modelcontextprotocol 规范</span>
+  </p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('cn', lang === 'cn');
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => {
+      btn.classList.toggle('active', (i === 0 && lang === 'en') || (i === 1 && lang === 'cn'));
+    });
+  }
+</script>
+
+<script>
+function saveInsightMd(filename, content) {
+  const text = content.replace(/\\n/g, '\n').replace(/\\'/g, "'");
+  const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 500);
+}
+</script>
+
+</body>
+</html>
