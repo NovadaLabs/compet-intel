@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novada Competitive Intelligence — 2026-05-10</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e6;
+    --card: #fffdf7;
+    --border: #e2d9c8;
+    --text: #2c2416;
+    --muted: #7a6e5e;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --orange: #d35400;
+    --orange-bg: #fef4ec;
+    --yellow: #b7860b;
+    --yellow-bg: #fefbec;
+    --green: #1e7e34;
+    --green-bg: #edf7f0;
+    --blue: #1a5276;
+    --blue-bg: #eaf2fb;
+    --accent: #7c4dbd;
+    --accent-light: #f0eaf9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .lang-cn { display: none; }
+  body.cn .lang-en { display: none; }
+  body.cn .lang-cn { display: block; }
+  body.cn .lang-cn-inline { display: inline; }
+  body.cn .lang-en-inline { display: none; }
+  .lang-cn-inline { display: none; }
+
+  header {
+    background: var(--text);
+    color: #f5f0e6;
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  header .brand { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; opacity: .6; }
+  header h1 { font-size: 22px; font-weight: 900; margin-top: 4px; }
+  header .meta { font-size: 12px; opacity: .55; margin-top: 2px; }
+  .lang-toggle { display: flex; gap: 4px; }
+  .lang-toggle button {
+    background: transparent;
+    border: 1px solid rgba(245,240,230,.35);
+    color: #f5f0e6;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .lang-toggle button.active,
+  .lang-toggle button:hover {
+    background: rgba(245,240,230,.18);
+    border-color: rgba(245,240,230,.7);
+  }
+
+  main { max-width: 1120px; margin: 0 auto; padding: 36px 24px 60px; }
+  section { margin-bottom: 44px; }
+  h2 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .alerts { display: flex; flex-direction: column; gap: 10px; }
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border-left: 4px solid;
+    font-size: 14px;
+  }
+  .alert.critical { background: var(--red-bg); border-color: var(--red); }
+  .alert.high     { background: var(--orange-bg); border-color: var(--orange); }
+  .alert.medium   { background: var(--yellow-bg); border-color: var(--yellow); }
+  .alert.low      { background: var(--green-bg); border-color: var(--green); }
+  .alert-icon { font-size: 18px; line-height: 1.4; flex-shrink: 0; }
+  .alert-body strong { font-weight: 800; }
+  .alert-body .co { font-weight: 700; color: var(--muted); font-size: 12px; margin-bottom: 1px; display: block; }
+
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .insight-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #a06ee0);
+  }
+  .insight-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent-light);
+    line-height: 1;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+  .insight-card h3 { font-size: 14px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+  .insight-card p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .comp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .comp-logo {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    background: var(--accent-light);
+  }
+  .comp-name { font-weight: 900; font-size: 15px; }
+  .comp-category { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .comp-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .badge-alert  { background: var(--red-bg);    color: var(--red);    border: 1px solid #f5c6c2; }
+  .badge-active { background: var(--green-bg);  color: var(--green);  border: 1px solid #b8dfc4; }
+  .badge-watch  { background: var(--yellow-bg); color: var(--yellow); border: 1px solid #f5e0a0; }
+  .comp-updates { list-style: none; }
+  .comp-updates li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+    border-bottom: 1px solid var(--bg);
+  }
+  .comp-updates li:last-child { border-bottom: none; }
+  .comp-updates li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 7px;
+  }
+  .comp-updates li strong { color: var(--text); font-weight: 700; }
+  .comp-updates li .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 8px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .tag-mcp  { background: #eaf2fb; color: #1a5276; }
+  .tag-sec  { background: var(--red-bg); color: var(--red); }
+  .tag-new  { background: var(--green-bg); color: var(--green); }
+  .tag-dep  { background: var(--yellow-bg); color: var(--yellow); }
+  .tag-acq  { background: var(--accent-light); color: var(--accent); }
+  .tag-win  { background: #edf7f0; color: #1e7e34; }
+  .tag-brk  { background: var(--red-bg); color: var(--red); border: 1px solid #f5c6c2; }
+
+  .mcp-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mcp-table th {
+    background: var(--text);
+    color: #f5f0e6;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 11px 16px;
+    text-align: left;
+  }
+  .mcp-table td {
+    padding: 11px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .mcp-table tr:last-child td { border-bottom: none; }
+  .mcp-table tr:hover td { background: var(--bg); }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-green  { background: #27ae60; }
+  .dot-yellow { background: #f39c12; }
+  .dot-red    { background: #c0392b; }
+
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 28px 24px 40px;
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+  ⚠️ INTERNAL USE ONLY — DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+</div>
+
+<header>
+  <div>
+    <div class="brand">Novada Labs</div>
+    <h1>
+      <span class="lang-en-inline">Competitive Intelligence</span>
+      <span class="lang-cn-inline">竞争情报</span>
+    </h1>
+    <div class="meta">
+      <span class="lang-en-inline">Daily Report — 2026-05-10</span>
+      <span class="lang-cn-inline">每日报告 — 2026-05-10</span>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('cn')">中文</button>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <h2><span class="lang-en">Alerts</span><span class="lang-cn">警报</span></h2>
+    <div class="alerts">
+
+      <div class="alert critical">
+        <div class="alert-icon">🔴</div>
+        <div class="alert-body">
+          <span class="co">Firecrawl</span>
+          <div class="lang-en"><strong>CRITICAL — Firecrawl Skill ships for Claude Code, Codex, and OpenCode — auto-discovery in the AI coding-agent skill marketplace.</strong> One install command sets up the CLI + build skills. Firecrawl is colonizing the agent-native distribution channel that Novada's KR-3 targets (Claude Plugin) before novada-search has a published skill. 110k+ GitHub stars. Every developer opening Claude Code for a web task now sees Firecrawl as the default suggested tool.</div>
+          <div class="lang-cn"><strong>严重 — Firecrawl Skill 面向 Claude Code、Codex 和 OpenCode 发布——在 AI 编码代理技能市场中自动发现。</strong> 一条安装命令即可设置 CLI + 构建技能。Firecrawl 正在占领 Novada KR-3 目标（Claude Plugin）的代理原生分发渠道，而 novada-search 尚未发布技能。GitHub 星标 110,000+。</div>
+        </div>
+      </div>
+
+      <div class="alert high">
+        <div class="alert-icon">🟠</div>
+        <div class="alert-body">
+          <span class="co">Decodo</span>
+          <div class="lang-en"><strong>HIGH — Decodo confirmed in official LangChain JavaScript docs</strong> (<code>docs.langchain.com/oss/javascript/integrations/tools/decodo</code>). KR-3's LangChain PR is no longer competing for an empty slot — it's competing against an established, indexed integration gated behind Web API Advanced plans. Python docs slot status is unconfirmed — that's the one to claim first.</div>
+          <div class="lang-cn"><strong>高危 — Decodo 已在 LangChain 官方 JavaScript 文档中确认</strong>（<code>docs.langchain.com/oss/javascript/integrations/tools/decodo</code>）。KR-3 的 LangChain PR 不再争夺空白插槽——而是与已建立的集成竞争。Python 文档插槽状态未确认——那是需要首先争取的。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Firecrawl</span>
+          <div class="lang-en"><strong>MEDIUM — Spark 1 model family launched</strong> (Fast / Mini / Pro): purpose-built reasoning models for <code>/agent</code>. Spark 1 Mini is 60% cheaper for everyday tasks; Spark 1 Pro for maximum accuracy extraction. Novada has no comparable agent-native reasoning layer. Proprietary model lock-in risk for developers building on Firecrawl's <code>/agent</code>.</div>
+          <div class="lang-cn"><strong>中危 — Spark 1 模型系列发布</strong>（Fast / Mini / Pro）：专为 <code>/agent</code> 端点构建的推理模型。Spark 1 Mini 日常任务成本降低 60%；Spark 1 Pro 最大精度提取。专有模型锁定风险。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">Tavily</span>
+          <div class="lang-en"><strong>MEDIUM — Web Search API Certification launched</strong> + April 2026 shipping recap: Snowflake integration, MongoDB hybrid search (Atlas vector + Tavily web in one call), Anthropic Programmatic Tool Calling integration. Credential/GTM move deepening enterprise and developer positioning simultaneously.</div>
+          <div class="lang-cn"><strong>中危 — Web 搜索 API 认证启动</strong> + 2026 年 4 月发货回顾：Snowflake 集成、MongoDB 混合搜索、Anthropic PTC 集成。凭证/GTM 举措同时深化企业和开发者定位。</div>
+        </div>
+      </div>
+
+      <div class="alert medium">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <span class="co">BrightData</span>
+          <div class="lang-en"><strong>MEDIUM — May 2026 Web MCP improvements</strong>: parallel browser session isolation (zero data mixing across concurrent MCP sessions), higher success rates for Google scraping, improved Safari browser emulation. Reliability and quality edge over competing MCP servers continues to widen.</div>
+          <div class="lang-cn"><strong>中危 — 2026 年 5 月 Web MCP 改进</strong>：并行浏览器会话隔离、Google 抓取成功率提高、Safari 浏览器模拟改进。相比竞争 MCP 服务器的可靠性和质量优势持续扩大。</div>
+        </div>
+      </div>
+
+      <div class="alert low">
+        <div class="alert-icon">🟢</div>
+        <div class="alert-body">
+          <span class="co">Crawl4AI</span>
+          <div class="lang-en"><strong>LOW — Still at v0.8.6 — no v0.8.7 this week.</strong> Quiet after the March 24 security hotfix (litellm → unclecode-litellm supply chain fix). GitHub stars continue climbing past 62,300.</div>
+          <div class="lang-cn"><strong>低危 — 仍在 v0.8.6——本周无 v0.8.7。</strong> 3 月 24 日安全热修复后平静。GitHub 星标继续攀升超过 62,300。</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="lang-en">AI Insights</span><span class="lang-cn">AI 洞察</span></h2>
+    <div class="insight-grid">
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('firecrawl-skill-claude-code-distribution-window-closing.md', '# Firecrawl Skill + CLI Combo Is the Most Significant Distribution Move This Week\n\nFirecrawl shipped a Skill that auto-discovers in Claude Code, Codex, and OpenCode. One install command sets up CLI tools for live web scraping from terminal plus build skills for integrating Firecrawl into application code.\n\nThis is an ecosystem distribution play. Every developer who opens Claude Code for a web-related task now sees Firecrawl as the suggested tool before searching for alternatives. The Skill auto-discovers — the developer does not have to find Firecrawl, Firecrawl finds the developer.\n\nNovada\'s KR-3 targets the Claude Plugin channel. The right target — but execution timing matters. Firecrawl is acquiring installed base in this channel right now. Once a developer has Firecrawl\'s Skill installed and working, the switching cost is inertia, not technical friction.\n\n**This week →** Prioritize the Claude Code skill package (novada-search Skill) above the LangChain/CrewAI PRs in KR-3. The skill marketplace slot is still open.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">01</div>
+        <div class="lang-en">
+          <h3>Firecrawl's Skill + CLI Is the Most Significant Distribution Move This Week</h3>
+          <p>A Firecrawl Skill that auto-discovers in Claude Code means every developer opening Claude Code for a web task sees Firecrawl before they've searched for alternatives. CLI + Skill together cover the two most important developer touchpoints outside the browser: terminal workflows and AI coding agents. Novada's KR-3 targets the Claude Plugin channel — the right target — but execution timing matters. Once a developer has Firecrawl's Skill installed and working for 4–6 weeks, it becomes the default through inertia. The window to publish a novada-search Claude Code skill before Firecrawl's installed base entrenches is weeks, not months.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Firecrawl Skill + CLI 是本周该领域最重要的分发举措</h3>
+          <p>Firecrawl Skill 在 Claude Code 中自动发现意味着每位开发者在搜索替代品之前就看到 Firecrawl。CLI + Skill 共同覆盖浏览器外最重要的两个接触点。Novada 的 KR-3 目标正确——但执行时机很重要。在 Firecrawl 安装基础固化之前发布 novada-search Skill 的窗口是数周，而非数月。</p>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('decodo-langchain-js-docs-kr3-slot-not-empty.md', '# Decodo in LangChain Official JS Docs Changes the KR-3 Landscape\n\nDecodo is confirmed in LangChain\'s official JavaScript integration docs at docs.langchain.com/oss/javascript/integrations/tools/decodo. This is the official LangChain integration directory, not a community fork.\n\nFor Novada\'s KR-3 LangChain PR, the JS slot is occupied. Novada\'s PR will add a second integration, not claim first-mover position.\n\nHowever, Decodo\'s integration is gated behind Web API Advanced plans. A free-tier Novada integration on the same page would win developer mindshare at evaluation time.\n\nThe Python docs slot is unconfirmed — most LLM/agent developers use Python LangChain, not JavaScript. That\'s the slot to audit and claim first.\n\n**This week →** Audit docs.langchain.com/docs/integrations/tools/ (Python) for Decodo and competing scraper integrations. If the Python slot is unoccupied, escalate the Python LangChain PR above the JavaScript one in KR-3 priority.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">02</div>
+        <div class="lang-en">
+          <h3>Decodo in LangChain's Official JS Docs Changes the KR-3 Landscape</h3>
+          <p>Decodo is confirmed in LangChain's official JavaScript integration docs — not a community fork, the actual integration directory. When Novada's LangChain PR lands, it will add a second integration in the scraping/proxy category, not claiming the first slot — a harder PR to merge and harder to surface in search. One opening: Decodo's integration is gated behind "Web API Advanced plans." A free-tier Novada integration on the same docs page wins evaluation-time developer mindshare. The Python docs slot is unconfirmed — that's the one to audit and potentially claim first, since Python LangChain is where most agent developers live.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Decodo 在 LangChain 官方 JS 文档中改变了 KR-3 格局</h3>
+          <p>Decodo 已在 LangChain 官方 JavaScript 集成文档中确认。Novada 的 LangChain PR 将添加第二个集成而非首个。机会：Decodo 的集成受高级计划限制，免费层集成可赢得开发者心智。Python 文档插槽未确认——大多数代理开发者使用 Python LangChain，那是需要首先争取的。</p>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+          <button onclick="saveInsightMd('firecrawl-spark-models-lock-in-novada-model-agnostic.md', '# Firecrawl Spark Models Create Lock-In — Novada Model-Agnostic Stack Is a Real Differentiator\n\nFirecrawl launched Spark 1 (Fast, Mini, Pro) — purpose-built reasoning models for /agent. Developers building on Firecrawl /agent are now dependent on Firecrawl\'s model roadmap, pricing, and availability.\n\nNovada\'s architecture (search + proxy, no proprietary model layer) means developers keep full model choice: Claude, GPT-4o, Gemini, local models, or any future model — without changing endpoint architecture.\n\nThis is model portability: a genuine differentiator for enterprise teams with model governance requirements, or developers benchmarking across models.\n\nThe risk: without an explicit statement, developers interpret the absence of Novada models as a gap rather than a design choice.\n\n**This week →** Add a model-agnostic by design statement to novada-search docs: novada-search works with any model — Claude, GPT-4, Gemini, or your own. We give your model the web layer it needs, without replacing it.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;">💾 Save .md</button>
+        </div>
+        <div class="insight-num">03</div>
+        <div class="lang-en">
+          <h3>Firecrawl's Spark Models Create Lock-In — Publish Novada's Model-Agnostic Position</h3>
+          <p>Firecrawl's Spark 1 model family (Fast/Mini/Pro) powers its <code>/agent</code> endpoint — technically impressive, but it means developers are now dependent on Firecrawl's model roadmap, pricing, and availability. novada-search's architecture (search + proxy, no proprietary model layer) means developers keep full model choice — Claude, GPT-4o, Gemini, or their own. This is model portability: a genuine advantage for enterprise teams with model governance requirements or anyone benchmarking across models. Without an explicit statement, developers will read the absence of Novada models as a gap, not a design choice. Silence on this cedes an architectural strength.</p>
+        </div>
+        <div class="lang-cn">
+          <h3>Firecrawl Spark 模型创造锁定——发布 Novada 模型无关性立场</h3>
+          <p>Firecrawl 的 Spark 1 系列驱动 <code>/agent</code> 端点，但开发者现在依赖于 Firecrawl 的模型路线图。novada-search 架构意味着开发者保留完整模型选择。这是模型可移植性：对企业团队的真正优势。没有明确声明，开发者会将 Novada 缺少模型视为差距而非设计选择。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="lang-en">Competitor Updates</span><span class="lang-cn">竞品动态</span></h2>
+    <div class="comp-grid">
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔥</div>
+          <div>
+            <div class="comp-name">Firecrawl</div>
+            <div class="comp-category lang-en">Web Scraping API</div>
+            <div class="comp-category lang-cn">网页抓取 API</div>
+          </div>
+          <span class="comp-badge badge-alert">Action needed</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Firecrawl Skill GA</strong>: auto-discovers in Claude Code, Codex, OpenCode — one install = CLI tools + build skills for agent workflows <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Firecrawl Skill GA</strong>：在 Claude Code、Codex、OpenCode 中自动发现 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Spark 1 model family</strong>: Fast (instant retrieval), Mini (60% cheaper), Pro (max accuracy) — powers production /agent <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Spark 1 模型系列</strong>：Fast、Mini（便宜 60%）、Pro——驱动生产 /agent <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Firecrawl CLI launched</strong>: scrape, search, crawl, map from terminal — works in CI/CD alongside MCP <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Firecrawl CLI 发布</strong>：从终端进行抓取、搜索、爬取、映射 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Blog: "MCP vs CLI for AI Agents"</strong>: CLI 4–32× cheaper on tokens, 100% reliability vs 72% MCP <span class="tag tag-new">BLOG</span></li>
+          <li class="lang-cn"><strong>博客："AI Agent 的 MCP vs CLI"</strong>：CLI Token 成本低 4-32 倍，可靠性 100% vs MCP 72% <span class="tag tag-new">博客</span></li>
+          <li class="lang-en"><strong>v2.5 — "World's Best Web Data API"</strong>: Semantic Index + custom browser stack; 110k+ GitHub stars <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>v2.5 — "世界最佳 Web 数据 API"</strong>：语义索引；GitHub 星标 110,000+ <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔍</div>
+          <div>
+            <div class="comp-name">Tavily</div>
+            <div class="comp-category lang-en">Search API (Nebius)</div>
+            <div class="comp-category lang-cn">搜索 API（Nebius 旗下）</div>
+          </div>
+          <span class="comp-badge badge-watch">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Web Search API Certification launched</strong>: official developer credential — "stand out as an agent builder" <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Web 搜索 API 认证启动</strong>：官方开发者认证计划 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>April 2026 recap</strong>: Snowflake integration; MongoDB hybrid search (Atlas vector + Tavily web); Anthropic PTC integration <span class="tag tag-new">SHIPPED</span></li>
+          <li class="lang-cn"><strong>2026 年 4 月发货</strong>：Snowflake 集成；MongoDB 混合搜索；Anthropic PTC 集成 <span class="tag tag-new">已发布</span></li>
+          <li class="lang-en"><strong>Auto-Parameters</strong>: Tavily selects optimal tool-call parameters automatically</li>
+          <li class="lang-cn"><strong>自动参数</strong>：Tavily 自动选择最优工具调用参数</li>
+          <li class="lang-en">IBM THINK ended May 7; Nvidia AI-Q Blueprint active; 3M+ SDK downloads/mo <span class="tag tag-acq">ACQ</span></li>
+          <li class="lang-cn">IBM THINK 5 月 7 日结束；Nvidia AI-Q Blueprint 活跃；月 SDK 下载量 300 万+ <span class="tag tag-acq">收购</span></li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">💡</div>
+          <div>
+            <div class="comp-name">BrightData</div>
+            <div class="comp-category lang-en">Proxy + Scraping</div>
+            <div class="comp-category lang-cn">代理 + 抓取</div>
+          </div>
+          <span class="comp-badge badge-alert">Watch</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Parallel browser session isolation</strong>: concurrent Web MCP sessions operate with zero data mixing <span class="tag tag-new">NEW</span> <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>并行浏览器会话隔离</strong>：并发 MCP 会话零数据混合 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Google scraping success rates up</strong>: improved unblocking; more reliable results <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Google 抓取成功率提升</strong>：改进解封技术 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Safari emulation fixed</strong>: detection/blocking for Safari-profile requests resolved <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>Safari 模拟修复</strong>：Safari 配置请求的检测问题已解决 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Free plan</strong>: 5,000 req/mo Rapid mode; no-setup browser playground available <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>免费计划</strong>：5,000 请求/月；无需设置的 Playground 可用 <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en">Social scrapers GA (Facebook/Reddit/YouTube); 60+ tools across 9 groups <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">社交爬虫 GA；9 组 60+ 工具 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🧪</div>
+          <div>
+            <div class="comp-name">Oxylabs</div>
+            <div class="comp-category lang-en">Proxy</div>
+            <div class="comp-category lang-cn">代理</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Self-healing parser presets</strong> (Web Scraper API): configs auto-adapt to site structure changes — reduces maintenance <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>自愈解析器预设</strong>（Web Scraper API）：自动适应目标站点结构变化 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Proxy pool locations</strong>: added to DC, Dedicated ISP, ISP pools; city/state headless browser sessions</li>
+          <li class="lang-cn"><strong>代理池位置</strong>：已添加至 DC、ISP 池；无头浏览器城市/州级会话</li>
+          <li class="lang-en"><strong>ISP providers</strong>: Cox + Deutsche Telekom added; OS + IP version filters available</li>
+          <li class="lang-cn"><strong>ISP 供应商</strong>：Cox + Deutsche Telekom 已加入；OS + IP 版本过滤器可用</li>
+          <li class="lang-en"><strong>AI Web Unblocker</strong> (Q1 2026): Cloudflare/Akamai/Kasada auto-handled; −43% block rate</li>
+          <li class="lang-cn"><strong>AI 解封器</strong>（2026 Q1）：自动处理反爬虫；封锁率降低 43%</li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🔷</div>
+          <div>
+            <div class="comp-name">Decodo</div>
+            <div class="comp-category lang-en">Proxy (formerly Smartproxy)</div>
+            <div class="comp-category lang-cn">代理（原 Smartproxy）</div>
+          </div>
+          <span class="comp-badge badge-alert">KR-3 signal</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>Official LangChain JS docs confirmed</strong>: <code>docs.langchain.com/oss/javascript/integrations/tools/decodo</code> — Web API Advanced plans <span class="tag tag-new">NEW</span></li>
+          <li class="lang-cn"><strong>LangChain JS 官方文档已确认</strong>：Web API 高级计划 <span class="tag tag-new">新</span></li>
+          <li class="lang-en"><strong>Blog content push</strong> (May 4–7): mobile proxy, jQuery scraping, PowerShell scraping, Python libraries — developer content flywheel</li>
+          <li class="lang-cn"><strong>博客内容推送</strong>（5 月 4-7 日）：移动代理、jQuery、PowerShell、Python 库——开发者内容飞轮</li>
+          <li class="lang-en"><strong>v2 Scraper API</strong>: <code>/v2</code> sync/async/batch; <strong>IP Replacement</strong> dashboard; <strong>AI Parser</strong> <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>v2 Scraper API</strong>；IP 替换仪表板；AI 解析器 <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en">125M+ IPs, 195+ countries, 135,000+ clients. Promo: <strong>DECODO30</strong> (30% off)</li>
+          <li class="lang-cn">1.25 亿+ IP；135,000+ 客户；优惠码：<strong>DECODO30</strong></li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🕷️</div>
+          <div>
+            <div class="comp-name">Crawl4AI</div>
+            <div class="comp-category lang-en">Open-Source Crawler</div>
+            <div class="comp-category lang-cn">开源爬虫</div>
+          </div>
+          <span class="comp-badge badge-watch">Quiet week</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>No v0.8.7</strong> — still at v0.8.6 (March 24 security hotfix); no new release this week</li>
+          <li class="lang-cn"><strong>无 v0.8.7</strong>——仍在 v0.8.6；本周无新发布</li>
+          <li class="lang-en"><strong>v0.8.6</strong>: <code>litellm</code> replaced with <code>unclecode-litellm</code> (PyPI supply chain fix); upgrade all v0.8.5 users <span class="tag tag-sec">SEC</span></li>
+          <li class="lang-cn"><strong>v0.8.6</strong>：<code>litellm</code> 供应链修复；建议所有 v0.8.5 用户升级 <span class="tag tag-sec">安全</span></li>
+          <li class="lang-en">3-tier anti-bot (v0.8.5); Shadow DOM flattening; webhooks; 62,300+ stars <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">3 层反爬虫；Shadow DOM；Webhook；62,300+ 星标 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">⚡</div>
+          <div>
+            <div class="comp-name">Exa</div>
+            <div class="comp-category lang-en">Neural Search</div>
+            <div class="comp-category lang-cn">神经搜索</div>
+          </div>
+          <span class="comp-badge badge-alert">Breaking live</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>⚠ Breaking changes still live (day 9, since May 1)</strong>: <code>use_autoprompt</code> removed; <code>highlights</code> removed (JS ≥2.0.11 only); Auto relevance deprecated <span class="tag tag-brk">BREAKING</span></li>
+          <li class="lang-cn"><strong>⚠ 破坏性变更仍在生效（第 9 天）</strong>：<code>use_autoprompt</code>、<code>highlights</code> 已移除 <span class="tag tag-brk">破坏性</span></li>
+          <li class="lang-en"><strong>No new May 10 announcements</strong> — Exa 2.0 (Fast/Auto/Deep) stable this week</li>
+          <li class="lang-cn"><strong>5 月 10 日无新公告</strong>——Exa 2.0 稳定</li>
+          <li class="lang-en">Fast &lt;350ms P50; Deep 3.5s P50; tens of billions of pages refreshed/minute; $85M Series B <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">Fast &lt;350ms P50；Deep 3.5s P50；数百亿页面每分钟刷新；8500 万美元 B 轮 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-card-header">
+          <div class="comp-logo">🤖</div>
+          <div>
+            <div class="comp-name">Apify</div>
+            <div class="comp-category lang-en">Scraping Platform</div>
+            <div class="comp-category lang-cn">抓取平台</div>
+          </div>
+          <span class="comp-badge badge-active">Active</span>
+        </div>
+        <ul class="comp-updates">
+          <li class="lang-en"><strong>State of Web Scraping 2026</strong> (with Web Scraping Club): 65.8% used more proxies YoY; 58.3% increased proxy spend; 54.2% not yet using AI-assisted scraping <span class="tag tag-new">REPORT</span></li>
+          <li class="lang-cn"><strong>2026 年网络抓取状况报告</strong>：65.8% 同比使用更多代理；54.2% 尚未使用 AI 辅助抓取 <span class="tag tag-new">报告</span></li>
+          <li class="lang-en"><strong>MCP best practices guide</strong>: structured JSON, fast runs &lt;30s, Cheerio over Playwright where both work <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn"><strong>MCP 最佳实践指南</strong>：结构化 JSON；&lt;30 秒运行；Cheerio 优于 Playwright <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-en"><strong>AI Agents + web scraping guide</strong>: autonomous data collection with Apify MCP</li>
+          <li class="lang-cn"><strong>AI Agent + 网络抓取指南</strong>：使用 Apify MCP 的自主数据收集</li>
+          <li class="lang-en">80+ MCP servers via ApifyForge; job lifecycle tools confirmed <span class="tag tag-mcp">MCP</span></li>
+          <li class="lang-cn">ApifyForge 提供 80+ MCP 服务器；任务生命周期工具已确认 <span class="tag tag-mcp">MCP</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="lang-en">MCP Ecosystem</span><span class="lang-cn">MCP 生态</span></h2>
+    <table class="mcp-table">
+      <thead>
+        <tr>
+          <th><span class="lang-en">Server</span><span class="lang-cn">服务器</span></th>
+          <th><span class="lang-en">Status</span><span class="lang-cn">状态</span></th>
+          <th><span class="lang-en">Notable</span><span class="lang-cn">亮点</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Firecrawl MCP + Skill</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (v2.8.0 + Skill GA)</span><span class="lang-cn">活跃（v2.8.0 + Skill GA）</span></td>
+          <td><span class="lang-en">Spark 1 Fast/Mini/Pro; CLI launched; Skill auto-discovers in Claude Code/Codex/OpenCode; "MCP vs CLI" blog; 110k+ stars</span><span class="lang-cn">Spark 1 模型系列；CLI 发布；Skill 自动发现；110k+ 星标</span></td>
+        </tr>
+        <tr>
+          <td><strong>BrightData MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active — May improvements live</span><span class="lang-cn">活跃——5 月改进上线</span></td>
+          <td><span class="lang-en">Parallel session isolation; Google rates up; Safari fixed; free tier 5K req/mo; 60+ tools</span><span class="lang-cn">并行会话隔离；Google 成功率提升；Safari 修复；免费层 5K 请求/月</span></td>
+        </tr>
+        <tr>
+          <td><strong>Crawl4AI MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Built-in (v0.8.6) — quiet week</span><span class="lang-cn">内置（v0.8.6）——安静的一周</span></td>
+          <td><span class="lang-en">No v0.8.7; 3-tier anti-bot + Shadow DOM from v0.8.5; self-hosted free; 62k+ stars</span><span class="lang-cn">无 v0.8.7；3 层反爬虫 + Shadow DOM；自托管免费</span></td>
+        </tr>
+        <tr>
+          <td><strong>Apify MCP</strong></td>
+          <td><span class="dot dot-green"></span><span class="lang-en">Active (Streamable HTTP)</span><span class="lang-cn">活跃（Streamable HTTP）</span></td>
+          <td><span class="lang-en">State of Web Scraping 2026 report; MCP best practices guide; 80+ actors</span><span class="lang-cn">2026 年网络抓取状况报告；MCP 最佳实践指南；80+ Actors</span></td>
+        </tr>
+        <tr>
+          <td><strong>Decodo MCP</strong></td>
+          <td><span class="dot dot-yellow"></span><span class="lang-en">Active — LangChain JS docs confirmed</span><span class="lang-cn">活跃——LangChain JS 文档已确认</span></td>
+          <td><span class="lang-en">Official LangChain JS integration indexed; v2 Scraper API; AI Parser; content push May 4–7</span><span class="lang-cn">LangChain JS 官方集成已索引；v2 Scraper API；AI 解析器</span></td>
+        </tr>
+        <tr>
+          <td><strong>Exa MCP</strong></td>
+          <td><span class="dot dot-red"></span><span class="lang-en">Active — ⚠ BREAKING (day 9, since May 1)</span><span class="lang-cn">活跃——⚠ 破坏性变更（第 9 天）</span></td>
+          <td><span class="lang-en">highlights/use_autoprompt/Auto relevance gone; integrations silently degraded for 9 days</span><span class="lang-cn">highlights/use_autoprompt 已移除；集成可能已静默降级 9 天</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tavily MCP</strong></td>
+          <td><span class="dot dot-yellow"></span><span class="lang-en">Active (Cursor) — Certification live</span><span class="lang-cn">活跃（Cursor）——认证已上线</span></td>
+          <td><span class="lang-en">Web Search API Certification; April: Snowflake + MongoDB hybrid + PTC; no May product releases</span><span class="lang-cn">Web 搜索 API 认证；4 月：Snowflake + MongoDB + PTC；5 月无产品发布</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px;font-size:12px;color:var(--muted);">
+      <span class="lang-en">Ecosystem: <strong>10,000+ public MCP servers</strong> · OAuth 2.1 + Streamable HTTP + async tasks stable · Linux Foundation Agentic AI Foundation governance · AWS, OpenAI, Google DeepMind native MCP support · Firecrawl Skill is the first competitor agent skill auto-discovered in Claude Code/Codex/OpenCode.</span>
+      <span class="lang-cn">生态：超过 <strong>1 万个</strong>公开 MCP 服务器 · OAuth 2.1 + Streamable HTTP 稳定 · Linux Foundation 治理 · Firecrawl Skill 首个在 Claude Code 中自动发现的竞争对手代理技能包。</span>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="lang-en">Novada Team Brief</span><span class="lang-cn">Novada 团队简报</span></h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;margin-top:-8px;">Novada-specific angles on today's intel. Open in browser and click 💾 Save .md to export any insight to your workspace.</p>
+    <div class="insight-grid">
+
+      <div class="insight-card" style="border-left-color:#c0392b;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">01</div>
+            <span style="background:#f0eaf9;color:#7c4dbd;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">BLIND SPOT</span>
+          </div>
+          <button onclick="saveInsightMd('novada-kr3-claude-skill-firecrawl-occupying-channel.md','# BLIND SPOT: Firecrawl Skill Occupying the Claude Code Channel KR-3 Targets\n\nFirecrawl shipped a Skill that auto-discovers in Claude Code, Codex, and OpenCode. This is the exact distribution channel Novada\'s KR-3 targets with Claude Plugin.\n\nFirecrawl\'s installed base compounds through inertia. Developers who install it this week will not search for alternatives once it works.\n\nNovada\'s MCP-native architecture and integrated stack are genuine differentiators — but invisible until the skill is installed.\n\n**This week →** Reprioritize KR-3: build and ship the novada-search Claude Code Skill before the LangChain/CrewAI PRs. The skill marketplace slot is still open.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Firecrawl Skill Is Occupying the Claude Code Channel KR-3 Targets</h3>
+        <p>Firecrawl's Skill auto-discovers in Claude Code, Codex, and OpenCode — one install, CLI tools + build skills, no friction. This is the exact distribution channel Novada's KR-3 targets with "Claude Plugin." The blind spot: KR-3 probably treats the Claude Plugin as a future deliverable. It should now be treated as an urgent present-tense race. Firecrawl's installed base in Claude Code compounds through inertia — developers who install it this week will not search for alternatives once it works. Novada's MCP-native architecture and integrated stack are genuine differentiators, but they are invisible until the skill is installed.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #c0392b;"><strong>This week →</strong> Reprioritize KR-3 execution order: build and ship the novada-search Claude Code Skill before the LangChain/CrewAI PRs. The skill marketplace slot is still open — but every day Firecrawl is installed without a Novada alternative widens the inertia gap.</div>
+      </div>
+
+      <div class="insight-card" style="border-left-color:#c0392b;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">02</div>
+            <span style="background:#fdf0ee;color:#c0392b;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">ACTION</span>
+          </div>
+          <button onclick="saveInsightMd('novada-kr3-langchain-python-slot-audit.md','# ACTION: Decodo in LangChain JS Docs — Audit the Python Slot Now\n\nDecodo is confirmed in LangChain\'s official JavaScript docs. For KR-3, the JS slot is occupied.\n\nDecodo\'s integration is gated behind Web API Advanced plans — a free-tier Novada integration wins evaluation-time mindshare.\n\nThe Python LangChain docs are a separate directory. Decodo appears JavaScript-only. If the Python slot is unoccupied, that is the highest-ROI KR-3 action.\n\n**This week →** Audit docs.langchain.com/docs/integrations/tools/ (Python) for competing scraper/proxy integrations. If empty, escalate the Python LangChain PR immediately.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Decodo Is in LangChain JS Docs — Audit the Python Slot Now</h3>
+        <p>Decodo is confirmed in LangChain's official JavaScript integration docs. For KR-3, the JS slot is not empty — Novada's LangChain PR will be a second entry, not a first-mover. One opening: Decodo's integration is gated behind "Web API Advanced plans" — a free-tier Novada integration on the same page wins evaluation-time developer mindshare. More importantly, Decodo's presence appears to be JavaScript-only. The Python LangChain integration docs are a separate directory, and the Python slot status is unconfirmed. Python LangChain is where most agent developers live — if that slot is open, it's the highest-ROI KR-3 action available this week.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #c0392b;"><strong>This week →</strong> Audit docs.langchain.com/docs/integrations/tools/ (Python) for Decodo and competing scraper/proxy integrations. 30-minute check that determines the KR-3 LangChain PR strategy: empty = claim it immediately; occupied = adjust with free-tier differentiation angle.</div>
+      </div>
+
+      <div class="insight-card" style="border-left-color:#d35400;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">03</div>
+            <span style="background:#fefbec;color:#b7860b;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">WATCH</span>
+          </div>
+          <button onclick="saveInsightMd('novada-firecrawl-mcp-vs-cli-vocabulary-counterpoint.md','# WATCH: Firecrawl MCP vs CLI Blog Sets Category Vocabulary — Novada Needs a Counterpoint\n\nFirecrawl published specific claims: CLI is 4-32x cheaper on token costs, 100% reliable vs MCP 72%.\n\nWhether accurate is less important than the fact they will circulate in developer Slacks and LangChain Discord for weeks. Firecrawl will be the brand associated with having studied the question.\n\nNovada is MCP-native from day one. If Firecrawl\'s MCP-is-72%-reliable framing takes hold, it becomes a headwind for MCP-native tools.\n\n**This week →** Add MCP reliability counterpoint to content backlog. Monitor LangChain Discord and r/LocalLLaMA for circulation. If it surfaces, escalate to current sprint.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Firecrawl's "MCP vs CLI" Blog Sets Category Vocabulary — Novada Needs a Counterpoint</h3>
+        <p>Firecrawl published specific claims: CLI is 4–32× cheaper on tokens, 100% reliable vs 72% for MCP. Whether these numbers are precise is less important than the fact they will circulate in developer Slacks and LangChain Discord for weeks. Novada is MCP-native from day one — a positioning strength when MCP is the production standard. But if "MCP is 72% reliable" becomes received wisdom without a counterpoint, it becomes a headwind for MCP-native tools. Novada has actual MCP reliability data from production use that could anchor a counter-narrative. Silence on this framing cedes the vocabulary by default.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #d35400;"><strong>This week →</strong> Add "MCP reliability counterpoint" to content backlog. Monitor LangChain Discord and r/LocalLLaMA for circulation of Firecrawl's framing. If it surfaces there, escalate from backlog to current sprint — a published Novada reliability benchmark is the most direct rebuttal.</div>
+      </div>
+
+      <div class="insight-card" style="border-left-color:#1e7e34;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="insight-num">04</div>
+            <span style="background:#edf7f0;color:#1e7e34;font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:.08em;">OPPORTUNITY</span>
+          </div>
+          <button onclick="saveInsightMd('novada-spark-lock-in-model-agnostic-position.md','# OPPORTUNITY: Spark Models Create Firecrawl Lock-In — Publish Novada Model-Agnostic Position\n\nFirecrawl Spark 1 (Fast, Mini, Pro) powers /agent. Developers on Firecrawl /agent are now dependent on Firecrawl\'s model roadmap, pricing, and availability.\n\nNovada\'s architecture (search + proxy, no proprietary model layer) means developers keep full model choice: Claude, GPT-4o, Gemini, local models — without changing endpoint architecture.\n\nThe risk: without an explicit statement, developers interpret the absence of Novada models as a gap.\n\n**This week →** Add to novada-search docs: novada-search works with any model — Claude, GPT-4, Gemini, or your own. We give your model the web layer it needs, without replacing it.\n\n---\nSaved from Novada Intel — 2026-05-10\n')" style="background:transparent;border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">💾 Save .md</button>
+        </div>
+        <h3>Spark Models Create Firecrawl Lock-In — Publish Novada's Model-Agnostic Position Now</h3>
+        <p>Firecrawl's Spark 1 (Fast/Mini/Pro) powers <code>/agent</code> — impressive, but it means developers are now on Firecrawl's model roadmap, pricing, and availability. Novada's architecture (search + proxy, no proprietary model layer) gives developers full model portability: Claude, GPT-4o, Gemini, or local — no endpoint architecture change required. This is a genuine differentiator for enterprise teams with model governance requirements or developers benchmarking across models. The risk: without an explicit statement, developers read "no Novada models" as a gap rather than a design choice that preserves their optionality.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:10px 14px;font-size:12px;border-left:3px solid #1e7e34;"><strong>This week →</strong> Add a "model-agnostic by design" statement to novada-search docs: "novada-search works with any model — Claude, GPT-4, Gemini, or your own. We give your model the web layer it needs, without replacing it." Converts invisible architecture into a visible competitive differentiator against Firecrawl's proprietary Spark stack.</div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Novada Labs</strong> &nbsp;·&nbsp;
+    <span class="lang-en">Competitive Intelligence — Daily Report</span>
+    <span class="lang-cn">竞争情报 — 每日报告</span>
+    &nbsp;·&nbsp; 2026-05-10
+  </p>
+  <p style="margin-top:6px;">
+    <span class="lang-en">Sources: Firecrawl blog/changelog/GitHub (v2.5, v2.8.0, CLI, Skill, "MCP vs CLI") · Tavily Blog (April 2026, Certification) · BrightData Web MCP docs (May 2026) · Oxylabs product-updates (self-healing parsers) · Decodo blog/LangChain docs (JS confirmed) · Crawl4AI GitHub (v0.8.6) · Exa docs/changelog · Apify blog/State of Web Scraping 2026 · PulseMCP · modelcontextprotocol spec</span>
+    <span class="lang-cn">来源：Firecrawl 博客/更新日志/GitHub · Tavily 博客（2026 年 4 月，认证）· BrightData Web MCP 文档（5 月）· Oxylabs 产品更新 · Decodo 博客/LangChain 文档 · Crawl4AI GitHub · Exa 文档 · Apify 博客/2026 年网络抓取状况 · PulseMCP</span>
+  </p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('cn', lang === 'cn');
+    document.querySelectorAll('.lang-toggle button').forEach((btn, i) => {
+      btn.classList.toggle('active', (i === 0 && lang === 'en') || (i === 1 && lang === 'cn'));
+    });
+  }
+</script>
+
+<script>
+function saveInsightMd(filename, content) {
+  const text = content.replace(/\\n/g, '\n').replace(/\\'/g, "'");
+  const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 500);
+}
+</script>
+
+</body>
+</html>
