@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novada AI Trends — 2026-05-10</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --beige: #f5f0e6;
+      --beige-dark: #ede6d6;
+      --beige-card: #faf7f1;
+      --brown: #7c6a52;
+      --brown-light: #a08c72;
+      --ink: #2a2118;
+      --ink-mid: #4a3f33;
+      --ink-light: #7c7060;
+      --accent-red: #c0392b;
+      --accent-orange: #d35400;
+      --accent-green: #27ae60;
+      --accent-blue: #2471a3;
+      --accent-purple: #7d3c98;
+      --accent-yellow: #d4ac0d;
+      --border: rgba(124,106,82,0.18);
+      --shadow: 0 2px 16px rgba(42,33,24,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--beige);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ── BANNER ── */
+    .internal-banner {
+      background: #1a1a1a;
+      color: #ff453a;
+      padding: 10px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #2a2118 0%, #4a3f33 100%);
+      color: #f5f0e6;
+      padding: 48px 32px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+    .header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .header-meta {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    header h1 span { color: #d4a84b; }
+    .header-sub {
+      font-size: 1rem;
+      color: rgba(245,240,230,0.65);
+      margin-bottom: 24px;
+    }
+    .lang-toggle {
+      display: inline-flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .lang-btn {
+      padding: 7px 20px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: rgba(255,255,255,0.08);
+      color: rgba(245,240,230,0.7);
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #d4a84b;
+      color: #2a2118;
+    }
+    .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.14); color: #f5f0e6; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── TOP 3 CARDS ── */
+    .top3-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 44px;
+    }
+    .insight-card {
+      background: var(--beige-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .insight-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(42,33,24,0.12); }
+    .card-rank {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--beige-dark);
+      position: absolute;
+      top: 12px; right: 20px;
+      line-height: 1;
+      user-select: none;
+    }
+    .card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .tag-urgent { background: #fde8e8; color: var(--accent-red); }
+    .tag-growth { background: #e8f5e9; color: var(--accent-green); }
+    .tag-opportunity { background: #e8f4fd; color: var(--accent-blue); }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .card-body {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .card-action {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-orange);
+      background: rgba(211,84,0,0.07);
+      border-radius: 8px;
+      padding: 8px 12px;
+      line-height: 1.5;
+    }
+    .card-action::before { content: '→ '; }
+
+    /* ── TABLES ── */
+    .table-wrap {
+      background: var(--beige-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 36px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    thead { background: #2a2118; color: #f5f0e6; }
+    thead th {
+      padding: 13px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+    }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--beige-dark); }
+    tbody td { padding: 12px 16px; color: var(--ink-mid); vertical-align: top; }
+    tbody td:first-child { color: var(--ink); font-weight: 700; }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .badge-green { background: #e8f5e9; color: #1b7a40; }
+    .badge-red { background: #fde8e8; color: #a93226; }
+    .badge-orange { background: #fef3e2; color: #b7570a; }
+    .badge-blue { background: #e8f4fd; color: #1a5c8a; }
+    .badge-purple { background: #f3e8fd; color: #6c2e91; }
+
+    /* ── HN HIGHLIGHTS ── */
+    .hn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+    .hn-card {
+      background: var(--beige-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hn-title { font-size: 0.9rem; font-weight: 700; color: var(--ink); line-height: 1.4; }
+    .hn-signal { font-size: 0.78rem; color: var(--ink-light); line-height: 1.5; }
+
+    /* ── MCP TABLE ── */
+    .mcp-gap { background: #fff3f3 !important; }
+
+    /* ── ARXIV ── */
+    .paper-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .paper-item {
+      background: var(--beige-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+    }
+    .paper-title { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .paper-desc { font-size: 0.82rem; color: var(--ink-light); line-height: 1.5; }
+
+    /* ── SIGNALS SUMMARY ── */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 44px;
+    }
+    .signal-card {
+      background: var(--beige-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .signal-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .signal-label { font-size: 0.75rem; font-weight: 700; color: var(--brown); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .signal-val { font-size: 1.1rem; font-weight: 800; color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #2a2118;
+      color: rgba(245,240,230,0.5);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.78rem;
+    }
+    footer strong { color: rgba(245,240,230,0.85); }
+
+    /* ── LANG CONTENT ── */
+    .lang-cn { display: none; }
+    body.cn .lang-en { display: none; }
+    body.cn .lang-cn { display: block; }
+    body.cn .lang-en-inline { display: none !important; }
+    body.cn .lang-cn-inline { display: inline !important; }
+    .lang-cn-inline { display: none; }
+    .lang-en-inline { display: inline; }
+  </style>
+</head>
+<body>
+
+  <!-- REQUIRED INTERNAL BANNER -->
+  <div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+    INTERNAL USE ONLY - DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-meta">Novada Intelligence · AI Trends Report</div>
+      <h1><span>AI Trends</span> — May 10, 2026</h1>
+      <p class="header-sub lang-en">Daily competitive intelligence for Novada: AI agent APIs, proxies & MCP servers</p>
+      <p class="header-sub lang-cn" style="display:none;">Novada 每日竞争情报：AI Agent API、代理与 MCP 服务器</p>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('cn')">中文</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ── SIGNAL SUMMARY BAR ── -->
+    <div class="signals-grid" style="margin-top:8px;">
+      <div class="signal-card">
+        <div class="signal-icon">🚨</div>
+        <div class="signal-label lang-en">Urgent</div>
+        <div class="signal-label lang-cn" style="display:none;">紧急信号</div>
+        <div class="signal-val">1</div>
+      </div>
+      <div class="signal-card">
+        <div class="signal-icon">⚠️</div>
+        <div class="signal-label lang-en">Competitive</div>
+        <div class="signal-label lang-cn" style="display:none;">竞争威胁</div>
+        <div class="signal-val">3</div>
+      </div>
+      <div class="signal-card">
+        <div class="signal-icon">✅</div>
+        <div class="signal-label lang-en">Opportunities</div>
+        <div class="signal-label lang-cn" style="display:none;">机会</div>
+        <div class="signal-val">2</div>
+      </div>
+      <div class="signal-card">
+        <div class="signal-icon">🔌</div>
+        <div class="signal-label lang-en">New MCP Servers</div>
+        <div class="signal-label lang-cn" style="display:none;">新 MCP 服务器</div>
+        <div class="signal-val">7</div>
+      </div>
+      <div class="signal-card">
+        <div class="signal-icon">⭐</div>
+        <div class="signal-label lang-en">GitHub Stars (OpenClaw)</div>
+        <div class="signal-label lang-cn" style="display:none;">GitHub Stars (OpenClaw)</div>
+        <div class="signal-val">210K+</div>
+      </div>
+    </div>
+
+    <!-- ── TOP 3 FOR NOVADA ── -->
+    <div class="section-title lang-en">Top 3 Signals for Novada</div>
+    <div class="section-title lang-cn" style="display:none;">Novada 最重要的三大信号</div>
+    <div class="top3-grid">
+
+      <div class="insight-card">
+        <div class="card-rank">01</div>
+        <span class="card-tag tag-urgent lang-en">Urgent · MCP</span>
+        <span class="card-tag tag-urgent lang-cn" style="display:none;">紧急 · MCP</span>
+        <div class="card-title lang-en">AWS MCP Server Goes GA — Enterprise Standard Locks In</div>
+        <div class="card-title lang-cn" style="display:none;">AWS MCP 服务器正式发布——企业级标准确立</div>
+        <div class="card-body lang-en">
+          AWS announced General Availability of its MCP Server on May 6, 2026, giving AI agents secure access to all AWS APIs through a single MCP tool. One week earlier, Azure MCP Server shipped natively in Visual Studio 2026. MCP is now the de-facto enterprise integration protocol. Novada has no public MCP server listed.
+        </div>
+        <div class="card-body lang-cn" style="display:none;">
+          AWS 于 2026 年 5 月 6 日宣布 MCP 服务器正式可用，让 AI Agent 通过单一 MCP 工具安全访问所有 AWS API。一周前，Azure MCP 服务器已内置于 Visual Studio 2026。MCP 已成为企业集成的事实标准，而 Novada 尚无公开的 MCP 服务器。
+        </div>
+        <div class="card-action lang-en">Ship a Novada MCP server — this is now urgent to remain in enterprise agent pipelines</div>
+        <div class="card-action lang-cn" style="display:none;">立即推出 Novada MCP 服务器——这是保持企业 Agent 流水线接入能力的紧迫任务</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="card-rank">02</div>
+        <span class="card-tag tag-growth lang-en">Growth · Claude</span>
+        <span class="card-tag tag-growth lang-cn" style="display:none;">增长 · Claude</span>
+        <div class="card-title lang-en">Claude Opus 4.7 + Multi-Agent Orchestration Amplifies Web Data Demand</div>
+        <div class="card-title lang-cn" style="display:none;">Claude Opus 4.7 + 多 Agent 编排大幅提升 Web 数据需求</div>
+        <div class="card-body lang-en">
+          Anthropic shipped Claude Opus 4.7 as the new Max/Team default this week, plus multi-agent orchestration (agent fleets), Outcomes (success-driven iteration), and "Dreaming" (session self-review). Claude Code rate limits were doubled for Pro/Max/Enterprise. More autonomous agents = more web data API calls.
+        </div>
+        <div class="card-body lang-cn" style="display:none;">
+          Anthropic 本周发布 Claude Opus 4.7 作为 Max/Team 新默认模型，同时推出多 Agent 编排（Agent 队列）、Outcomes（成功驱动迭代）和"Dreaming"（Session 自我审查）。Claude Code 的速率限制为 Pro/Max/Enterprise 用户翻倍。更多自主 Agent = 更多 Web 数据 API 调用。
+        </div>
+        <div class="card-action lang-en">Market proxy and scraping APIs as "Claude agent ready" — emphasize concurrency and anti-bot bypass</div>
+        <div class="card-action lang-cn" style="display:none;">将代理和抓取 API 定位为"Claude Agent 就绪"——重点强调并发能力和反爬虫绕过能力</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="card-rank">03</div>
+        <span class="card-tag tag-opportunity lang-en">Opportunity · Proxy</span>
+        <span class="card-tag tag-opportunity lang-cn" style="display:none;">机会 · 代理</span>
+        <div class="card-title lang-en">AI Crawlers Dominate Traffic — Anti-Bot Pressure Validates Proxy Moat</div>
+        <div class="card-title lang-cn" style="display:none;">AI 爬虫主导流量——反爬压力验证代理护城河</div>
+        <div class="card-body lang-en">
+          A top HN thread confirmed AI crawlers now dominate web traffic, forcing site operators to block entire countries. Firecrawl's <code>/agent</code> and <code>/interact</code> endpoints compete in the AI scraping API space, but rely on limited IP pools. The global web scraping market is on track to exceed $2B in 2026.
+        </div>
+        <div class="card-body lang-cn" style="display:none;">
+          一篇高热度 HN 帖确认 AI 爬虫已主导 Web 流量，迫使网站运营商封锁整个国家。Firecrawl 的 <code>/agent</code> 和 <code>/interact</code> 端点在 AI 抓取 API 领域形成竞争，但依赖有限的 IP 池。全球网络抓取市场预计在 2026 年超过 20 亿美元。
+        </div>
+        <div class="card-action lang-en">Emphasize residential rotating proxy coverage — anti-bot escalation is a tailwind for Novada's network</div>
+        <div class="card-action lang-cn" style="display:none;">强调住宅轮换代理覆盖——反爬升级是 Novada 网络的顺风</div>
+      </div>
+
+    </div>
+
+    <!-- ── GITHUB TRENDING ── -->
+    <div class="section-title lang-en">GitHub Trending — AI Agent Repositories</div>
+    <div class="section-title lang-cn" style="display:none;">GitHub 热门 AI Agent 仓库</div>
+    <div class="table-wrap" style="margin-bottom:36px;">
+      <table>
+        <thead>
+          <tr>
+            <th class="lang-en">Repository</th><th class="lang-cn" style="display:none;">仓库</th>
+            <th class="lang-en">Stars</th><th class="lang-cn" style="display:none;">Star 数</th>
+            <th class="lang-en">Category</th><th class="lang-cn" style="display:none;">类别</th>
+            <th class="lang-en">Novada Relevance</th><th class="lang-cn" style="display:none;">Novada 相关性</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OpenClaw</td>
+            <td>210K+</td>
+            <td><span class="badge badge-blue">Web Automation</span></td>
+            <td class="lang-en">Web browsing, form filling, shell exec — high proxy/scraping demand</td>
+            <td class="lang-cn" style="display:none;">网页浏览、表单填写、命令执行——高代理/抓取需求</td>
+          </tr>
+          <tr>
+            <td>n8n</td>
+            <td>180K+</td>
+            <td><span class="badge badge-green">Workflow Builder</span></td>
+            <td class="lang-en">Visual agent workflows; web data task routing</td>
+            <td class="lang-cn" style="display:none;">可视化 Agent 工作流；Web 数据任务路由</td>
+          </tr>
+          <tr>
+            <td>Langflow</td>
+            <td>146K</td>
+            <td><span class="badge badge-purple">Visual Builder</span></td>
+            <td class="lang-en">Drag-and-drop agent pipelines; MCP tool integration nodes</td>
+            <td class="lang-cn" style="display:none;">拖拽式 Agent 流水线；MCP 工具集成节点</td>
+          </tr>
+          <tr>
+            <td>Dify</td>
+            <td>136K</td>
+            <td><span class="badge badge-purple">LLM Platform</span></td>
+            <td class="lang-en">LLM app platform; web search/scrape tool integrations</td>
+            <td class="lang-cn" style="display:none;">LLM 应用平台；Web 搜索/抓取工具集成</td>
+          </tr>
+          <tr>
+            <td>Flowise</td>
+            <td>51K</td>
+            <td><span class="badge badge-purple">Visual Builder</span></td>
+            <td class="lang-en">Low-code agent builder; growing MCP connector ecosystem</td>
+            <td class="lang-cn" style="display:none;">低代码 Agent 构建器；成长中的 MCP 连接器生态</td>
+          </tr>
+          <tr>
+            <td>awesome-ai-agents-2026</td>
+            <td>—</td>
+            <td><span class="badge badge-orange">Resource List</span></td>
+            <td class="lang-en">300+ resources; community signal aggregator, updated monthly</td>
+            <td class="lang-cn" style="display:none;">300+ 资源；社区信号聚合，每月更新</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── HN HIGHLIGHTS ── -->
+    <div class="section-title lang-en">Hacker News Highlights</div>
+    <div class="section-title lang-cn" style="display:none;">Hacker News 亮点</div>
+    <div class="hn-grid">
+      <div class="hn-card">
+        <div class="hn-title">Chrome WebMCP Integration</div>
+        <div class="hn-signal lang-en">Browser-native MCP standard — AI agents interact with sites natively, could reduce raw scraping need long-term. <span class="badge badge-orange">⚠️ Watch</span></div>
+        <div class="hn-signal lang-cn" style="display:none;">浏览器原生 MCP 标准——AI Agent 原生与网站交互，长期可能减少原始抓取需求。<span class="badge badge-orange">⚠️ 关注</span></div>
+      </div>
+      <div class="hn-card">
+        <div class="hn-title">Show HN: Free Web Search via MCP (You.com)</div>
+        <div class="hn-signal lang-en">You.com offers free MCP-native real-time web search for agents — competitive pressure on search data APIs. <span class="badge badge-red">⚠️ Competitive</span></div>
+        <div class="hn-signal lang-cn" style="display:none;">You.com 为 Agent 提供免费 MCP 原生实时 Web 搜索——对搜索数据 API 形成竞争压力。<span class="badge badge-red">⚠️ 竞争</span></div>
+      </div>
+      <div class="hn-card">
+        <div class="hn-title">Show HN: Open-Source Browser for AI Agents</div>
+        <div class="hn-signal lang-en">Synchronized JS-freezing browser control for agents. Agent automation stack maturing rapidly. <span class="badge badge-blue">📌 Ecosystem</span></div>
+        <div class="hn-signal lang-cn" style="display:none;">面向 Agent 的同步 JS 冻结浏览器控制。Agent 自动化栈正在快速成熟。<span class="badge badge-blue">📌 生态</span></div>
+      </div>
+      <div class="hn-card">
+        <div class="hn-title">Show HN: Hyperbrowser MCP Server</div>
+        <div class="hn-signal lang-en"><code>scrape_webpage</code> MCP tool for any URL — direct competitor in MCP-native scraping. <span class="badge badge-red">⚠️ Competitive</span></div>
+        <div class="hn-signal lang-cn" style="display:none;"><code>scrape_webpage</code> MCP 工具支持任意 URL——MCP 原生抓取领域的直接竞争对手。<span class="badge badge-red">⚠️ 竞争</span></div>
+      </div>
+      <div class="hn-card">
+        <div class="hn-title">AI Crawlers Dominate Traffic, Forcing Country Blocks</div>
+        <div class="hn-signal lang-en">Anti-bot escalation validates Novada's residential proxy value proposition — infrastructure demand rising. <span class="badge badge-green">✅ Opportunity</span></div>
+        <div class="hn-signal lang-cn" style="display:none;">反爬升级验证了 Novada 住宅代理的价值主张——基础设施需求上升。<span class="badge badge-green">✅ 机会</span></div>
+      </div>
+      <div class="hn-card">
+        <div class="hn-title">ScrapeGraphAI Release Week</div>
+        <div class="hn-signal lang-en">AI-native graph-based scraping framework gaining traction in developer community. <span class="badge badge-blue">📌 Ecosystem</span></div>
+        <div class="hn-signal lang-cn" style="display:none;">AI 原生图结构抓取框架在开发者社区获得关注。<span class="badge badge-blue">📌 生态</span></div>
+      </div>
+    </div>
+
+    <!-- ── INDUSTRY NEWS ── -->
+    <div class="section-title lang-en">Industry News</div>
+    <div class="section-title lang-cn" style="display:none;">行业动态</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="lang-en">Event</th><th class="lang-cn" style="display:none;">事件</th>
+            <th class="lang-en">Date</th><th class="lang-cn" style="display:none;">日期</th>
+            <th class="lang-en">Impact</th><th class="lang-cn" style="display:none;">影响</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="lang-en">Microsoft Agent Framework 1.0 GA — MCP native, .NET + Python</td>
+            <td class="lang-cn" style="display:none;">Microsoft Agent Framework 1.0 正式发布——MCP 原生，支持 .NET + Python</td>
+            <td>Apr 3, 2026</td>
+            <td><span class="badge badge-orange">High</span></td>
+          </tr>
+          <tr>
+            <td class="lang-en">CrewAI v1.10.1 — Native MCP + A2A, 12M+ daily agent executions</td>
+            <td class="lang-cn" style="display:none;">CrewAI v1.10.1——原生 MCP + A2A，每日超 1200 万次 Agent 执行</td>
+            <td>2026 Q1–Q2</td>
+            <td><span class="badge badge-orange">High</span></td>
+          </tr>
+          <tr>
+            <td class="lang-en">LangGraph v0.3.0 — Stateful graphs, durable execution, LangSmith observability</td>
+            <td class="lang-cn" style="display:none;">LangGraph v0.3.0——有状态图、持久执行、LangSmith 可观测性</td>
+            <td>2026 Q1</td>
+            <td><span class="badge badge-blue">Medium</span></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Claude Opus 4.7 — New default + multi-agent orchestration + "Dreaming"</td>
+            <td class="lang-cn" style="display:none;">Claude Opus 4.7——新默认模型 + 多 Agent 编排 + "Dreaming"自改进</td>
+            <td>May 6–10, 2026</td>
+            <td><span class="badge badge-red">Critical</span></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Microsoft Copilot blends GPT (draft) + Claude (critique) in single pipeline</td>
+            <td class="lang-cn" style="display:none;">Microsoft Copilot 在单一流水线中融合 GPT（起草）+ Claude（审查）</td>
+            <td>May 2026</td>
+            <td><span class="badge badge-blue">Medium</span></td>
+          </tr>
+          <tr>
+            <td class="lang-en">Web scraping market projected to exceed $2B globally in 2026</td>
+            <td class="lang-cn" style="display:none;">全球网络抓取市场预计 2026 年超过 20 亿美元</td>
+            <td>2026</td>
+            <td><span class="badge badge-green">Tailwind</span></td>
+          </tr>
+          <tr>
+            <td class="lang-en">GitHub: 4.3M AI repositories, 178% YoY jump in LLM-focused projects</td>
+            <td class="lang-cn" style="display:none;">GitHub：430 万个 AI 仓库，LLM 相关项目同比增长 178%</td>
+            <td>2025→2026</td>
+            <td><span class="badge badge-green">Tailwind</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── MCP ECOSYSTEM ── -->
+    <div class="section-title lang-en">MCP Ecosystem Tracker</div>
+    <div class="section-title lang-cn" style="display:none;">MCP 生态系统追踪</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="lang-en">Provider</th><th class="lang-cn" style="display:none;">提供商</th>
+            <th class="lang-en">MCP Server</th><th class="lang-cn" style="display:none;">MCP 服务器</th>
+            <th class="lang-en">Status</th><th class="lang-cn" style="display:none;">状态</th>
+            <th class="lang-en">Notes</th><th class="lang-cn" style="display:none;">备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AWS</td>
+            <td class="lang-en">AWS MCP Server</td><td class="lang-cn" style="display:none;">AWS MCP 服务器</td>
+            <td><span class="badge badge-green">✅ GA</span></td>
+            <td class="lang-en">All AWS APIs via single MCP tool (May 6, 2026)</td>
+            <td class="lang-cn" style="display:none;">通过单一 MCP 工具访问所有 AWS API（2026 年 5 月 6 日）</td>
+          </tr>
+          <tr>
+            <td>Azure / Microsoft</td>
+            <td class="lang-en">Azure MCP Server</td><td class="lang-cn" style="display:none;">Azure MCP 服务器</td>
+            <td><span class="badge badge-green">✅ GA</span></td>
+            <td class="lang-en">Built into Visual Studio 2026 natively</td>
+            <td class="lang-cn" style="display:none;">已内置于 Visual Studio 2026</td>
+          </tr>
+          <tr>
+            <td>Blend Labs</td>
+            <td class="lang-en">Autopilot MCP Server</td><td class="lang-cn" style="display:none;">Autopilot MCP 服务器</td>
+            <td><span class="badge badge-green">✅ Live</span></td>
+            <td class="lang-en">Loan origination AI workflows for financial institutions</td>
+            <td class="lang-cn" style="display:none;">面向金融机构的贷款发起 AI 工作流</td>
+          </tr>
+          <tr>
+            <td>GoodData</td>
+            <td class="lang-en">GoodData MCP Server</td><td class="lang-cn" style="display:none;">GoodData MCP 服务器</td>
+            <td><span class="badge badge-green">✅ Q1 2026</span></td>
+            <td class="lang-en">Analytics end-to-end via agents; 10–50× faster BI</td>
+            <td class="lang-cn" style="display:none;">通过 Agent 端到端分析；BI 速度提升 10–50 倍</td>
+          </tr>
+          <tr>
+            <td>Splunk</td>
+            <td class="lang-en">Splunk MCP Server</td><td class="lang-cn" style="display:none;">Splunk MCP 服务器</td>
+            <td><span class="badge badge-green">✅ Early 2026</span></td>
+            <td class="lang-en">Agents connect to Splunk data without custom integration</td>
+            <td class="lang-cn" style="display:none;">Agent 无需自定义集成即可连接 Splunk 数据</td>
+          </tr>
+          <tr>
+            <td>You.com</td>
+            <td class="lang-en">Web Search MCP</td><td class="lang-cn" style="display:none;">Web 搜索 MCP</td>
+            <td><span class="badge badge-green">✅ Feb 2026</span></td>
+            <td class="lang-en">Free real-time web search for agents via MCP</td>
+            <td class="lang-cn" style="display:none;">通过 MCP 为 Agent 提供免费实时 Web 搜索</td>
+          </tr>
+          <tr>
+            <td>Hyperbrowser</td>
+            <td class="lang-en">Hyperbrowser MCP</td><td class="lang-cn" style="display:none;">Hyperbrowser MCP</td>
+            <td><span class="badge badge-green">✅ Live</span></td>
+            <td class="lang-en"><code>scrape_webpage</code> MCP tool — direct scraping competitor</td>
+            <td class="lang-cn" style="display:none;"><code>scrape_webpage</code> MCP 工具——直接抓取竞争对手</td>
+          </tr>
+          <tr class="mcp-gap">
+            <td style="color:#a93226;font-weight:800;">Novada</td>
+            <td class="lang-en" style="color:#a93226;">—</td><td class="lang-cn" style="display:none;color:#a93226;">—</td>
+            <td><span class="badge badge-red">❌ Missing</span></td>
+            <td class="lang-en" style="color:#a93226;font-weight:700;">Gap: No public MCP server. Action required.</td>
+            <td class="lang-cn" style="display:none;color:#a93226;font-weight:700;">缺口：无公开 MCP 服务器，需立即行动。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── ARXIV PAPERS ── -->
+    <div class="section-title lang-en">arXiv Research Highlights</div>
+    <div class="section-title lang-cn" style="display:none;">arXiv 研究亮点</div>
+    <div class="paper-list">
+      <div class="paper-item">
+        <div class="paper-title">AI Agent Systems: Architectures, Applications, and Evaluation [2601.01743]</div>
+        <div class="paper-desc lang-en">Survey synthesizing emerging agent landscapes: deliberation and reasoning, planning and control, and tool calling + environment interaction. Foundation for understanding agent API surface demands.</div>
+        <div class="paper-desc lang-cn" style="display:none;">综合调查新兴 Agent 架构：审议与推理、规划与控制、工具调用与环境交互。理解 Agent API 需求的基础参考。</div>
+      </div>
+      <div class="paper-item">
+        <div class="paper-title">From Secure Agentic AI to Secure Agentic Web [2603.01564]</div>
+        <div class="paper-desc lang-en">LLMs deployed as agentic systems bring new security problems — tool use, persistent memory, and interaction with untrusted web content create real-world harms. Critical for Novada's proxy security posture.</div>
+        <div class="paper-desc lang-cn" style="display:none;">LLM 作为 Agentic 系统部署带来新安全问题——工具使用、持久记忆和与不可信 Web 内容的交互可导致现实危害。对 Novada 代理安全态势至关重要。</div>
+      </div>
+      <div class="paper-item">
+        <div class="paper-title">Dive into Claude Code: Design Space of AI Agent Systems [VILA-Lab, 2026]</div>
+        <div class="paper-desc lang-en">Systematic analysis of Claude Code as a model for designing today's and future AI agent systems. Relevant for understanding how Claude-powered agents will consume web data infrastructure.</div>
+        <div class="paper-desc lang-cn" style="display:none;">对 Claude Code 作为当今及未来 AI Agent 系统设计模型的系统性分析。有助于理解 Claude 驱动的 Agent 将如何消耗 Web 数据基础设施。</div>
+      </div>
+      <div class="paper-item">
+        <div class="paper-title">Adaptation of Agentic AI: Post-Training, Memory, and Skills [2512.16301]</div>
+        <div class="paper-desc lang-en">LLM agents moving beyond prompting: on-policy RL for tool use, persistent memory, and reusable skills. Agents with persistent memory will require persistent, reliable web data access.</div>
+        <div class="paper-desc lang-cn" style="display:none;">LLM Agent 超越提示工程：面向工具使用的在策略强化学习、持久记忆和可复用技能。具备持久记忆的 Agent 需要持久可靠的 Web 数据访问。</div>
+      </div>
+    </div>
+
+    <!-- ── NOVADA STRATEGIC SIGNALS ── -->
+    <div class="section-title lang-en">Novada Strategic Signals</div>
+    <div class="section-title lang-cn" style="display:none;">Novada 战略信号</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="lang-en">Signal</th><th class="lang-cn" style="display:none;">信号</th>
+            <th class="lang-en">Priority</th><th class="lang-cn" style="display:none;">优先级</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="lang-en"><strong>MCP server gap</strong> — Every major cloud and data platform now has an MCP server. Novada has none publicly listed. Ship this first.</td>
+            <td class="lang-cn" style="display:none;"><strong>MCP 服务器缺口</strong>——每个主要云和数据平台都有 MCP 服务器，Novada 尚无。优先推出。</td>
+            <td><span class="badge badge-red">P0 — Urgent</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="lang-en"><strong>Agent volume explosion</strong> — Claude Opus 4.7 doubled rate limits + multi-agent orchestration = 2–5× more agent API calls incoming. Scale proxy/scraping infra now.</td>
+            <td class="lang-cn" style="display:none;"><strong>Agent 量级爆发</strong>——Claude Opus 4.7 速率限制翻倍 + 多 Agent 编排 = 即将增加 2–5 倍 API 调用。现在扩展代理/抓取基础设施。</td>
+            <td><span class="badge badge-orange">P1 — High</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="lang-en"><strong>Firecrawl /agent endpoint</strong> — Top-ranked AI scraping API now offers autonomous agent mode. Direct competition to Novada's web data API. Differentiate on scale, compliance, reliability.</td>
+            <td class="lang-cn" style="display:none;"><strong>Firecrawl /agent 端点</strong>——排名最高的 AI 抓取 API 现提供自主 Agent 模式，直接竞争 Novada Web 数据 API。在规模、合规性、可靠性上差异化。</td>
+            <td><span class="badge badge-orange">P1 — High</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="lang-en"><strong>WebMCP standard (Chrome)</strong> — Browser-native MCP tool exposure could partially shift demand from raw scraping to structured API access. Monitor and potentially adopt.</td>
+            <td class="lang-cn" style="display:none;"><strong>WebMCP 标准（Chrome）</strong>——浏览器原生 MCP 工具暴露可能将需求从原始抓取部分转移到结构化 API 访问。持续监控并考虑采用。</td>
+            <td><span class="badge badge-blue">P2 — Watch</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="lang-en"><strong>AI crawler anti-bot escalation</strong> — Country-level blocking validates residential rotating proxy as critical infra. This is a Novada tailwind. Accelerate go-to-market.</td>
+            <td class="lang-cn" style="display:none;"><strong>AI 爬虫反爬升级</strong>——国家级封锁验证住宅轮换代理为关键基础设施。这是 Novada 的顺风。加速市场推广。</td>
+            <td><span class="badge badge-green">P2 — Opportunity</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer>
+    <strong>Novada Intelligence</strong> — AI Trends Report · 2026-05-10<br />
+    Sources: AWS Blog · Microsoft TechCommunity · Visual Studio Blog · Anthropic Code w/ Claude 2026 · ByteByteGo · Fungies.io · OSSInsight · Kadoa · Firecrawl Blog · ScrapeOps · Hacker News · arXiv.org · GeekWire · NxCode<br />
+    <span style="opacity:0.4;">Internal use only. Do not share outside the company without permission.</span>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const enEls = document.querySelectorAll('.lang-en');
+      const cnEls = document.querySelectorAll('.lang-cn');
+
+      if (lang === 'cn') {
+        enEls.forEach(el => el.style.display = 'none');
+        cnEls.forEach(el => {
+          el.style.display = el.tagName === 'TD' ? 'table-cell' : 'block';
+        });
+      } else {
+        cnEls.forEach(el => el.style.display = 'none');
+        enEls.forEach(el => {
+          el.style.display = el.tagName === 'TD' ? 'table-cell' : 'block';
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
