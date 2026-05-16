@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Competitive Intelligence — 2026-05-16</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f0e6;
+      --bg-card: #ffffff;
+      --bg-card-alt: #faf7f2;
+      --border: #e2d9c8;
+      --text-primary: #1a1a1a;
+      --text-secondary: #5a5243;
+      --text-muted: #8a7e70;
+      --accent: #c85c1a;
+      --accent-light: #fdebd8;
+      --accent-mid: #f0a06a;
+      --green: #1a7c4a;
+      --green-light: #d4f5e4;
+      --yellow: #8a6800;
+      --yellow-light: #fff3c4;
+      --red: #c82020;
+      --red-light: #fde8e8;
+      --blue: #1a4a8a;
+      --blue-light: #deeaff;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .lang-cn { display: none; }
+    body.show-cn .lang-en { display: none; }
+    body.show-cn .lang-cn { display: inline; }
+
+    .lang-toggle-bar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lang-toggle-bar span { color: var(--text-muted); font-size: 13px; }
+    #langToggle {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #langToggle:hover { background: #a84a0e; }
+
+    header {
+      background: var(--text-primary);
+      color: #fff;
+      padding: 32px 24px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 16px;
+    }
+    header .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    header .logo span { color: var(--accent-mid); }
+    header .title-block { flex: 1; min-width: 220px; }
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    header .meta { color: #bbb; font-size: 13px; }
+
+    main { max-width: 1200px; margin: 0 auto; padding: 32px 20px 64px; }
+    section { margin-bottom: 48px; }
+    h2 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alerts-list { display: flex; flex-direction: column; gap: 10px; }
+    .alert-banner {
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border-left: 5px solid transparent;
+      box-shadow: var(--shadow);
+    }
+    .alert-banner.high  { background: var(--red-light);    border-color: var(--red);    }
+    .alert-banner.med   { background: var(--yellow-light); border-color: #c8a020; }
+    .alert-banner.low   { background: var(--green-light);  border-color: var(--green);  }
+    .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .alert-body { flex: 1; }
+    .alert-competitor { font-weight: 800; font-size: 14px; margin-bottom: 2px; }
+    .alert-text { font-size: 14px; color: var(--text-secondary); }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge.high   { background: var(--red);    color: #fff; }
+    .badge.med    { background: #c8a020;        color: #fff; }
+    .badge.low    { background: var(--green);   color: #fff; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header {
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      background: var(--bg-card-alt);
+      flex-shrink: 0;
+    }
+    .card-name { font-size: 16px; font-weight: 800; }
+    .card-category { font-size: 11px; color: var(--text-muted); margin-top: 1px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+    .card-body { padding: 14px 18px; flex: 1; }
+    .update-item {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 9px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    .update-item:last-child { margin-bottom: 0; }
+    .update-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-mid);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .update-dot.red    { background: var(--red); }
+    .update-dot.yellow { background: #c8a020; }
+    .update-dot.green  { background: var(--green); }
+    .card-footer {
+      background: var(--bg-card-alt);
+      border-top: 1px solid var(--border);
+      padding: 9px 18px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mcp-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--blue-light);
+      color: var(--blue);
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .mcp-table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th {
+      background: var(--text-primary);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    th:first-child { border-radius: 8px 0 0 0; }
+    th:last-child  { border-radius: 0 8px 0 0; }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: var(--bg-card-alt); }
+    tr:first-child td { background: var(--bg-card); }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .insight-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .insight-number {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 900;
+      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .insight-title { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+    .insight-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
+
+    #novada-brief {
+      min-height: 80px;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    #novada-brief:empty::after { content: "[ Novada brief — to be filled in ]"; }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+<div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+  ⚠️ INTERNAL USE ONLY — DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+</div>
+
+<div class="lang-toggle-bar">
+  <span><span class="lang-en">Language / 语言:</span><span class="lang-cn">语言 / Language:</span></span>
+  <button id="langToggle" onclick="toggleLang()">
+    <span class="lang-en">切换中文</span>
+    <span class="lang-cn">Switch to English</span>
+  </button>
+</div>
+
+<header>
+  <div class="logo">Nova<span>da</span></div>
+  <div class="title-block">
+    <h1>
+      <span class="lang-en">Competitive Intelligence Report</span>
+      <span class="lang-cn">竞争情报报告</span>
+    </h1>
+    <div class="meta">
+      <span class="lang-en">Week of 2026-05-16 · Web Scraping &amp; Search API Landscape · 8 Competitors</span>
+      <span class="lang-cn">2026-05-16 周报 · 网络抓取与搜索 API 市场 · 8 家竞争对手</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ALERTS -->
+  <section id="alerts">
+    <h2>🚨
+      <span class="lang-en">Priority Alerts</span>
+      <span class="lang-cn">优先警报</span>
+    </h2>
+    <div class="alerts-list">
+
+      <div class="alert-banner high">
+        <div class="alert-icon">🔴</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge high">HIGH</span>Firecrawl — Token-Efficient /scrape Formats + Lockdown Mode</div>
+          <div class="alert-text">
+            <span class="lang-en">Two new /scrape response formats: <code>question</code> (grounded answer from any page) and <code>highlights</code> (verbatim excerpts) — both use up to 100× fewer tokens than a full scrape. Lockdown Mode (May 8) adds cache-only scraping with zero data retention and prompt-injection hardening. Structural attack on per-scrape cost model across the industry.</span>
+            <span class="lang-cn">两种新/scrape响应格式：<code>question</code>（从任意页面提取有据可查的答案）和<code>highlights</code>（原文摘录）——两者均比完整抓取少用高达100倍的token。锁定模式（5月8日）新增仅缓存抓取模式，零数据留存并内置提示注入防护。对全行业按次收费模式的结构性冲击。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner high">
+        <div class="alert-icon">🔴</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge high">HIGH</span>Tavily / Nebius — Insider Selling Signal Amid Blowout Q1</div>
+          <div class="alert-text">
+            <span class="lang-en">Nebius Q1: $389–399M revenue, +684% YoY, +75% QoQ. $27B Meta deal confirmed. Pennsylvania AI factory announced. However: $15M in insider sales reported concurrently — unusual given the bullish narrative. Potential signal of insiders monetising at peak. Q2 guidance revision risk worth watching. Tavily remains backed by hyperscaler-level capital regardless of outcome.</span>
+            <span class="lang-cn">Nebius Q1：营收$389–399M，同比+684%，环比+75%。$270亿Meta合同确认，宾夕法尼亚AI工厂宣布。但同期报告$1500万内部人员抛售——在乐观叙事下显得异常。需关注Q2业绩修正风险。无论如何，Tavily仍获超大规模云服务商级资本支持。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner med">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge med">MED</span>Firecrawl — n8n Cloud + OpenRouter Distribution Expansion</div>
+          <div class="alert-text">
+            <span class="lang-en">Firecrawl is now natively integrated into n8n Cloud (no API key, 10k free credits on connect) and is a web search engine on OpenRouter (one toggle, all models). Combined with Cursor Marketplace plugin status, this makes Firecrawl visible in every major workflow automation and LLM routing surface. Developer reach expanding dramatically without paid acquisition.</span>
+            <span class="lang-cn">Firecrawl现已原生集成至n8n Cloud（无需API密钥，连接即获1万免费积分），并成为OpenRouter上的网络搜索引擎（一键切换，适用所有模型）。加上Cursor官方插件地位，Firecrawl已覆盖所有主要工作流自动化和大模型路由平台，无需付费投放即可大幅扩大开发者触达。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner med">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge med">MED</span>BrightData — Smart TV SDK Under Platform Crackdown</div>
+          <div class="alert-text">
+            <span class="lang-en">BrightData's ~150M-node residential proxy network includes users of partner TV apps who opt in for lower costs. Google is reportedly banning persistent background SDK processes; Amazon blocking third-party proxy SDK integrations. Platform-level enforcement tightening. Residential pool composition and legality increasingly scrutinised — supply risk for anyone purchasing BrightData residential proxies.</span>
+            <span class="lang-cn">BrightData约1.5亿节点住宅代理网络包含通过合作电视应用选择加入的用户。据报道，谷歌正禁止持久后台SDK进程，亚马逊封锁第三方代理SDK集成。平台层执法趋严。住宅代理池构成与合法性受到越来越多审查——购买BrightData住宅代理者面临供应风险。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner med">
+        <div class="alert-icon">🟡</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge med">MED</span>Oxylabs — Residential Pool 72M → 100M IPs, Enterprise Focus Locked In</div>
+          <div class="alert-text">
+            <span class="lang-en">Residential proxy pool expanded from 72M to 100M IPs — now claims largest network on market. New ISP providers (Cox US, Deutsche Telekom DE), city/state Headless Browser targeting, IPv4/IPv6 filters, and self-healing parser presets added. PAYG tier removed March 2026 ($30/mo floor). Oxylabs is exclusively enterprise — SMB demand displaced toward Decodo and Firecrawl.</span>
+            <span class="lang-cn">住宅代理池从7200万扩展至1亿IP——现声称市场最大网络。新增ISP服务商（美国Cox、德国电信），无头浏览器支持城市/州级定向，增加IPv4/IPv6筛选器及自愈解析预设。即付即用套餐于2026年3月取消（最低$30/月）。Oxylabs完全面向企业——中小企业需求流向Decodo和Firecrawl。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner low">
+        <div class="alert-icon">🟢</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge low">LOW</span>Crawl4AI — Supply Chain Hotfix v0.8.6, Docker CVE Still Open</div>
+          <div class="alert-text">
+            <span class="lang-en">v0.8.6 (Mar 24): replaced <code>litellm</code> with <code>unclecode-litellm</code> after TeamPCP PyPI backdoor harvested SSH keys and cloud credentials. Users on ≤ v0.8.5 must upgrade. CVE-2026-26216 (RCE via Docker API Hooks) is a separate, still-open issue. Any Novada team running self-hosted Crawl4AI Docker should audit both.</span>
+            <span class="lang-cn">v0.8.6（3月24日）：因TeamPCP PyPI后门（窃取SSH密钥和云凭证）将<code>litellm</code>替换为<code>unclecode-litellm</code>。v0.8.5及以下版本用户须立即升级。CVE-2026-26216（Docker API Hooks远程代码执行）为独立未解决问题。自托管Crawl4AI Docker的Novada团队应同时审计两个问题。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-banner low">
+        <div class="alert-icon">🟢</div>
+        <div class="alert-body">
+          <div class="alert-competitor"><span class="badge low">LOW</span>Apify — mcpc CLI + ApifyForge 93 MCP Servers</div>
+          <div class="alert-text">
+            <span class="lang-en">mcpc universal MCP CLI released: OAuth 2.1, persistent sessions, stdio/HTTP transport, proxy mode for AI sandboxes, <code>x402</code> micropayments. ApifyForge grows to 93+ MCP intelligence servers covering financial crime, cybersecurity, supply chain, and regulatory intelligence verticals. SSE → Streamable HTTP migration complete.</span>
+            <span class="lang-cn">mcpc通用MCP CLI发布：OAuth 2.1、持久会话、stdio/HTTP传输、AI沙箱代理模式、<code>x402</code>微支付。ApifyForge增至93+个MCP情报服务器，覆盖金融犯罪、网络安全、供应链、监管合规等垂直领域。SSE→Streamable HTTP迁移完成。</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPETITOR CARDS -->
+  <section id="competitors">
+    <h2>🏢
+      <span class="lang-en">Competitor Updates</span>
+      <span class="lang-cn">竞争对手动态</span>
+    </h2>
+    <div class="cards-grid">
+
+      <!-- Firecrawl -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔥</div>
+          <div>
+            <div class="card-name">Firecrawl</div>
+            <div class="card-category"><span class="lang-en">Web Scraping API</span><span class="lang-cn">网页抓取API</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot red"></div>
+            <div><span class="lang-en">New /scrape formats: <code>question</code> + <code>highlights</code> — up to 100× fewer tokens, prompt-injection hardened (Apr 30)</span><span class="lang-cn">新/scrape格式：<code>question</code>+<code>highlights</code>——减少高达100倍token用量，内置提示注入防护（4月30日）</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot yellow"></div>
+            <div><span class="lang-en">Lockdown Mode (May 8): cache-only scraping, zero data retention, single flag across all SDKs + MCP</span><span class="lang-cn">锁定模式（5月8日）：仅缓存抓取，零数据留存，所有SDK+MCP统一标志</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Native n8n Cloud integration (no API key, 10k credits) + OpenRouter web search engine addition</span><span class="lang-cn">原生n8n Cloud集成（无需API密钥，1万积分）+ 加入OpenRouter网络搜索引擎</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Firecrawl Skill for Claude Code / Codex / OpenCode; CLI with scrape, search, crawl, map commands</span><span class="lang-cn">面向Claude Code/Codex/OpenCode的Firecrawl Skill；CLI支持抓取、搜索、爬取、映射命令</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">110k+ GitHub stars; BrightCoding blog (May 14) named it "the revolutionary web API for AI agents"</span><span class="lang-cn">GitHub超11万星；BrightCoding博客（5月14日）称其为"AI智能体的革命性网络API"</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span class="mcp-pill">⚡ MCP Active</span><span class="lang-en">Lockdown Mode: May 8, 2026</span><span class="lang-cn">锁定模式：2026年5月8日</span></div>
+      </div>
+
+      <!-- Tavily -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔍</div>
+          <div>
+            <div class="card-name">Tavily <span style="font-size:11px;font-weight:600;color:var(--text-muted);">acq. Nebius</span></div>
+            <div class="card-category"><span class="lang-en">Agentic Search API</span><span class="lang-cn">智能体搜索API</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot red"></div>
+            <div><span class="lang-en">Nebius Q1: $389–399M revenue, +684% YoY; $27B Meta 5-yr deal; Pennsylvania AI factory</span><span class="lang-cn">Nebius Q1：营收$389–399M，同比+684%；$270亿Meta五年合同；宾夕法尼亚AI工厂</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot yellow"></div>
+            <div><span class="lang-en">⚠️ $15M insider sales flagged alongside earnings — potential peak-valuation monetisation signal</span><span class="lang-cn">⚠️ 财报同期报告$1500万内部人员抛售——潜在估值顶部变现信号</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Full-year guidance: $3B–$3.4B revenue; CapEx raised to $20B–$25B; ARR target $7B–$9B</span><span class="lang-cn">全年指引：营收$30–34亿；资本支出上调至$200–250亿；ARR目标$70–90亿</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Embedded in NVIDIA AI-Q Blueprint (GTC 2026); 3M+ SDK downloads/mo; IBM, Cohere, Groq clients</span><span class="lang-cn">嵌入NVIDIA AI-Q蓝图（GTC 2026）；每月SDK下载量超300万；IBM、Cohere、Groq客户</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span style="font-size:11px;color:var(--blue);font-weight:700;">⚙️ Via NVIDIA MCP</span><span class="lang-en">Earnings May 13, 2026</span><span class="lang-cn">财报：2026年5月13日</span></div>
+      </div>
+
+      <!-- BrightData -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🌐</div>
+          <div>
+            <div class="card-name">BrightData</div>
+            <div class="card-category"><span class="lang-en">Proxy + Scraping Platform</span><span class="lang-cn">代理与抓取平台</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot red"></div>
+            <div><span class="lang-en">Smart TV SDK controversy: ~150M-node network under Google/Amazon platform restrictions (Feb 2026)</span><span class="lang-cn">智能电视SDK争议：约1.5亿节点网络受谷歌/亚马逊平台限制（2026年2月）</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">MCP server v2.8.3: free 5k req/mo; 100% accuracy benchmark (AIMultiple); ARIA-snapshot browser automation</span><span class="lang-cn">MCP服务器v2.8.3：免费5千次/月；AIMultiple准确率100%基准；ARIA快照浏览器自动化</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">New scrapers: Facebook profiles, Reddit profiles &amp; posts, YouTube Podcasts</span><span class="lang-cn">新增采集器：Facebook主页、Reddit资料页&amp;帖子、YouTube播客</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">RFC 9209 error reporting; batch concurrency reduced 10→5; OpenAI MCP endpoint published</span><span class="lang-cn">RFC 9209错误报告；批量并发从10降至5；发布OpenAI MCP端点</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span class="mcp-pill">⚡ MCP Active</span><span class="lang-en">v2.8.3 · Jan 18, 2026</span><span class="lang-cn">v2.8.3 · 2026年1月18日</span></div>
+      </div>
+
+      <!-- Oxylabs -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔒</div>
+          <div>
+            <div class="card-name">Oxylabs</div>
+            <div class="card-category"><span class="lang-en">Proxy Network</span><span class="lang-cn">代理网络</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot yellow"></div>
+            <div><span class="lang-en">Residential pool: 72M → 100M IPs; new ISP providers: Cox (US) + Deutsche Telekom (DE)</span><span class="lang-cn">住宅代理池：7200万→1亿IP；新增ISP服务商：美国Cox+德国电信</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Headless Browser: city/state-level targeting; new filters: OS type, IPv4/IPv6</span><span class="lang-cn">无头浏览器：城市/州级定向；新增筛选器：操作系统类型、IPv4/IPv6</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">AI Web Unblocker (Q1): auto-handles Cloudflare/Akamai/Kasada; 43% block rate reduction YoY</span><span class="lang-cn">AI Web Unblocker（Q1）：自动处理Cloudflare/Akamai/Kasada；封锁率同比降低43%</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Self-healing parser presets in Web Scraper API; PAYG removed Mar 2026 ($30/mo floor)</span><span class="lang-cn">Web Scraper API新增自愈解析预设；即付即用于2026年3月取消（起价$30/月）</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span style="font-size:11px;color:var(--text-muted);font-weight:700;">— No MCP</span><span class="lang-en">Enterprise-only since Mar 2026</span><span class="lang-cn">2026年3月起仅面向企业</span></div>
+      </div>
+
+      <!-- Decodo -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🛡️</div>
+          <div>
+            <div class="card-name">Decodo <span style="font-size:11px;font-weight:600;color:var(--text-muted);">ex-Smartproxy</span></div>
+            <div class="card-category"><span class="lang-en">Proxy Network</span><span class="lang-cn">代理网络</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot green"></div>
+            <div><span class="lang-en">AI Parser now GA — auto-cleans and formats raw scraped data; bundled with Web Scraping API</span><span class="lang-cn">AI解析器正式发布——自动清洗并格式化原始抓取数据；随Web抓取API捆绑提供</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Universal Scraper: real-time data from advanced/anti-bot websites with minimal config</span><span class="lang-cn">通用抓取器：以极少配置从高防护网站获取实时数据</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">No new product releases May 9–16. Network: 125M+ IPs / 195+ locations / 85K+ users</span><span class="lang-cn">5月9–16日无新产品发布。网络：超1.25亿IP/195+地点/85K+用户</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span style="font-size:11px;color:var(--text-muted);font-weight:700;">— No MCP</span><span class="lang-en">AI Parser GA this week</span><span class="lang-cn">AI解析器本周正式发布</span></div>
+      </div>
+
+      <!-- Crawl4AI -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🤖</div>
+          <div>
+            <div class="card-name">Crawl4AI</div>
+            <div class="card-category"><span class="lang-en">Open-Source Crawler</span><span class="lang-cn">开源爬虫</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot red"></div>
+            <div><span class="lang-en">v0.8.6 supply-chain hotfix: litellm PyPI backdoor (harvested SSH keys + cloud creds). Upgrade from ≤ v0.8.5 required.</span><span class="lang-cn">v0.8.6供应链热修复：litellm PyPI后门（窃取SSH密钥+云凭证）。v0.8.5及以下版本必须升级。</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot red"></div>
+            <div><span class="lang-en">CVE-2026-26216 open: RCE via Docker API Hooks parameter — separate from supply chain issue</span><span class="lang-cn">CVE-2026-26216未解决：通过Docker API Hooks参数的远程代码执行——与供应链问题独立</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">v0.8.0 (Jan 2026): anti-bot + proxy escalation, Shadow DOM flattening, crash recovery, 60+ bug fixes</span><span class="lang-cn">v0.8.0（2026年1月）：反机器人+代理升级、Shadow DOM扁平化、崩溃恢复、60+个错误修复</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">61.7k+ GitHub stars; OSS model — no dedicated MCP server</span><span class="lang-cn">GitHub超6.17万星；开源模型——无专用MCP服务器</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span style="font-size:11px;color:var(--red);font-weight:700;">⚠️ 2 Open Security Issues</span><span class="lang-en">Latest: v0.8.6</span><span class="lang-cn">最新版本：v0.8.6</span></div>
+      </div>
+
+      <!-- Exa -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🧠</div>
+          <div>
+            <div class="card-name">Exa</div>
+            <div class="card-category"><span class="lang-en">Neural Search API</span><span class="lang-cn">神经搜索API</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot red"></div>
+            <div><span class="lang-en">API deprecations live May 1: <code>linkedin_search_exa</code> + <code>people_search_exa</code> removed. Migrate to <code>web_search_advanced_exa</code>.</span><span class="lang-cn">API弃用已于5月1日生效：<code>linkedin_search_exa</code>+<code>people_search_exa</code>已移除。迁移至<code>web_search_advanced_exa</code>。</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Exa 2.0: Fast (&lt;350ms P50), Auto (default), Deep (agentic multi-step, P50 3.5s)</span><span class="lang-cn">Exa 2.0：Fast（&lt;350ms P50）、Auto（默认）、Deep（智能体多步骤，P50 3.5秒）</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Exa Instant (Feb 2026): sub-200ms neural search; up to 15× faster than competitors tested</span><span class="lang-cn">Exa Instant（2026年2月）：200毫秒以下神经搜索；比测试竞品快高达15倍</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">$85M Series B (Benchmark-led); rebuilt index: tens of billions of pages refreshed per minute</span><span class="lang-cn">B轮融资$8500万（Benchmark领投）；重建索引：数百亿页面每分钟刷新</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span class="mcp-pill">⚡ MCP Active</span><span class="lang-en">Exa 2.0 live; deprecations May 1</span><span class="lang-cn">Exa 2.0已上线；弃用于5月1日</span></div>
+      </div>
+
+      <!-- Apify -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🕷️</div>
+          <div>
+            <div class="card-name">Apify</div>
+            <div class="card-category"><span class="lang-en">Scraping Platform</span><span class="lang-cn">抓取平台</span></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="update-item">
+            <div class="update-dot green"></div>
+            <div><span class="lang-en">mcpc CLI: OAuth 2.1, persistent sessions, stdio/HTTP, AI sandbox proxy mode, x402 micropayments</span><span class="lang-cn">mcpc CLI：OAuth 2.1、持久会话、stdio/HTTP、AI沙箱代理模式、x402微支付</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">ApifyForge: 93+ MCP servers (financial crime, cybersecurity, supply chain, regulatory intelligence)</span><span class="lang-cn">ApifyForge：93+个MCP服务器（金融犯罪、网络安全、供应链、监管合规）</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">Agent Skills for Claude Code + Cursor; SSE → Streamable HTTP complete (Apr 1 deadline met)</span><span class="lang-cn">Claude Code+Cursor的Agent Skills；SSE→Streamable HTTP迁移完成（4月1日截止）</span></div>
+          </div>
+          <div class="update-item">
+            <div class="update-dot"></div>
+            <div><span class="lang-en">State of Web Scraping 2026: 65.8% report ↑ proxy use; 58.3% report ↑ proxy spend YoY</span><span class="lang-cn">2026年网络抓取现状：65.8%报告代理使用增加；58.3%报告代理支出同比增加</span></div>
+          </div>
+        </div>
+        <div class="card-footer"><span class="mcp-pill">⚡ MCP Active</span><span class="lang-en">mcpc + ApifyForge active</span><span class="lang-cn">mcpc + ApifyForge活跃</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCP TABLE -->
+  <section id="mcp">
+    <h2>⚡
+      <span class="lang-en">MCP Ecosystem Snapshot</span>
+      <span class="lang-cn">MCP 生态系统快照</span>
+    </h2>
+    <div class="mcp-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="lang-en">Competitor</span><span class="lang-cn">竞争对手</span></th>
+            <th><span class="lang-en">MCP Server</span><span class="lang-cn">MCP服务器</span></th>
+            <th><span class="lang-en">Status</span><span class="lang-cn">状态</span></th>
+            <th><span class="lang-en">Notes</span><span class="lang-cn">备注</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Firecrawl</strong></td>
+            <td><code>firecrawl-mcp-server</code></td>
+            <td>✅ <span class="lang-en">Active</span><span class="lang-cn">活跃</span></td>
+            <td><span class="lang-en">Cursor Marketplace plugin; n8n + OpenRouter; 5.4k stars</span><span class="lang-cn">Cursor官方插件；n8n+OpenRouter；5.4k星</span></td>
+          </tr>
+          <tr>
+            <td><strong>BrightData</strong></td>
+            <td><code>brightdata-mcp</code></td>
+            <td>✅ <span class="lang-en">Active</span><span class="lang-cn">活跃</span></td>
+            <td><span class="lang-en">v2.8.3; free 5k req/mo cloud tier; OpenAI endpoint; 100% benchmark</span><span class="lang-cn">v2.8.3；免费云端5千次/月；OpenAI端点；100%基准</span></td>
+          </tr>
+          <tr>
+            <td><strong>Exa</strong></td>
+            <td><code>exa-mcp-server</code></td>
+            <td>✅ <span class="lang-en">Active</span><span class="lang-cn">活跃</span></td>
+            <td><span class="lang-en">Exa 2.0 live; deprecated endpoints removed May 1; code search tool added</span><span class="lang-cn">Exa 2.0已上线；弃用端点已于5月1日移除；新增代码搜索工具</span></td>
+          </tr>
+          <tr>
+            <td><strong>Apify</strong></td>
+            <td><code>apify-mcp-server</code></td>
+            <td>✅ <span class="lang-en">Active</span><span class="lang-cn">活跃</span></td>
+            <td><span class="lang-en">Streamable HTTP; mcpc CLI; Agent Skills; 93+ ApifyForge servers</span><span class="lang-cn">Streamable HTTP；mcpc CLI；Agent Skills；93+个ApifyForge服务器</span></td>
+          </tr>
+          <tr>
+            <td><strong>Tavily</strong></td>
+            <td>—</td>
+            <td>⚙️ <span class="lang-en">Via Nebius</span><span class="lang-cn">通过Nebius</span></td>
+            <td><span class="lang-en">Embedded in NVIDIA AI-Q Blueprint; no standalone MCP server</span><span class="lang-cn">嵌入NVIDIA AI-Q蓝图；无独立MCP服务器</span></td>
+          </tr>
+          <tr>
+            <td><strong>Crawl4AI</strong></td>
+            <td>—</td>
+            <td>🔧 <span class="lang-en">OSS</span><span class="lang-cn">开源</span></td>
+            <td><span class="lang-en">No MCP server; CVE-2026-26216 open; v0.8.6 supply-chain fix required</span><span class="lang-cn">无MCP服务器；CVE-2026-26216未解决；需应用v0.8.6供应链修复</span></td>
+          </tr>
+          <tr>
+            <td><strong>Oxylabs</strong></td>
+            <td>—</td>
+            <td>— <span class="lang-en">None</span><span class="lang-cn">无</span></td>
+            <td><span class="lang-en">No MCP offering identified</span><span class="lang-cn">未发现MCP产品</span></td>
+          </tr>
+          <tr>
+            <td><strong>Decodo</strong></td>
+            <td>—</td>
+            <td>— <span class="lang-en">None</span><span class="lang-cn">无</span></td>
+            <td><span class="lang-en">No MCP offering identified</span><span class="lang-cn">未发现MCP产品</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AI INSIGHTS -->
+  <section id="insights">
+    <h2>💡
+      <span class="lang-en">AI Insights</span>
+      <span class="lang-cn">AI 洞察</span>
+    </h2>
+    <div class="insights-grid">
+
+      <div class="insight-card">
+        <div class="insight-header">
+          <div class="insight-number">1</div>
+          <div class="insight-title">
+            <span class="lang-en">Firecrawl is engineering toward zero marginal cost per query</span>
+            <span class="lang-cn">Firecrawl正在将每次查询边际成本逼近零</span>
+          </div>
+        </div>
+        <div class="insight-body">
+          <span class="lang-en">The <code>question</code> and <code>highlights</code> /scrape formats — using up to 100× fewer tokens — combined with Lockdown Mode (zero outbound, zero retention) suggest Firecrawl is building a tiered cost architecture where common queries approach negligible cost. This directly attacks the per-scrape pricing model competitors rely on and will anchor developer expectations around token-efficient retrieval. Novada should assess whether its own pipeline can offer similarly lightweight extraction modes before this becomes the baseline expectation.</span>
+          <span class="lang-cn"><code>question</code>和<code>highlights</code> /scrape格式（减少高达100倍token用量），结合锁定模式（零出站、零留存），表明Firecrawl正在构建分层成本架构，使常见查询接近零成本。这直接冲击竞争对手依赖的按次收费模式，并将重塑开发者对高效检索的预期。Novada应在此成为基线预期之前，评估自身流水线能否提供同样轻量的提取模式。</span>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-header">
+          <div class="insight-number">2</div>
+          <div class="insight-title">
+            <span class="lang-en">Platform distribution is now a first-order competitive variable</span>
+            <span class="lang-cn">平台分发已成为首要竞争变量</span>
+          </div>
+        </div>
+        <div class="insight-body">
+          <span class="lang-en">Firecrawl is simultaneously embedded in n8n Cloud, OpenRouter, Cursor Marketplace, Docker MCP Catalog, and four coding-assistant skill registries. For most developers, the tool present in their IDE or workflow platform is the tool they adopt — discovery drives adoption more than features at this stage. Apify's Agent Skills strategy targets the same vector. Novada's product needs a concrete distribution checklist: Cursor Marketplace, Claude Desktop MCP config, n8n node, OpenRouter provider, Docker MCP Catalog. Absence from these surfaces is not neutral — it is actively losing mindshare.</span>
+          <span class="lang-cn">Firecrawl同时嵌入n8n Cloud、OpenRouter、Cursor官方市场、Docker MCP目录及四个编码助手技能注册表。对多数开发者而言，出现在其IDE或工作流平台的工具就是他们采用的工具——在当前阶段，发现性比功能更能驱动采用。Apify的Agent Skills策略针对同一方向。Novada产品需要明确的分发清单：Cursor官方市场、Claude Desktop MCP配置、n8n节点、OpenRouter服务商、Docker MCP目录。缺席这些平台并非中立——而是在主动失去开发者心智。</span>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-header">
+          <div class="insight-number">3</div>
+          <div class="insight-title">
+            <span class="lang-en">BrightData's SDK model faces a platform governance reckoning</span>
+            <span class="lang-cn">BrightData的SDK模式面临平台治理清算</span>
+          </div>
+        </div>
+        <div class="insight-body">
+          <span class="lang-en">BrightData's 150M-node residential proxy network is partly sustained by SDKs embedded in consumer TV apps. Google and Amazon are now explicitly restricting this practice. If enforcement tightens further (App Store-style SDK rules), BrightData's residential pool could shrink materially — a secondary supply risk for anyone purchasing residential proxies through them. This is also an opportunity: ethical, directly-consented IP sourcing becomes a premium differentiator as regulatory scrutiny increases. Novada should document its proxy sourcing chain and be prepared to articulate consent standards to enterprise customers.</span>
+          <span class="lang-cn">BrightData的1.5亿节点住宅代理网络部分依赖嵌入消费类电视应用的SDK维持。谷歌和亚马逊现已明确限制此类做法。若执法进一步收紧（类似应用商店的SDK规则），BrightData住宅代理池可能大幅缩水——对通过其购买住宅代理的用户构成次级供应风险。这也是机遇：随着监管审查加剧，经过用户明确同意的IP来源将成为高端差异化优势。Novada应记录其代理来源链，并准备好向企业客户阐明同意标准。</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NOVADA BRIEF (placeholder) -->
+  <section id="novada-brief-section">
+    <h2>📋
+      <span class="lang-en">Novada Brief</span>
+      <span class="lang-cn">Novada 简报</span>
+    </h2>
+    <section id="novada-brief"></section>
+  </section>
+
+</main>
+
+<footer>
+  <span class="lang-en">Sources: GitHub releases, official blogs (firecrawl.dev, exa.ai, tavily.com, brightdata.com, oxylabs.io, decodo.com, apify.com, docs.crawl4ai.com), Nebius Q1 2026 earnings (Bloomberg, ad-hoc-news.de, TechStartups), MarkTechPost (Exa Instant), TechSpot (BrightData Smart TV), n8n Blog, BrightCoding Blog · Generated 2026-05-16</span>
+  <span class="lang-cn">来源：GitHub发布、官方博客（firecrawl.dev、exa.ai、tavily.com、brightdata.com、oxylabs.io、decodo.com、apify.com、docs.crawl4ai.com）、Nebius Q1 2026财报（Bloomberg、ad-hoc-news.de、TechStartups）、MarkTechPost（Exa Instant）、TechSpot（BrightData智能电视）、n8n博客、BrightCoding博客 · 生成于2026-05-16</span>
+</footer>
+
+<script>
+  function toggleLang() {
+    document.body.classList.toggle('show-cn');
+  }
+</script>
+</body>
+</html>
