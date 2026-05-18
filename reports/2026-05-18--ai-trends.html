@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Trends Report — 2026-05-18 | Novada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f0e6;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #5a5a5a;
+      --accent: #2d6a4f;
+      --accent2: #b5451b;
+      --accent3: #1d4e89;
+      --border: #d9d0be;
+      --tag-bg: #e8e0d0;
+      --high: #e63946;
+      --med: #e09f3e;
+      --low: #52b788;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── banner ── */
+    .banner-internal {
+      background: #1a1a1a;
+      color: #ff453a;
+      padding: 10px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    /* ── header ── */
+    header {
+      background: linear-gradient(135deg, #2d6a4f 0%, #1d4e89 100%);
+      color: #fff;
+      padding: 36px 40px 28px;
+    }
+    header .meta { font-size: 13px; opacity: 0.75; margin-bottom: 6px; }
+    header h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; }
+    header p.subtitle { margin-top: 8px; opacity: 0.85; font-size: 0.97rem; }
+
+    /* ── lang toggle ── */
+    .lang-bar {
+      display: flex; align-items: center; justify-content: flex-end;
+      padding: 10px 40px; background: #e8e0d0; border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+    .lang-bar span { font-size: 13px; color: var(--muted); }
+    .lang-btn {
+      background: none; border: 1.5px solid var(--border); border-radius: 20px;
+      padding: 3px 14px; font-family: 'Nunito', sans-serif; font-size: 13px;
+      cursor: pointer; transition: all .2s;
+    }
+    .lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .lang-btn:hover:not(.active) { background: var(--tag-bg); }
+
+    /* ── layout ── */
+    main { max-width: 1060px; margin: 0 auto; padding: 32px 24px 60px; }
+
+    /* ── section titles ── */
+    .section-title {
+      font-size: 1.15rem; font-weight: 800; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin: 40px 0 16px; padding-bottom: 6px;
+      border-bottom: 2px solid var(--accent);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title .ico { font-size: 1.1rem; }
+
+    /* ── insight cards ── */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: box-shadow .2s;
+    }
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+    .card .card-rank { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .card h3 { font-size: 1rem; font-weight: 800; line-height: 1.3; margin-bottom: 8px; }
+    .card p { font-size: 0.875rem; color: var(--muted); }
+    .card .tag {
+      display: inline-block; background: var(--tag-bg); border-radius: 6px;
+      font-size: 11px; font-weight: 700; padding: 2px 8px; margin-top: 10px; margin-right: 4px;
+      color: var(--accent3); text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .card .novada-signal {
+      margin-top: 12px; padding: 8px 10px; border-radius: 8px;
+      background: #eaf4ee; border-left: 3px solid var(--accent);
+      font-size: 0.82rem; color: #2d6a4f; font-weight: 600;
+    }
+
+    /* urgency dots */
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .dot.high { background: var(--high); }
+    .dot.med  { background: var(--med); }
+    .dot.low  { background: var(--low); }
+
+    /* ── tables ── */
+    .table-wrap { overflow-x: auto; margin: 0 0 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    thead tr { background: var(--accent); color: #fff; }
+    thead th { padding: 10px 14px; text-align: left; font-weight: 700; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: #f0ebe0; }
+    tbody td { padding: 9px 14px; }
+
+    /* ── highlights list ── */
+    .hn-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .hn-list li {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 16px; font-size: 0.875rem;
+    }
+    .hn-list li strong { color: var(--accent3); }
+
+    /* ── opportunity grid ── */
+    .opp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+    .opp-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 16px 18px; font-size: 0.85rem;
+    }
+    .opp-card .opp-title { font-weight: 800; color: var(--accent2); margin-bottom: 6px; font-size: 0.9rem; }
+    .opp-card p { color: var(--muted); }
+
+    /* ── footer ── */
+    footer {
+      background: #1a1a1a; color: #aaa; text-align: center;
+      padding: 20px 24px; font-size: 12px; line-height: 1.7;
+    }
+    footer strong { color: #ddd; }
+
+    /* ── language layers ── */
+    .cn { display: none; }
+    body.lang-cn .en { display: none; }
+    body.lang-cn .cn { display: block; }
+    body.lang-cn .cn-inline { display: inline; }
+    body.lang-cn .en-inline { display: none; }
+    .cn-inline { display: none; }
+    .en-inline { display: inline; }
+  </style>
+</head>
+<body>
+
+<!-- REQUIRED BANNER -->
+<div style="background:#1a1a1a;color:#ff453a;padding:10px 24px;font-family:'Courier New',monospace;font-size:12px;font-weight:bold;letter-spacing:0.5px;text-align:center;">
+  INTERNAL USE ONLY - DO NOT SHARE OUTSIDE THE COMPANY WITHOUT PERMISSION
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="meta en-inline">Novada Intelligence · Daily AI Trends Report</div>
+  <div class="meta cn-inline">Novada 情报 · 每日 AI 趋势报告</div>
+  <h1 class="en">AI &amp; Tech Trends — May 18, 2026</h1>
+  <h1 class="cn" style="display:none;">AI 与科技趋势 — 2026年5月18日</h1>
+  <p class="subtitle en">Focus areas: AI agent frameworks · MCP servers · web data APIs · proxy infrastructure</p>
+  <p class="subtitle cn" style="display:none;">重点领域：AI 智能体框架 · MCP 服务器 · 网页数据 API · 代理基础设施</p>
+</header>
+
+<!-- LANG TOGGLE -->
+<div class="lang-bar">
+  <span>Language / 语言</span>
+  <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+  <button class="lang-btn" onclick="setLang('cn')" id="btn-cn">中文</button>
+</div>
+
+<main>
+
+  <!-- ── TOP 3 FOR NOVADA ── -->
+  <div class="section-title"><span class="ico">🎯</span>
+    <span class="en">Top 3 Signals for Novada</span>
+    <span class="cn" style="display:none;">Novada 核心信号 Top 3</span>
+  </div>
+
+  <div class="cards">
+
+    <!-- Signal 1 -->
+    <div class="card">
+      <div class="card-rank"><span class="dot high"></span> Signal #1 · High Urgency</div>
+      <h3 class="en">Azure MCP Now IDE-Native — Visual Studio 2026 Ships It Built-In</h3>
+      <h3 class="cn" style="display:none;">Azure MCP 进入 IDE 原生时代 — Visual Studio 2026 内置发布</h3>
+      <p class="en">Microsoft confirmed Azure MCP Server tools are <strong>generally available inside Visual Studio 2026</strong> with zero setup. Combined with 10,000+ public servers now governed by the Linux Foundation, MCP has crossed from emerging standard to <strong>infrastructure</strong>.</p>
+      <p class="cn" style="display:none;">微软确认 Azure MCP Server 工具已<strong>内置于 Visual Studio 2026</strong>，无需额外配置。结合 Linux 基金会管理下的 10,000+ 公开服务器，MCP 已从新兴标准升级为<strong>基础设施</strong>。</p>
+      <span class="tag">MCP</span><span class="tag">IDE</span><span class="tag">Microsoft</span>
+      <div class="novada-signal en">
+        IDE-native MCP means developers reach for MCP tools before REST calls. Novada must publish a first-class MCP server now — before competitors occupy agent toolboxes.
+      </div>
+      <div class="novada-signal cn" style="display:none;">
+        IDE 原生 MCP 意味着开发者会优先使用 MCP 工具而非 REST 调用。Novada 必须立即发布一流的 MCP 服务器——在竞争对手抢占智能体工具箱之前。
+      </div>
+    </div>
+
+    <!-- Signal 2 -->
+    <div class="card">
+      <div class="card-rank"><span class="dot high"></span> Signal #2 · High Urgency</div>
+      <h3 class="en">"Code w/ Claude" SF Conference: Webhooks, Managed Agents &amp; Higher API Limits</h3>
+      <h3 class="cn" style="display:none;">"Code w/ Claude" 旧金山大会：Webhooks、托管智能体与更高 API 限额</h3>
+      <p class="en">Anthropic's annual developer conference this week in San Francisco formalised <strong>Claude Managed Agents</strong>: Dreaming (cross-session memory), Outcomes (goal-rubric execution), Multiagent Orchestration, and Webhooks. Claude Code now supports scheduled runs (hourly/nightly/weekly). Opus API limits raised.</p>
+      <p class="cn" style="display:none;">Anthropic 本周在旧金山举办年度开发者大会，正式推出 <strong>Claude 托管智能体</strong>：Dreaming（跨会话记忆）、Outcomes（目标驱动执行）、多智能体编排和 Webhooks。Claude Code 支持定时运行（每小时/每晚/每周）。Opus API 限额提升。</p>
+      <span class="tag">Anthropic</span><span class="tag">Agents</span><span class="tag">API</span>
+      <div class="novada-signal en">
+        Webhook-triggered, memory-aware agents run 24/7 without human oversight. Schema instability in the data layer cascades into agent failures. Novada's reliability SLA is now a hard dependency.
+      </div>
+      <div class="novada-signal cn" style="display:none;">
+        由 Webhook 触发的、具备记忆的智能体 24/7 无人监督运行。数据层的 Schema 不稳定会级联导致智能体失败。Novada 的可靠性 SLA 现已成为刚性依赖。
+      </div>
+    </div>
+
+    <!-- Signal 3 -->
+    <div class="card">
+      <div class="card-rank"><span class="dot med"></span> Signal #3 · Medium Urgency</div>
+      <h3 class="en">ArXiv: REST APIs Can Be Automatically Made Agent-Ready via MCP (2605.14312)</h3>
+      <h3 class="cn" style="display:none;">ArXiv：REST API 可通过 MCP 自动转化为智能体可用接口（2605.14312）</h3>
+      <p class="en">New paper "Making OpenAPI Documentation Agent-Ready" shows how to detect documentation and REST smells that block agent adoption, then expose existing APIs as MCP tools automatically. Companion paper "Agentic Tool Use in LLMs" (2604.00835) frames the full tool-learning landscape.</p>
+      <p class="cn" style="display:none;">新论文"Making OpenAPI Documentation Agent-Ready"展示了如何检测阻碍智能体采用的文档和 REST 设计缺陷，并自动将现有 API 暴露为 MCP 工具。配套论文"Agentic Tool Use in LLMs"（2604.00835）构建了完整工具学习图景。</p>
+      <span class="tag">MCP</span><span class="tag">REST API</span><span class="tag">ArXiv</span>
+      <div class="novada-signal en">
+        This paper is a direct playbook for Novada: publish an OpenAPI spec → wrap in MCP → fix documentation smells → become discoverable by every major agent framework overnight.
+      </div>
+      <div class="novada-signal cn" style="display:none;">
+        该论文是 Novada 的直接行动指南：发布 OpenAPI 规范 → MCP 封装 → 修复文档缺陷 → 立即被所有主流智能体框架发现。
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── GITHUB TRENDING ── -->
+  <div class="section-title"><span class="ico">⭐</span>
+    <span class="en">GitHub Trending — AI Agent Repos</span>
+    <span class="cn" style="display:none;">GitHub 趋势 — AI 智能体仓库</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="en">Repository</th><th class="en">Stars</th><th class="en">Signal for Novada</th>
+          <th class="cn" style="display:none;">仓库</th><th class="cn" style="display:none;">Star 数</th><th class="cn" style="display:none;">对 Novada 的意义</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ollama</td><td>~165k</td>
+          <td class="en">Local model inference leader; no-cloud agent runtime signals on-prem data demand</td>
+          <td class="cn" style="display:none;">本地模型推理领导者；无云智能体运行时预示本地数据需求增长</td>
+        </tr>
+        <tr>
+          <td>Langflow</td><td>~146k</td>
+          <td class="en">Visual agent pipeline builder — non-engineer adoption accelerating; Novada needs a Langflow node</td>
+          <td class="cn" style="display:none;">可视化智能体管道构建器 — 非工程师采用加速；Novada 需要 Langflow 节点</td>
+        </tr>
+        <tr>
+          <td>Hermes Agent (Nous Research)</td><td>~140k+</td>
+          <td class="en">#1 on OpenRouter; self-improving agent on NVIDIA RTX / DGX Spark — 140k stars in &lt;3 months</td>
+          <td class="cn" style="display:none;">OpenRouter 排名第一；NVIDIA RTX/DGX Spark 上的自进化智能体，不足3个月达 14 万 Star</td>
+        </tr>
+        <tr>
+          <td>Dify</td><td>~136k</td>
+          <td class="en">Visual builder + LLMOps platform; enterprise-grade; Novada integration opportunity</td>
+          <td class="cn" style="display:none;">可视化构建器 + LLMOps 平台；企业级；Novada 集成机会</td>
+        </tr>
+        <tr>
+          <td><strong>Firecrawl</strong></td><td>~120k</td>
+          <td class="en">Web crawl/scrape API purpose-built for AI agents — direct market validation; monitor enterprise gaps</td>
+          <td class="cn" style="display:none;">专为 AI 智能体构建的网页爬取 API — 直接市场验证；监测企业级缺口</td>
+        </tr>
+        <tr>
+          <td>OpenHuman</td><td>Rapid ↑ (May 16)</td>
+          <td class="en">User-context-first desktop agent; topped GitHub trending May 16 — rising star to watch</td>
+          <td class="cn" style="display:none;">以用户上下文为先的桌面智能体；5月16日登顶 GitHub 趋势 — 值得关注的新星</td>
+        </tr>
+        <tr>
+          <td>awesome-ai-agents-2026</td><td>300+ resources</td>
+          <td class="en">Community intelligence hub; 20+ categories, updated monthly — reflects what practitioners actually use</td>
+          <td class="cn" style="display:none;">社区情报中心；20+ 类别，每月更新 — 反映从业者实际使用情况</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:0.82rem;color:var(--muted);margin-top:8px;">
+    <span class="en"><strong>Notable:</strong> Three of the top repos are visual builders (Langflow, Dify, n8n). Domain experts — not just ML engineers — are now primary agent builders. Novada needs ready-made nodes for these platforms. GitHub's 4.3M+ AI repositories (178% YoY growth, Octoverse 2025) underline the scale of the shift.</span>
+    <span class="cn" style="display:none;"><strong>值得注意：</strong>前几名仓库中有三个是可视化构建器（Langflow、Dify、n8n）。领域专家（而非仅 ML 工程师）已成为智能体构建的主力。Novada 需要为这些平台提供现成节点。GitHub 拥有 430 万+ AI 仓库（同比增长 178%，Octoverse 2025），凸显了这一转变的规模。</span>
+  </p>
+
+  <!-- ── HN HIGHLIGHTS ── -->
+  <div class="section-title"><span class="ico">🔶</span>
+    <span class="en">Hacker News Highlights</span>
+    <span class="cn" style="display:none;">Hacker News 精选</span>
+  </div>
+
+  <ul class="hn-list">
+    <li>
+      <strong class="en">"Do AI Agents Make Money in 2026? Or Is It Just Mac Minis and Vibes?"</strong>
+      <strong class="cn" style="display:none;">"2026年 AI 智能体赚钱了吗？还是只有 Mac Mini 和氛围感？"</strong>
+      — <span class="en">Active community debate on commercial viability. Signals that many teams are still in the 'build' phase; monetisation pathways remain unclear.</span>
+      <span class="cn" style="display:none;">社区对商业可行性的热烈讨论。表明许多团队仍处于"构建"阶段，变现路径尚不明确。</span>
+    </li>
+    <li>
+      <strong>"MCP is dead; long live MCP"</strong>
+      — <span class="en">HN debate on MCP longevity (March 2026). Community split: sceptics say it's over-hyped; builders note it's embedded in every major IDE and framework regardless.</span>
+      <span class="cn" style="display:none;">HN 关于 MCP 寿命的辩论（2026年3月）。社区分歧：怀疑者认为过度炒作；构建者指出它已嵌入所有主流 IDE 和框架。</span>
+    </li>
+    <li>
+      <strong class="en">"Show HN: MCP Isn't Dead. You're Just Using It Wrong"</strong>
+      <strong class="cn" style="display:none;">"Show HN：MCP 没死。你只是用错了"</strong>
+      — <span class="en">Highlights Dynamic Tool Registration buried in Claude Code's Jan 2026 release — a key UX unlock that most developers missed.</span>
+      <span class="cn" style="display:none;">揭示了 Claude Code 2026年1月版本中被忽视的动态工具注册功能 — 大多数开发者错过了这一关键 UX 突破。</span>
+    </li>
+    <li>
+      <strong class="en">"Ask HN: Any enterprises experimenting with AI agents / MCP-style infra?"</strong>
+      <strong class="cn" style="display:none;">"Ask HN：有企业在试验 AI 智能体 / MCP 式基础设施吗？"</strong>
+      — <span class="en">Thread shows production adoption lagging dev/test. Authentication, rate limits, and data reliability named as top blockers — Novada's core value proposition.</span>
+      <span class="cn" style="display:none;">帖子显示生产环境采用落后于开发/测试阶段。鉴权、速率限制和数据可靠性被列为主要障碍 — 正是 Novada 的核心价值主张。</span>
+    </li>
+    <li>
+      <strong class="en">"Selvedge: Capture the why behind AI code changes"</strong>
+      <strong class="cn" style="display:none;">"Selvedge：捕获 AI 代码变更背后的原因"</strong>
+      — <span class="en">MCP server that logs structured change events including agent reasoning. Points to emerging demand for agent auditability — aligns with Novada's proxy audit-log story.</span>
+      <span class="cn" style="display:none;">记录结构化变更事件（含智能体推理）的 MCP 服务器。指向智能体可审计性的新兴需求 — 与 Novada 代理审计日志定位契合。</span>
+    </li>
+  </ul>
+
+  <!-- ── INDUSTRY NEWS ── -->
+  <div class="section-title"><span class="ico">📰</span>
+    <span class="en">Industry News</span>
+    <span class="cn" style="display:none;">行业动态</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="en">Date</th><th class="en">Event</th><th class="en">Relevance</th>
+          <th class="cn" style="display:none;">日期</th><th class="cn" style="display:none;">事件</th><th class="cn" style="display:none;">相关性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>May 14–15</td>
+          <td class="en">Code w/ Claude SF Developer Conference</td>
+          <td class="cn" style="display:none;">Code w/ Claude 旧金山开发者大会</td>
+          <td class="en">Anthropic keynotes on Managed Agents, Claude Code scheduling, Opus API expansion</td>
+          <td class="cn" style="display:none;">Anthropic 主题演讲：托管智能体、Claude Code 调度、Opus API 扩展</td>
+        </tr>
+        <tr>
+          <td>May 2026</td>
+          <td class="en">Azure MCP Server — GA in Visual Studio 2026</td>
+          <td class="cn" style="display:none;">Azure MCP Server — Visual Studio 2026 内置 GA</td>
+          <td class="en">IDE-native MCP; all Azure APIs, zero setup for VS 2026 users</td>
+          <td class="cn" style="display:none;">IDE 原生 MCP；VS 2026 用户零配置访问所有 Azure API</td>
+        </tr>
+        <tr>
+          <td>May 13</td>
+          <td class="en">CrewAI v1.10.1 — AgentExecutor default, Anthropic improvements</td>
+          <td class="cn" style="display:none;">CrewAI v1.10.1 — AgentExecutor 默认，Anthropic 模型改进</td>
+          <td class="en">Deprecated CrewAgentExecutor; 12M+ daily agent executions; improved structured output for Anthropic models</td>
+          <td class="cn" style="display:none;">废弃 CrewAgentExecutor；每日执行超 1200 万次；改进 Anthropic 模型结构化输出</td>
+        </tr>
+        <tr>
+          <td>May 5</td>
+          <td class="en">OpenAI GPT-5.5 Instant</td>
+          <td class="cn" style="display:none;">OpenAI GPT-5.5 Instant</td>
+          <td class="en">52.5% fewer hallucinations on high-stakes prompts (medicine, law, finance)</td>
+          <td class="cn" style="display:none;">在高风险提示（医疗、法律、金融）上幻觉减少 52.5%</td>
+        </tr>
+        <tr>
+          <td>Apr 23</td>
+          <td class="en">OpenAI GPT-5.5</td>
+          <td class="cn" style="display:none;">OpenAI GPT-5.5</td>
+          <td class="en">1M context window; $5/$30 per million tokens; agentic coding focus</td>
+          <td class="cn" style="display:none;">100万上下文窗口；每百万 token $5/$30；专注智能体编程</td>
+        </tr>
+        <tr>
+          <td>May 2026</td>
+          <td class="en">Microsoft Copilot: GPT drafts + Claude critiques</td>
+          <td class="cn" style="display:none;">微软 Copilot：GPT 起草 + Claude 审查</td>
+          <td class="en">Multi-model orchestration entering mainstream product surfaces</td>
+          <td class="cn" style="display:none;">多模型编排进入主流产品界面</td>
+        </tr>
+        <tr>
+          <td>Apr 2026</td>
+          <td class="en">LangGraph v0.4</td>
+          <td class="cn" style="display:none;">LangGraph v0.4</td>
+          <td class="en">State persistence, human-in-the-loop checkpoints; 97k stars; 57% of practitioners now have agents in production</td>
+          <td class="cn" style="display:none;">状态持久化、人机协同检查点；97k Star；57% 从业者已有生产智能体</td>
+        </tr>
+        <tr>
+          <td>2026 YTD</td>
+          <td class="en">Web scraping market on track to exceed $2B</td>
+          <td class="cn" style="display:none;">网页抓取市场有望突破 20 亿美元</td>
+          <td class="en">Driven by AI adoption. Top players: Firecrawl, Browse AI (770k+ users), Gumloop, Octoparse</td>
+          <td class="cn" style="display:none;">由 AI 采用驱动。头部玩家：Firecrawl、Browse AI（770k+ 用户）、Gumloop、Octoparse</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── MCP ECOSYSTEM ── -->
+  <div class="section-title"><span class="ico">🔌</span>
+    <span class="en">MCP Ecosystem Snapshot</span>
+    <span class="cn" style="display:none;">MCP 生态快照</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="en">MCP Server</th><th class="en">Launch</th><th class="en">Capability</th>
+          <th class="cn" style="display:none;">MCP 服务器</th><th class="cn" style="display:none;">发布时间</th><th class="cn" style="display:none;">能力</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Azure MCP (Visual Studio 2026)</strong></td><td>May 2026</td>
+          <td class="en">IDE-native; all Azure APIs; zero setup — MCP is now default dev infrastructure</td>
+          <td class="cn" style="display:none;">IDE 原生；所有 Azure API；零配置 — MCP 现已成为默认开发基础设施</td>
+        </tr>
+        <tr>
+          <td>AWS MCP Server</td><td>May 6, 2026</td>
+          <td class="en">All AWS APIs via single interface; sandboxed Python execution</td>
+          <td class="cn" style="display:none;">单一接口访问所有 AWS API；沙箱 Python 执行</td>
+        </tr>
+        <tr>
+          <td>TikTok Ads MCP</td><td>May 13, 2026</td>
+          <td class="en">Agents autonomously plan, launch, and optimize ad campaigns</td>
+          <td class="cn" style="display:none;">智能体自主规划、发布和优化广告活动</td>
+        </tr>
+        <tr>
+          <td>GoodData MCP</td><td>Q1 2026</td>
+          <td class="en">Analytics agents — 10–50× faster than manual BI workflows</td>
+          <td class="cn" style="display:none;">分析型智能体 — 比手动 BI 工作流快 10–50 倍</td>
+        </tr>
+        <tr>
+          <td>You.com Search MCP</td><td>Feb 2026</td>
+          <td class="en">Free real-time web search for agents — search commoditised; structured data wins</td>
+          <td class="cn" style="display:none;">为智能体提供免费实时网络搜索 — 搜索商品化；结构化数据胜出</td>
+        </tr>
+        <tr>
+          <td><em class="en">Ecosystem total</em><em class="cn" style="display:none;">生态总量</em></td><td>May 2026</td>
+          <td><strong>10,000+</strong> <span class="en">public servers · Linux Foundation governed · OAuth 2.1 · Streamable HTTP</span><span class="cn" style="display:none;">个公开服务器 · Linux 基金会管理 · OAuth 2.1 · 流式 HTTP</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── ARXIV PICKS ── -->
+  <div class="section-title"><span class="ico">📄</span>
+    <span class="en">ArXiv Research Picks</span>
+    <span class="cn" style="display:none;">ArXiv 精选论文</span>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-rank"><span class="dot high"></span> 2605.14312</div>
+      <h3 class="en">Making OpenAPI Documentation Agent-Ready</h3>
+      <h3 class="cn" style="display:none;">让 OpenAPI 文档面向智能体就绪</h3>
+      <p class="en">Detects documentation and REST design smells that block agent adoption; shows how MCP can automatically expose existing REST APIs as agent-consumable tools. Practical industrial case study included.</p>
+      <p class="cn" style="display:none;">检测阻碍智能体采用的文档和 REST 设计缺陷；展示 MCP 如何自动将现有 REST API 暴露为智能体可用工具。包含实际工业案例研究。</p>
+      <span class="tag">MCP</span><span class="tag">REST</span><span class="tag">Novada</span>
+    </div>
+    <div class="card">
+      <div class="card-rank"><span class="dot high"></span> 2505.16120</div>
+      <h3 class="en">LLM-Powered AI Agent Systems: Industry Applications</h3>
+      <h3 class="cn" style="display:none;">LLM 驱动的 AI 智能体系统：行业应用</h3>
+      <p class="en">Comprehensive survey of agent architectures across customer service, manufacturing, finance, and healthcare. Categorises software-based, physical, and adaptive hybrid systems. Published May 4, 2026.</p>
+      <p class="cn" style="display:none;">涵盖客服、制造、金融和医疗领域智能体架构的综合调查。对软件型、物理型和自适应混合型系统进行分类。2026年5月4日发布。</p>
+      <span class="tag">Survey</span><span class="tag">Industry</span>
+    </div>
+    <div class="card">
+      <div class="card-rank"><span class="dot med"></span> 2604.00835</div>
+      <h3 class="en">Agentic Tool Use in Large Language Models</h3>
+      <h3 class="cn" style="display:none;">大语言模型中的智能体工具使用</h3>
+      <p class="en">Organises the tool-use literature into three paradigms: prompting-as-plug-and-play, supervised tool learning, and reward-driven tool policy. Includes failure mode analysis for each approach.</p>
+      <p class="cn" style="display:none;">将工具使用文献分为三种范式：即插即用提示、监督工具学习和奖励驱动工具策略。包含各方法的失败模式分析。</p>
+      <span class="tag">Tool Use</span><span class="tag">LLM</span>
+    </div>
+    <div class="card">
+      <div class="card-rank"><span class="dot low"></span> 2605.13496</div>
+      <h3 class="en">MARLIN: Sustainable LLM Inference via Multi-Agent RL</h3>
+      <h3 class="cn" style="display:none;">MARLIN：多智能体强化学习实现可持续 LLM 推理</h3>
+      <p class="en">Game-theoretic RL framework to jointly optimise time-to-first-token, carbon emissions, water usage, and energy cost across cloud LLM inference. Signals infrastructure cost pressure on agent operators.</p>
+      <p class="cn" style="display:none;">博弈论强化学习框架，联合优化首字响应时间、碳排放、用水量和云端 LLM 推理能耗。预示智能体运营商面临的基础设施成本压力。</p>
+      <span class="tag">Infrastructure</span><span class="tag">Sustainability</span>
+    </div>
+  </div>
+
+  <!-- ── OPPORTUNITY SIGNALS ── -->
+  <div class="section-title"><span class="ico">💡</span>
+    <span class="en">Novada Opportunity Signals</span>
+    <span class="cn" style="display:none;">Novada 机会信号</span>
+  </div>
+
+  <div class="opp-grid">
+    <div class="opp-card">
+      <div class="opp-title en">Wrap Novada APIs as MCP Tools (Now)</div>
+      <div class="opp-title cn" style="display:none;">立即将 Novada API 封装为 MCP 工具</div>
+      <p class="en">ArXiv 2605.14312 is the exact methodology. Publish OpenAPI spec, apply their detection tool, wrap in MCP. Be discoverable in VS 2026 and every major agent framework.</p>
+      <p class="cn" style="display:none;">ArXiv 2605.14312 提供了确切方法。发布 OpenAPI 规范，应用其检测工具，封装为 MCP。在 VS 2026 和所有主流智能体框架中可被发现。</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-title en">Pitch API Reliability as Agent-Loop SLA</div>
+      <div class="opp-title cn" style="display:none;">将 API 可靠性定位为智能体循环 SLA</div>
+      <p class="en">Claude Code scheduled runs + CrewAI checkpoint-resume = agents run unattended. Any data-layer instability fails the loop. Novada uptime and schema consistency are now contractual requirements.</p>
+      <p class="cn" style="display:none;">Claude Code 定时运行 + CrewAI 检查点恢复 = 智能体无人值守运行。数据层任何不稳定都会导致循环失败。Novada 的可用性和 Schema 一致性现已成为合同要求。</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-title en">Ship No-Code Platform Nodes</div>
+      <div class="opp-title cn" style="display:none;">发布无代码平台节点</div>
+      <p class="en">Langflow (~146k stars), Dify (~136k), n8n dominate visual pipeline building. Domain experts are primary agent builders now. Novada nodes multiply the TAM beyond engineers.</p>
+      <p class="cn" style="display:none;">Langflow（~14.6万 Star）、Dify（~13.6万）、n8n 主导可视化管道构建。领域专家已成为主要智能体构建者。Novada 节点将 TAM 从工程师扩展到更广泛群体。</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-title en">Publish Firecrawl Competitive Matrix</div>
+      <div class="opp-title cn" style="display:none;">发布 Firecrawl 竞争矩阵</div>
+      <p class="en">Firecrawl at 120k stars validates the market. JS-heavy, auth-gated, and rate-limited sites remain hard. Publish where Novada's proxy depth wins — a one-pager for enterprise buyers.</p>
+      <p class="cn" style="display:none;">Firecrawl 达到 12 万 Star，验证了市场需求。JS 密集型、需鉴权和速率受限的网站仍是难题。发布 Novada 代理优势所在 — 面向企业买家的一页纸。</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-title en">Agent Auditability as Differentiator</div>
+      <div class="opp-title cn" style="display:none;">智能体可审计性作为差异化优势</div>
+      <p class="en">HN shows enterprise teams blocked on audit trails for agent actions. Novada's proxy layer can provide structured request logs per agent call — a compliance story for regulated industries.</p>
+      <p class="cn" style="display:none;">HN 显示企业团队被智能体操作的审计追踪所阻碍。Novada 代理层可为每次智能体调用提供结构化请求日志 — 面向监管行业的合规故事。</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Novada Intelligence</strong> · AI Trends Report · 2026-05-18<br/>
+  Sources: Anthropic, Microsoft, OpenAI, AWS, ArXiv, GitHub, Hacker News, Digiday, GeekWire, CrewAI Changelog, LangChain, WebSearch<br/>
+  <span style="color:#666;">This report is for internal use only. Do not distribute outside Novada without permission.</span>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('lang-cn', lang === 'cn');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-cn').classList.toggle('active', lang === 'cn');
+
+    document.querySelectorAll('.en').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+    document.querySelectorAll('.cn').forEach(el => {
+      el.style.display = lang === 'cn' ? '' : 'none';
+    });
+    document.querySelectorAll('.en-inline').forEach(el => {
+      el.style.display = lang === 'en' ? 'inline' : 'none';
+    });
+    document.querySelectorAll('.cn-inline').forEach(el => {
+      el.style.display = lang === 'cn' ? 'inline' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
